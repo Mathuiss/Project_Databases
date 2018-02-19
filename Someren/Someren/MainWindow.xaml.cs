@@ -20,6 +20,7 @@ namespace Someren
     /// </summary>
     public partial class MainWindow : Window
     {
+        const string patat = "Robbin is litttt";
         public MainWindow()
         {
             InitializeComponent();
