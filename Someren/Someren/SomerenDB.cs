@@ -11,10 +11,10 @@ namespace Someren
     {
         private SqlConnection OpenConnectieDB()
         {
-            string host = "spartainholland.database.windows.net";
-            string db = "someren_inholland_db";
-            string user = "spartainholland";
-            string password = "Sparta1";
+            string host = "den1.mssql4.gear.host";
+            string db = "projectdbgroepa1";
+            string user = "projectdbgroepa1";
+            string password = "Zc2pQwg-wK_w";
             //string port = "3306";
 
             try
@@ -39,7 +39,7 @@ namespace Someren
             }            
         }
 
-        private void SluitConnectieDB(SqlConnection connection)
+        public void SluitConnectieDB(SqlConnection connection)
         {
             connection.Close();
         }
@@ -49,10 +49,11 @@ namespace Someren
             SqlConnection connection = OpenConnectieDB();
             List<SomerenModel.Student> studenten_lijst = new List<SomerenModel.Student>();
 
+            SluitConnectieDB(connection);
             connection.Open();
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             // schrijf hier een query om te zorgen dat er een lijst met studenten wordt getoond
-            sb.Append("#query");
+            sb.Append("select * from projectdbgroepa1.sys.tables");
 
             /* VOORBEELDQUERY */
             //sb.Append("SELECT TOP 20 pc.Name as CategoryName, p.name as ProductName ");
@@ -64,13 +65,13 @@ namespace Someren
             String sql = sb.ToString();
 
             SqlCommand command = new SqlCommand(sql, connection);
-            SqlDataReader reader = command.ExecuteReader();
+            var reader = command.ExecuteReader();
             while (reader.Read())
             {
                 SomerenModel.Student student = new SomerenModel.Student();
                 studenten_lijst.Add(student);
             }
-
+            SluitConnectieDB(connection);
             return studenten_lijst;
         }
 

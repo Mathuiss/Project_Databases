@@ -9,33 +9,19 @@ namespace Someren
 {
     public static class SomerenUI
     {
-        public static Control showStudents()
+        public static Control showStudents(List<SomerenModel.Student> studentList)
         {
-            List<SomerenModel.Student> sl = new List<SomerenModel.Student>();
-            //SomerenDB.
-            SomerenModel.Student s1 = new SomerenModel.Student();
-            s1.setNaam("Henk");
-            SomerenModel.Student s2 = new SomerenModel.Student();
-            s2.setNaam("Piet");
-            SomerenModel.Student s3 = new SomerenModel.Student();
-            s3.setNaam("Amber");
+            int aantal = studentList.Count();
 
-            sl.Add(s1);
-            sl.Add(s2);
-            sl.Add(s3);
+            ListView listView = new ListView();
+            listView.Height = 1000;
 
-            int aantal = sl.Count();
-            ListView c = new ListView();
-            c.Height = 1000;
-            ListViewItem li = new ListViewItem();
-            li.SubItems.Add(s1.getNaam());
-            li.SubItems.Add(s1.getId().ToString());
-            c.Items.Add(s1.getNaam());
-            c.Items.Add(s2.getNaam());
-            c.Items.Add(s3.getNaam());
-            c.Items.Add(li);
+            foreach (SomerenModel.Student student in studentList)
+            {
+                listView.Items.Add(new ListViewItem(student.Naam, student.Id));
+            }
 
-            return c;
+            return listView;
         }
 
         public static Control addUILabel(string text)
