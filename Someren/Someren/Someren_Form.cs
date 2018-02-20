@@ -15,7 +15,10 @@ namespace Someren
        
         private static Someren_Form instance;
 
-        public Someren_Form() { InitializeComponent(); }
+        public Someren_Form()
+        {
+            InitializeComponent();
+        }
 
         public static Someren_Form Instance
         {
@@ -58,7 +61,7 @@ namespace Someren
             // Message msg = new Message();
             if ((MessageBox.Show("Weet je zeker dat je SomerenAdministratie wilt afsluiten?", "SomerenAdministratie Afsluiten?",
             MessageBoxButtons.YesNo, MessageBoxIcon.Question,
-            MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            MessageBoxDefaultButton.Button1) == DialogResult.Yes))
             {
                 Application.Exit();
             }
