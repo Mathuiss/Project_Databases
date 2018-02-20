@@ -12,11 +12,13 @@ namespace Someren
 {
     public partial class Someren_Form : Form
     {
-       
+        private List<SomerenModel.Student> studentList;
+        private SomerenDB database;
         private static Someren_Form instance;
 
         public Someren_Form()
         {
+            database = new SomerenDB();
             InitializeComponent();
         }
 
@@ -70,7 +72,8 @@ namespace Someren
 
         private void toolStripMenuItem9_Click(object sender, EventArgs e)
         {
-            SomerenUI.showStudents();
+            studentList = database.DB_gettudents();
+            SomerenUI.showStudents(studentList);
         }
 
         private void overSomerenAppToolStripMenuItem_Click(object sender, EventArgs e)
@@ -116,7 +119,10 @@ namespace Someren
         {
             this.panel1.Controls.Clear();
             this.groupBox1.Text = "Studenten";
-            this.panel1.Controls.Add(SomerenUI.showStudents());
+
+            this.studentList = database.DB_gettudents();
+            studentList.Add(new SomerenModel.Student(1, "Mathijs"));
+            this.panel1.Controls.Add(SomerenUI.showStudents(studentList));
             
         }
 
