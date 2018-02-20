@@ -8,8 +8,8 @@ using System.Data.SqlClient;
 namespace Someren
 {
     class SomerenDB
-    {  
-        private SqlConnection openConnectieDB()
+    {
+        private SqlConnection OpenConnectieDB()
         {
             string host = "spartainholland.database.windows.net";
             string db = "someren_inholland_db";
@@ -39,14 +39,14 @@ namespace Someren
             }            
         }
 
-        private void sluitConnectieDB(SqlConnection connection)
+        private void SluitConnectieDB(SqlConnection connection)
         {
             connection.Close();
         }
 
         public List<SomerenModel.Student> DB_gettudents()
         {
-            SqlConnection connection = openConnectieDB();
+            SqlConnection connection = OpenConnectieDB();
             List<SomerenModel.Student> studenten_lijst = new List<SomerenModel.Student>();
 
             connection.Open();
