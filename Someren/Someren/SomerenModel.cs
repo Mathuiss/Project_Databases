@@ -6,28 +6,21 @@ using System.Threading.Tasks;
 
 namespace Someren
 {
-    class SomerenModel
+    public class SomerenModel
     {
-        public class Student
+        public struct Student
         {
             int id;
             string naam;
 
-            public void setNaam(string naamStudent)
+            public Student(int id, string naam)
             {
-                naam = naamStudent;
-            }
-
-            public string getNaam()
-            {
-                return naam;
-            }
-
-            public int getId()
-            {
-                return id;
+                this.id = id;
+                this.naam = naam;
             }
             
+            public int Id { get => id; set => id = value; }
+            public string Naam { get => naam; set => naam = value; }
         }
 
         public class StudentList
