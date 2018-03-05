@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
+using Model;
 
 namespace Someren
 {
@@ -39,21 +38,21 @@ namespace Someren
             }            
         }
 
-        public void SluitConnectieDB(SqlConnection connection)
+        public void SluitConnectieDB(ref SqlConnection connection)
         {
             connection.Close();
         }
 
-        public List<SomerenModel.Student> DB_gettudents()
+        public List<Student> DB_gettudents()
         {
             SqlConnection connection = OpenConnectieDB();
-            List<SomerenModel.Student> studenten_lijst = new List<SomerenModel.Student>();
+            List<Student> studenten_lijst = new List<Student>();
 
-            SluitConnectieDB(connection);
+            SluitConnectieDB(ref connection);
             connection.Open();
             var sb = new StringBuilder();
             // schrijf hier een query om te zorgen dat er een lijst met studenten wordt getoond
-            sb.Append("select * from projectdbgroepa1.sys.tables");
+            sb.Append("select studentNr from STUDENT");
 
             /* VOORBEELDQUERY */
             //sb.Append("SELECT TOP 20 pc.Name as CategoryName, p.name as ProductName ");
@@ -65,16 +64,28 @@ namespace Someren
             String sql = sb.ToString();
 
             SqlCommand command = new SqlCommand(sql, connection);
-            var reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                SomerenModel.Student student = new SomerenModel.Student();
-                studenten_lijst.Add(student);
-            }
-            SluitConnectieDB(connection);
+
+            var student = new Student();
+            student.Id = (int)command.ExecuteScalar();
+            Console.WriteLine(student.Id);
+            Console.WriteLine("Success!");
+            
+            SluitConnectieDB(ref connection);
             return studenten_lijst;
         }
 
-       // public void 
+        public Student GetStudent(SqlConnection connection)
+        {
+            var getId = new SqlCommand("select studentNr from STUDENT", connection);
+            var getNaam = new SqlCommand("select voornaam from STUDENT", connection);
+
+
+            return new Student()
+            {
+                Id = (int)getId.ExecuteScalar(),
+                Naam = getNaam.ExecuteScalar().ToString(),
+                Achternaam = "Patat"
+            };
+        }
     }
 }
