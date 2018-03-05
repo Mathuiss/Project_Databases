@@ -10,8 +10,6 @@ namespace Someren
     {
         public static Control showStudents(List<Student> studentList)
         {
-            int aantal = studentList.Count();
-
             ListView listView = new ListView();
             listView.Height = 1000;
 
