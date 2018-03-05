@@ -29,7 +29,22 @@ namespace Someren
             l.Text = text;
             return l;
         }
-        
+
+        public static Control showDocenten(List<Docent> docentList)
+        {
+            int aantal = docentList.Count();
+
+            ListView listView = new ListView();
+            listView.Height = 1000;
+
+            foreach (Docent docent in docentList)
+            {
+                listView.Items.Add(new ListViewItem(docent.Naam, docent.Id));
+            }
+
+            return listView;
+        }
+
 
     }
 }

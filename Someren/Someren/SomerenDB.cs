@@ -87,5 +87,28 @@ namespace Someren
                 Achternaam = "Patat"
             };
         }
+
+        public List<Docent> GetDocenten()
+        {
+            SqlConnection connection = OpenConnectieDB();
+            var docentenLijst = new List<Docent>();
+
+            SluitConnectieDB(ref connection);
+            connection.Open();
+            
+            SqlCommand command = new SqlCommand("select docentCode, voornaam, achternaam, isBegeleider from DOCENT", connection);
+            SqlDataReader reader = command.ExecuteReader();
+            
+            if (reader.HasRows)
+            {
+                while(reader.Read())
+                {
+                    docentenLijst.Add(new Docent(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3)));
+                }
+            }
+            
+            SluitConnectieDB(ref connection);
+            return docentenLijst;
+        }
     }
 }
