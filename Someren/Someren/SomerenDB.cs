@@ -58,8 +58,13 @@ namespace Someren
             {
                 while (reader.Read())
                 {
-                     studentList.Add(new Student(reader.GetInt32(0), reader.GetString(1),
-                         reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4)));
+                     studentList.Add(new Student(
+                         reader.GetInt32(0), 
+                         reader.GetString(1),
+                         reader.GetString(2), 
+                         reader.GetInt32(3), 
+                         reader.GetInt32(4)
+                         ));
                 }
             }
 
@@ -75,14 +80,14 @@ namespace Someren
             SluitConnectieDB(ref connection);
             connection.Open();
 
-            SqlCommand command = new SqlCommand("select kamerCode, maxPersonen from KAMER", connection);
+            SqlCommand command = new SqlCommand("select kamerCode, maxPersonen, isDocentKamer from KAMER", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    kamerLijst.Add(new Kamer(reader.GetInt32(0), reader.GetInt32(1)));
+                    kamerLijst.Add(new Kamer(reader.GetInt32(0), reader.GetInt32(1), reader.GetBoolean(2)));
                 }
             }
 
@@ -98,14 +103,20 @@ namespace Someren
             SluitConnectieDB(ref connection);
             connection.Open();
             
-            SqlCommand command = new SqlCommand("select docentCode, voornaam, achternaam, isBegeleider from DOCENT", connection);
+            SqlCommand command = new SqlCommand("select docentCode, voornaam, achternaam, isBegeleider, slaapt_op from DOCENT", connection);
             SqlDataReader reader = command.ExecuteReader();
             
             if (reader.HasRows)
             {
                 while(reader.Read())
                 {
-                    docentenLijst.Add(new Docent(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3)));
+                    docentenLijst.Add(new Docent(
+                        reader.GetInt32(0),
+                        reader.GetString(1),
+                        reader.GetString(2),
+                        reader.GetBoolean(3),
+                        reader.GetInt32(4)
+                        ));
                 }
             }
             

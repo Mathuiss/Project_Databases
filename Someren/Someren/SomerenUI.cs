@@ -11,19 +11,33 @@ namespace Someren
         public static Control showStudents(List<Student> studentList)
         {
             ListView listView = new ListView();
-            listView.Height = 1000;
-            listView.Width = 500;
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
 
-            listView.Columns.Add("StudentNr");
-            listView.Columns.Add("Voornaam");
-            listView.Columns.Add("Achternaam");
-            listView.Columns.Add("Kamer Code");
-            listView.Columns.Add("Begeleider Code");
+            listView.Columns.Add("StudentNr", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Voornaam", - 2, HorizontalAlignment.Left);
+            listView.Columns.Add("Achternaam", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Kamer Code", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Begeleider Code", -2, HorizontalAlignment.Left);
 
             foreach (Student student in studentList)
             {
-                listView.Items.Add(new ListViewItem(new string[] {student.Id.ToString(), student.Naam, student.Achternaam,
-                    student.KamerCode.ToString(), student.BegeleiderCode.ToString() }));
+                string[] items = new string[5];
+                ListViewItem item;
+
+                items[0] = student.Id.ToString();
+                items[1] = student.Naam;
+                items[2] = student.Achternaam;
+                items[3] = student.KamerCode.ToString();
+                items[4] = student.BegeleiderCode.ToString();
+
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
             }
 
             return listView;
@@ -32,11 +46,29 @@ namespace Someren
         public static Control showKamers(List<Kamer> kamerList)
         {
             ListView listView = new ListView();
-            listView.Height = 1000;
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            listView.Columns.Add("Kamer Code", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Max. Personen", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Is Docent Kamer", -2, HorizontalAlignment.Left);
 
             foreach (Kamer kamer in kamerList)
             {
-                listView.Items.Add(new ListViewItem(kamer.KamerCode.ToString(), kamer.MaxPersonen));
+                string[] items = new string[3];
+                ListViewItem item;
+
+                items[0] = kamer.KamerCode.ToString();
+                items[1] = kamer.MaxPersonen.ToString();
+                items[2] = kamer.IsBegeleider.ToString();
+
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
             }
 
             return listView;
@@ -51,14 +83,34 @@ namespace Someren
 
         public static Control showDocenten(List<Docent> docentList)
         {
-            int aantal = docentList.Count();
-
             ListView listView = new ListView();
-            listView.Height = 1000;
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            listView.Columns.Add("Docent Code", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Voornaam", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Achternaam", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Is Begeleider", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Slaapt Op", -2, HorizontalAlignment.Left);
 
             foreach (Docent docent in docentList)
             {
-                listView.Items.Add(new ListViewItem(docent.Naam));
+                string[] items = new string[5];
+                ListViewItem item;
+
+                items[0] = docent.Id.ToString();
+                items[1] = docent.Naam;
+                items[2] = docent.Achternaam;
+                items[3] = docent.Begeleider.ToString();
+                items[4] = docent.KamerNummer.ToString();
+
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
             }
 
             return listView;
