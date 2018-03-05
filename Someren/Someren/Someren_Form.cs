@@ -114,6 +114,7 @@ namespace Someren
 
         private void toolStripMenuItem6_Click(object sender, EventArgs e)
         {
+            // Schoont het veld op en toont een tabel met studenten
             panel1.Controls.Clear();
             groupBox1.Text = "Studenten";
 
