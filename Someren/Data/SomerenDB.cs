@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Model;
+using System.Windows.Forms;
 
 namespace Data
 {
@@ -17,6 +18,7 @@ namespace Data
 
             try
             {
+                //Connectionstring voor DB maken.
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
                 builder.DataSource = host;
                 builder.UserID = user;
@@ -25,14 +27,16 @@ namespace Data
 
                 SqlConnection connection = new SqlConnection(builder.ConnectionString);
 
+                //Connectie openen
                 connection.Open();
                 return connection;
 
             }
-            catch (SqlException e)
+            catch (SqlException ex)
             {
+                //Als de connection
                 SqlConnection connection = null;
-                Console.WriteLine(e.ToString());
+                MessageBox.Show("Verbinding met de database mislukt. Error: \n\n" + ex);
                 return connection;
             }
         }
@@ -44,18 +48,21 @@ namespace Data
 
         public List<Student> GetStudenten()
         {
-            //Create connection and list
+            //Maakt verbinding met DB
             SqlConnection connection = OpenConnectieDB();
             var studentList = new List<Student>();
 
+            //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
             SluitConnectieDB(ref connection);
             connection.Open();
 
+            //Querie om studenten uit de db te halen
             var studentKeys = new SqlCommand("select studentNr, voornaam, achternaam, slaapt_op, docentCode from STUDENT", connection);
             SqlDataReader reader = studentKeys.ExecuteReader();
 
             if (reader.HasRows)
             {
+                //Vult een lijst met studenten
                 while (reader.Read())
                 {
                     studentList.Add(new Student(
@@ -74,17 +81,21 @@ namespace Data
 
         public List<Kamer> GetKamers()
         {
+            //Maakt verbinding met DB
             SqlConnection connection = OpenConnectieDB();
             var kamerLijst = new List<Kamer>();
 
+            //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
             SluitConnectieDB(ref connection);
             connection.Open();
 
+            //Querie om kamers uit de DB te halen
             SqlCommand command = new SqlCommand("select kamerCode, maxPersonen, isDocentKamer from KAMER", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
+                //Vult lijst met Kamers
                 while (reader.Read())
                 {
                     kamerLijst.Add(new Kamer(reader.GetInt32(0),
@@ -100,17 +111,21 @@ namespace Data
 
         public List<Docent> GetDocenten()
         {
+            //Maakt verbinding met DB
             SqlConnection connection = OpenConnectieDB();
             var docentenLijst = new List<Docent>();
 
+            //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
             SluitConnectieDB(ref connection);
             connection.Open();
 
+            //Querie om docenten uit de db te halen
             SqlCommand command = new SqlCommand("select docentCode, voornaam, achternaam, isBegeleider, slaapt_op from DOCENT", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
+                //Vult de lijst met docenten
                 while (reader.Read())
                 {
                     docentenLijst.Add(new Docent(
