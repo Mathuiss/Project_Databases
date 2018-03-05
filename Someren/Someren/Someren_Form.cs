@@ -73,8 +73,6 @@ namespace Someren
 
         private void overSomerenAppToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
-            
             panel1.Controls.Clear();
 
             groupBox1.Text = "TODO LIJST";

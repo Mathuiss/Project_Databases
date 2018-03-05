@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Data.SqlClient;
 using Model;
 
@@ -45,47 +44,27 @@ namespace Someren
 
         public List<Student> DB_gettudents()
         {
+            //Create connection and list
             SqlConnection connection = OpenConnectieDB();
-            List<Student> studenten_lijst = new List<Student>();
+            var studentList = new List<Student>();
 
             SluitConnectieDB(ref connection);
             connection.Open();
-            var sb = new StringBuilder();
-            // schrijf hier een query om te zorgen dat er een lijst met studenten wordt getoond
-            sb.Append("select studentNr from STUDENT");
 
-            /* VOORBEELDQUERY */
-            //sb.Append("SELECT TOP 20 pc.Name as CategoryName, p.name as ProductName ");
-            //sb.Append("FROM [SalesLT].[ProductCategory] pc ");
-            //sb.Append("JOIN [SalesLT].[Product] p ");
-            //sb.Append("ON pc.productcategoryid = p.productcategoryid;");
-            /* */
+            var studentKeys = new SqlCommand("select studentNr, voornaam, achternaam, slaapt_op, docentCode from STUDENT", connection);
+            SqlDataReader reader = studentKeys.ExecuteReader();
 
-            String sql = sb.ToString();
-
-            SqlCommand command = new SqlCommand(sql, connection);
-
-            var student = new Student();
-            student.Id = (int)command.ExecuteScalar();
-            Console.WriteLine(student.Id);
-            Console.WriteLine("Success!");
-            
-            SluitConnectieDB(ref connection);
-            return studenten_lijst;
-        }
-
-        public Student GetStudent(SqlConnection connection)
-        {
-            var getId = new SqlCommand("select studentNr from STUDENT", connection);
-            var getNaam = new SqlCommand("select voornaam from STUDENT", connection);
-
-
-            return new Student()
+            if (reader.HasRows)
             {
-                Id = (int)getId.ExecuteScalar(),
-                Naam = getNaam.ExecuteScalar().ToString(),
-                Achternaam = "Patat"
-            };
+                while (reader.Read())
+                {
+                     studentList.Add(new Student(reader.GetInt32(0), reader.GetString(1),
+                         reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4)));
+                }
+            }
+
+            SluitConnectieDB(ref connection);
+            return studentList;
         }
     }
 }
