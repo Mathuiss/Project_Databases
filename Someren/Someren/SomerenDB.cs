@@ -24,7 +24,7 @@ namespace Someren
                 builder.InitialCatalog = db;
 
                 SqlConnection connection = new SqlConnection(builder.ConnectionString);
-                
+
                 connection.Open();
                 return connection;
 
@@ -34,7 +34,7 @@ namespace Someren
                 SqlConnection connection = null;
                 Console.WriteLine(e.ToString());
                 return connection;
-            }            
+            }
         }
 
         public void SluitConnectieDB(ref SqlConnection connection)
@@ -65,6 +65,29 @@ namespace Someren
 
             SluitConnectieDB(ref connection);
             return studentList;
+        }
+
+        public List<Kamer> GetKamers()
+        {
+            SqlConnection connection = OpenConnectieDB();
+            var kamerLijst = new List<Kamer>();
+
+            SluitConnectieDB(ref connection);
+            connection.Open();
+
+            SqlCommand command = new SqlCommand("select kamerCode, maxPersonen from KAMER", connection);
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    kamerLijst.Add(new Kamer(reader.GetInt32(0), reader.GetInt32(1)));
+                }
+            }
+
+            SluitConnectieDB(ref connection);
+            return kamerLijst;
         }
 
         public List<Docent> GetDocenten()
