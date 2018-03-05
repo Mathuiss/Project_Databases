@@ -114,6 +114,7 @@ namespace Someren
 
         private void toolStripMenuItem6_Click(object sender, EventArgs e)
         {
+            // Schoont het veld op en toont een tabel met studenten
             panel1.Controls.Clear();
             groupBox1.Text = "Studenten";
 
@@ -148,9 +149,11 @@ namespace Someren
 
         private void toonDocentenToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //eventuele data laten verdwijnen
             panel1.Controls.Clear();
             groupBox1.Text = "Docenten";
 
+            //toont de tabel met docenten.
             docentLijst = database.GetDocenten();
             panel1.Controls.Add(SomerenUI.ShowDocenten(docentLijst));
         }
