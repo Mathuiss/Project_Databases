@@ -23,6 +23,19 @@ namespace Someren
             return listView;
         }
 
+        public static Control showKamers(List<Kamer> kamerList)
+        {
+            ListView listView = new ListView();
+            listView.Height = 1000;
+
+            foreach (Kamer kamer in kamerList)
+            {
+                listView.Items.Add(new ListViewItem(kamer.KamerCode.ToString(), kamer.MaxPersonen));
+            }
+
+            return listView;
+        }
+
         public static Control addUILabel(string text)
         {
             Label l = new Label();

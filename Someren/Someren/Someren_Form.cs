@@ -8,6 +8,7 @@ namespace Someren
     public partial class Someren_Form : Form
     {
         private List<Student> studentList;
+        private List<Kamer> kamerList;
         private SomerenDB database;
         private static Someren_Form instance;
 
@@ -142,6 +143,16 @@ namespace Someren
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            // kamers
+            panel1.Controls.Clear();
+            groupBox1.Text = "Kamers";
+
+            kamerList = database.GetKamers();
+            panel1.Controls.Add(SomerenUI.showKamers(kamerList));
         }
     }
 }
