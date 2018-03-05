@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Model;
 
 namespace Someren
 {
     public partial class Someren_Form : Form
     {
-        private List<SomerenModel.Student> studentList;
+        private List<Student> studentList;
         private SomerenDB database;
         private static Someren_Form instance;
 
@@ -117,12 +112,11 @@ namespace Someren
 
         private void toolStripMenuItem6_Click(object sender, EventArgs e)
         {
-            this.panel1.Controls.Clear();
-            this.groupBox1.Text = "Studenten";
+            panel1.Controls.Clear();
+            groupBox1.Text = "Studenten";
 
-            this.studentList = database.DB_gettudents();
-            studentList.Add(new SomerenModel.Student(1, "Mathijs"));
-            this.panel1.Controls.Add(SomerenUI.showStudents(studentList));
+            studentList = database.DB_gettudents();
+            panel1.Controls.Add(SomerenUI.showStudents(studentList));
             
         }
 
@@ -133,16 +127,16 @@ namespace Someren
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.Focus();
-            this.Enabled = true;
-            this.Visible = true;
+            Focus();
+            Enabled = true;
+            Visible = true;
         }
 
         private void notifyIcon1_Click(object sender, MouseEventArgs e)
         {
-            this.Focus();
-            this.Enabled = true;
-            this.Visible = true;
+            Focus();
+            Enabled = true;
+            Visible = true;
         }
 
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
