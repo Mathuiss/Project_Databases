@@ -98,19 +98,31 @@
             // dashboardToolStripMenuItem
             // 
             this.dashboardToolStripMenuItem.Name = "dashboardToolStripMenuItem";
+<<<<<<< HEAD
             this.dashboardToolStripMenuItem.Size = new System.Drawing.Size(157, 26);
+=======
+            this.dashboardToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+>>>>>>> Sander
             this.dashboardToolStripMenuItem.Text = "Dashboard";
             this.dashboardToolStripMenuItem.Click += new System.EventHandler(this.dashboardToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
+<<<<<<< HEAD
             this.toolStripSeparator1.Size = new System.Drawing.Size(154, 6);
+=======
+            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+>>>>>>> Sander
             // 
             // menuAfsluiten
             // 
             this.menuAfsluiten.Name = "menuAfsluiten";
+<<<<<<< HEAD
             this.menuAfsluiten.Size = new System.Drawing.Size(157, 26);
+=======
+            this.menuAfsluiten.Size = new System.Drawing.Size(181, 26);
+>>>>>>> Sander
             this.menuAfsluiten.Text = "Afsluiten";
             this.menuAfsluiten.Click += new System.EventHandler(this.toolStripMenuItem10_Click);
             // 
@@ -143,7 +155,10 @@
             this.toonDocentenToolStripMenuItem.Name = "toonDocentenToolStripMenuItem";
             this.toonDocentenToolStripMenuItem.Size = new System.Drawing.Size(185, 26);
             this.toonDocentenToolStripMenuItem.Text = "Toon Docenten";
+<<<<<<< HEAD
             this.toonDocentenToolStripMenuItem.Click += new System.EventHandler(this.toonDocentenToolStripMenuItem_Click);
+=======
+>>>>>>> Sander
             // 
             // toolStripMenuItem1
             // 
@@ -154,7 +169,10 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(70, 24);
             this.toolStripMenuItem1.Text = "Kamers";
+<<<<<<< HEAD
             this.toolStripMenuItem1.Visible = false;
+=======
+>>>>>>> Sander
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripMenuItem2
@@ -162,6 +180,10 @@
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(181, 26);
             this.toolStripMenuItem2.Text = "Kamers";
+<<<<<<< HEAD
+=======
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+>>>>>>> Sander
             // 
             // toolStripMenuItem3
             // 

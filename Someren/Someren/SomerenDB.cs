@@ -25,7 +25,7 @@ namespace Someren
                 builder.InitialCatalog = db;
 
                 SqlConnection connection = new SqlConnection(builder.ConnectionString);
-                
+
                 connection.Open();
                 return connection;
 
@@ -35,7 +35,7 @@ namespace Someren
                 SqlConnection connection = null;
                 Console.WriteLine(e.ToString());
                 return connection;
-            }            
+            }
         }
 
         public void SluitConnectieDB(ref SqlConnection connection)
@@ -54,13 +54,6 @@ namespace Someren
             // schrijf hier een query om te zorgen dat er een lijst met studenten wordt getoond
             sb.Append("select studentNr from STUDENT");
 
-            /* VOORBEELDQUERY */
-            //sb.Append("SELECT TOP 20 pc.Name as CategoryName, p.name as ProductName ");
-            //sb.Append("FROM [SalesLT].[ProductCategory] pc ");
-            //sb.Append("JOIN [SalesLT].[Product] p ");
-            //sb.Append("ON pc.productcategoryid = p.productcategoryid;");
-            /* */
-
             String sql = sb.ToString();
 
             SqlCommand command = new SqlCommand(sql, connection);
@@ -69,23 +62,32 @@ namespace Someren
             student.Id = (int)command.ExecuteScalar();
             Console.WriteLine(student.Id);
             Console.WriteLine("Success!");
-            
+
             SluitConnectieDB(ref connection);
             return studenten_lijst;
         }
 
-        public Student GetStudent(SqlConnection connection)
+        public List<Kamer> GetKamers()
         {
-            var getId = new SqlCommand("select studentNr from STUDENT", connection);
-            var getNaam = new SqlCommand("select voornaam from STUDENT", connection);
+            SqlConnection connection = OpenConnectieDB();
+            var kamerLijst = new List<Kamer>();
 
+            SluitConnectieDB(ref connection);
+            connection.Open();
 
-            return new Student()
+            SqlCommand command = new SqlCommand("select kamerCode, maxPersonen from KAMER", connection);
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
             {
-                Id = (int)getId.ExecuteScalar(),
-                Naam = getNaam.ExecuteScalar().ToString(),
-                Achternaam = "Patat"
-            };
+                while (reader.Read())
+                {
+                    kamerLijst.Add(new Kamer(reader.GetInt32(0), reader.GetInt32(1)));
+                }
+            }
+
+            SluitConnectieDB(ref connection);
+            return kamerLijst;
         }
 
         public List<Docent> GetDocenten()
