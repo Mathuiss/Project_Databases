@@ -72,7 +72,7 @@ namespace Someren
         private void toolStripMenuItem9_Click(object sender, EventArgs e)
         {
             studentLijst = database.GetStudenten();
-            SomerenUI.showStudents(studentLijst);
+            SomerenUI.ShowStudents(studentLijst);
         }
 
         private void overSomerenAppToolStripMenuItem_Click(object sender, EventArgs e)
@@ -118,7 +118,7 @@ namespace Someren
             groupBox1.Text = "Studenten";
 
             studentLijst = database.GetStudenten();
-            panel1.Controls.Add(SomerenUI.showStudents(studentLijst));
+            panel1.Controls.Add(SomerenUI.ShowStudents(studentLijst));
             
         }
 
@@ -152,7 +152,7 @@ namespace Someren
             groupBox1.Text = "Docenten";
 
             docentLijst = database.GetDocenten();
-            panel1.Controls.Add(SomerenUI.showDocenten(docentLijst));
+            panel1.Controls.Add(SomerenUI.ShowDocenten(docentLijst));
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -162,7 +162,7 @@ namespace Someren
             groupBox1.Text = "Kamers";
 
             kamerLijst = database.GetKamers();
-            panel1.Controls.Add(SomerenUI.showKamers(kamerLijst));
+            panel1.Controls.Add(SomerenUI.ShowKamers(kamerLijst));
 
         }
     }
