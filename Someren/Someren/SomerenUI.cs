@@ -12,10 +12,18 @@ namespace Someren
         {
             ListView listView = new ListView();
             listView.Height = 1000;
+            listView.Width = 500;
+
+            listView.Columns.Add("StudentNr");
+            listView.Columns.Add("Voornaam");
+            listView.Columns.Add("Achternaam");
+            listView.Columns.Add("Kamer Code");
+            listView.Columns.Add("Begeleider Code");
 
             foreach (Student student in studentList)
             {
-                listView.Items.Add(new ListViewItem(student.Naam, student.Id));
+                listView.Items.Add(new ListViewItem(new string[] {student.Id.ToString(), student.Naam, student.Achternaam,
+                    student.KamerCode.ToString(), student.BegeleiderCode.ToString() }));
             }
 
             return listView;
@@ -50,7 +58,7 @@ namespace Someren
 
             foreach (Docent docent in docentList)
             {
-                listView.Items.Add(new ListViewItem(docent.Naam, docent.Id));
+                listView.Items.Add(new ListViewItem(docent.Naam));
             }
 
             return listView;
