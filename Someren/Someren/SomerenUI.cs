@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Model;
 
@@ -8,32 +7,132 @@ namespace Someren
 {
     public static class SomerenUI
     {
+        private static ListView listView;
+
         public static Control showStudents(List<Student> studentList)
         {
-            int aantal = studentList.Count();
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
 
-            ListView listView = new ListView();
-            listView.Height = 1000;
+            listView.ColumnClick += ListView_ColumnClick;
+
+            listView.Columns.Add("StudentNr", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Voornaam", - 2, HorizontalAlignment.Left);
+            listView.Columns.Add("Achternaam", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Kamer Code", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Begeleider Code", -2, HorizontalAlignment.Left);
 
             foreach (Student student in studentList)
             {
-                listView.Items.Add(new ListViewItem(student.Naam, student.Id));
+                string[] items = new string[5];
+                ListViewItem item;
+
+                items[0] = student.Id.ToString();
+                items[1] = student.Naam;
+                items[2] = student.Achternaam;
+                items[3] = student.KamerCode.ToString();
+                items[4] = student.BegeleiderCode.ToString();
+
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
+            }
+
+            return listView;
+        }
+        
+        public static Control showKamers(List<Kamer> kamerList)
+        {
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            listView.ColumnClick += ListView_ColumnClick;
+            
+            listView.Columns.Add("Kamer Code", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Max. Personen", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Is Docent Kamer", -2, HorizontalAlignment.Left);
+
+            foreach (Kamer kamer in kamerList)
+            {
+                string[] items = new string[3];
+                ListViewItem item;
+
+                items[0] = kamer.KamerCode.ToString();
+                items[1] = kamer.MaxPersonen.ToString();
+                items[2] = kamer.IsBegeleider.ToString();
+
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
+            }
+
+            return listView;
+        }
+        
+        public static Control showDocenten(List<Docent> docentList)
+        {
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            listView.ColumnClick += ListView_ColumnClick;
+            
+            listView.Columns.Add("Docent Code", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Voornaam", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Achternaam", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Is Begeleider", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Slaapt Op", -2, HorizontalAlignment.Left);
+
+            foreach (Docent docent in docentList)
+            {
+                string[] items = new string[5];
+                ListViewItem item;
+
+                items[0] = docent.Id.ToString();
+                items[1] = docent.Naam;
+                items[2] = docent.Achternaam;
+                items[3] = docent.Begeleider.ToString();
+                items[4] = docent.KamerNummer.ToString();
+
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
             }
 
             return listView;
         }
 
-        public static Control showKamers(List<Kamer> kamerList)
+        private static void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            ListView listView = new ListView();
-            listView.Height = 1000;
-
-            foreach (Kamer kamer in kamerList)
+            if (listView.Sorting == SortOrder.Ascending)
             {
-                listView.Items.Add(new ListViewItem(kamer.KamerCode.ToString(), kamer.MaxPersonen));
+                listView.Sorting = SortOrder.Descending;
+                listView.Sort();
             }
-
-            return listView;
+            else if (listView.Sorting == SortOrder.Descending)
+            {
+                listView.Sorting = SortOrder.Ascending;
+                listView.Sort();
+            }
+            else
+            {
+                listView.Sorting = SortOrder.Ascending;
+                listView.Sort();
+            }
         }
 
         public static Control addUILabel(string text)
@@ -42,22 +141,6 @@ namespace Someren
             l.Text = text;
             return l;
         }
-
-        public static Control showDocenten(List<Docent> docentList)
-        {
-            int aantal = docentList.Count();
-
-            ListView listView = new ListView();
-            listView.Height = 1000;
-
-            foreach (Docent docent in docentList)
-            {
-                listView.Items.Add(new ListViewItem(docent.Naam, docent.Id));
-            }
-
-            return listView;
-        }
-
 
     }
 }
