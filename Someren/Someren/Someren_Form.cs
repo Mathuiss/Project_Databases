@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Model;
+using Data;
 
 namespace Someren
 {
     public partial class Someren_Form : Form
     {
-        private List<Student> studentList;
-<<<<<<< HEAD
-        private List<Docent> docentList;
-=======
-        private List<Kamer> kamerList;
->>>>>>> Sander
+        private List<Student> studentLijst;
+        private List<Docent> docentLijst;
+        private List<Kamer> kamerLijst;
+
         private SomerenDB database;
         private static Someren_Form instance;
 
@@ -72,8 +71,8 @@ namespace Someren
 
         private void toolStripMenuItem9_Click(object sender, EventArgs e)
         {
-            studentList = database.DB_gettudents();
-            SomerenUI.showStudents(studentList);
+            studentLijst = database.GetStudenten();
+            SomerenUI.showStudents(studentLijst);
         }
 
         private void overSomerenAppToolStripMenuItem_Click(object sender, EventArgs e)
@@ -118,8 +117,8 @@ namespace Someren
             panel1.Controls.Clear();
             groupBox1.Text = "Studenten";
 
-            studentList = database.DB_gettudents();
-            panel1.Controls.Add(SomerenUI.showStudents(studentList));
+            studentLijst = database.GetStudenten();
+            panel1.Controls.Add(SomerenUI.showStudents(studentLijst));
             
         }
 
@@ -147,24 +146,24 @@ namespace Someren
 
         }
 
-<<<<<<< HEAD
         private void toonDocentenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
             groupBox1.Text = "Docenten";
 
-            docentList = database.GetDocenten();
-            panel1.Controls.Add(SomerenUI.showDocenten(docentList));
-=======
+            docentLijst = database.GetDocenten();
+            panel1.Controls.Add(SomerenUI.showDocenten(docentLijst));
+        }
+
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             // kamers
             panel1.Controls.Clear();
             groupBox1.Text = "Kamers";
 
-            kamerList = database.GetKamers();
-            panel1.Controls.Add(SomerenUI.showKamers(kamerList));
->>>>>>> Sander
+            kamerLijst = database.GetKamers();
+            panel1.Controls.Add(SomerenUI.showKamers(kamerLijst));
+
         }
     }
 }

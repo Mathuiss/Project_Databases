@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Someren", "Someren\Someren.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{F7264FEF-3F63-4E21-8380-646F2BAFD70A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{5520DDEA-AE5B-45C9-B5A1-5C7FB69658DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F7264FEF-3F63-4E21-8380-646F2BAFD70A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7264FEF-3F63-4E21-8380-646F2BAFD70A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7264FEF-3F63-4E21-8380-646F2BAFD70A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5520DDEA-AE5B-45C9-B5A1-5C7FB69658DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5520DDEA-AE5B-45C9-B5A1-5C7FB69658DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5520DDEA-AE5B-45C9-B5A1-5C7FB69658DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5520DDEA-AE5B-45C9-B5A1-5C7FB69658DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
