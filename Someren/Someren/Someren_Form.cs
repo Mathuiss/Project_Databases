@@ -165,5 +165,10 @@ namespace Someren
             panel1.Controls.Add(SomerenUI.ShowKamers(kamerLijst));
 
         }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            toolStripStatusLabel1.Text = DateTime.Now.ToString();
+        }
     }
 }
