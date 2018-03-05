@@ -7,15 +7,19 @@ namespace Someren
 {
     public static class SomerenUI
     {
+        private static ListView listView;
+
         public static Control showStudents(List<Student> studentList)
         {
-            ListView listView = new ListView();
+            listView = new ListView();
             listView.View = View.Details;
             listView.Height = 300;
             listView.Width = 400;
             listView.AllowColumnReorder = true;
             listView.GridLines = true;
             listView.Sorting = SortOrder.Ascending;
+
+            listView.ColumnClick += ListView_ColumnClick;
 
             listView.Columns.Add("StudentNr", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Voornaam", - 2, HorizontalAlignment.Left);
@@ -41,10 +45,10 @@ namespace Someren
 
             return listView;
         }
-
+        
         public static Control showKamers(List<Kamer> kamerList)
         {
-            ListView listView = new ListView();
+            listView = new ListView();
             listView.View = View.Details;
             listView.Height = 300;
             listView.Width = 400;
@@ -52,6 +56,8 @@ namespace Someren
             listView.GridLines = true;
             listView.Sorting = SortOrder.Ascending;
 
+            listView.ColumnClick += ListView_ColumnClick;
+            
             listView.Columns.Add("Kamer Code", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Max. Personen", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Is Docent Kamer", -2, HorizontalAlignment.Left);
@@ -72,17 +78,10 @@ namespace Someren
 
             return listView;
         }
-
-        public static Control addUILabel(string text)
-        {
-            Label l = new Label();
-            l.Text = text;
-            return l;
-        }
-
+        
         public static Control showDocenten(List<Docent> docentList)
         {
-            ListView listView = new ListView();
+            listView = new ListView();
             listView.View = View.Details;
             listView.Height = 300;
             listView.Width = 400;
@@ -90,6 +89,8 @@ namespace Someren
             listView.GridLines = true;
             listView.Sorting = SortOrder.Ascending;
 
+            listView.ColumnClick += ListView_ColumnClick;
+            
             listView.Columns.Add("Docent Code", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Voornaam", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Achternaam", -2, HorizontalAlignment.Left);
@@ -115,6 +116,31 @@ namespace Someren
             return listView;
         }
 
+        private static void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (listView.Sorting == SortOrder.Ascending)
+            {
+                listView.Sorting = SortOrder.Descending;
+                listView.Sort();
+            }
+            else if (listView.Sorting == SortOrder.Descending)
+            {
+                listView.Sorting = SortOrder.Ascending;
+                listView.Sort();
+            }
+            else
+            {
+                listView.Sorting = SortOrder.Ascending;
+                listView.Sort();
+            }
+        }
+
+        public static Control addUILabel(string text)
+        {
+            Label l = new Label();
+            l.Text = text;
+            return l;
+        }
 
     }
 }

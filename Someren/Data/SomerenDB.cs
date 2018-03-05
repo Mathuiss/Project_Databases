@@ -42,7 +42,7 @@ namespace Data
             connection.Close();
         }
 
-        public List<Student> DB_gettudents()
+        public List<Student> GetStudenten()
         {
             //Create connection and list
             SqlConnection connection = OpenConnectieDB();
@@ -87,7 +87,10 @@ namespace Data
             {
                 while (reader.Read())
                 {
-                    kamerLijst.Add(new Kamer(reader.GetInt32(0), reader.GetInt32(1), reader.GetBoolean(2)));
+                    kamerLijst.Add(new Kamer(reader.GetInt32(0),
+                        reader.GetInt32(1),
+                        reader.GetBoolean(2)
+                        ));
                 }
             }
 
