@@ -61,7 +61,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SomerenDB.cs" />
     <Compile Include="SomerenUI.cs" />
     <Compile Include="Someren_Form.cs">
       <SubType>Form</SubType>
@@ -109,6 +108,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{5520ddea-ae5b-45c9-b5a1-5c7fb69658df}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{f7264fef-3f63-4e21-8380-646f2bafd70a}</Project>
       <Name>Model</Name>
