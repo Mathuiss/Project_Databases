@@ -196,6 +196,7 @@
             this.kassaToolStripMenuItem.Name = "kassaToolStripMenuItem";
             this.kassaToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.kassaToolStripMenuItem.Text = "Kassa";
+            this.kassaToolStripMenuItem.Click += new System.EventHandler(this.kassaToolStripMenuItem_Click);
             // 
             // omzetrapportageToolStripMenuItem
             // 

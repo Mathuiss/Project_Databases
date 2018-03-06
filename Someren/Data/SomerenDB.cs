@@ -141,5 +141,36 @@ namespace Data
             SluitConnectieDB(ref connection);
             return docentenLijst;
         }
+
+        public List<Drank> GetDranken()
+        {
+            SqlConnection connection = OpenConnectieDB();
+            var drankLijst = new List<Drank>();
+
+            //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
+            SluitConnectieDB(ref connection);
+            connection.Open();
+
+            //Querie om docenten uit de db te halen
+            SqlCommand command = new SqlCommand("select Id, naam, prijs from DRANK", connection);
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                //Vult de lijst met docenten
+                while (reader.Read())
+                {
+                    drankLijst.Add(new Drank(
+                        reader.GetInt32(0),
+                        reader.GetString(1),
+                        reader.GetDecimal(2)
+                        ));
+                }
+            }
+
+            SluitConnectieDB(ref connection);
+
+            return drankLijst;
+        }
     }
 }
