@@ -7,11 +7,15 @@ namespace Someren
 {
     public static class SomerenUI
     {
+        //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private static ListView listView;
 
-        public static Control showStudents(List<Student> studentList)
+        public static Control ShowStudents(List<Student> studentList)
         {
+            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
             listView = new ListView();
+
+            //List view eigenschappen
             listView.View = View.Details;
             listView.Height = 300;
             listView.Width = 400;
@@ -19,14 +23,17 @@ namespace Someren
             listView.GridLines = true;
             listView.Sorting = SortOrder.Ascending;
 
+            //Event handeler
             listView.ColumnClick += ListView_ColumnClick;
 
+            //Kolommen voor in de list view
             listView.Columns.Add("StudentNr", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Voornaam", - 2, HorizontalAlignment.Left);
             listView.Columns.Add("Achternaam", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Kamer Code", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Begeleider Code", -2, HorizontalAlignment.Left);
 
+            //Vul de list view met data uit de studentenlijst
             foreach (Student student in studentList)
             {
                 string[] items = new string[5];
@@ -46,7 +53,7 @@ namespace Someren
             return listView;
         }
         
-        public static Control showKamers(List<Kamer> kamerList)
+        public static Control ShowKamers(List<Kamer> kamerList)
         {
             listView = new ListView();
             listView.View = View.Details;
@@ -79,7 +86,7 @@ namespace Someren
             return listView;
         }
         
-        public static Control showDocenten(List<Docent> docentList)
+        public static Control ShowDocenten(List<Docent> docentList)
         {
             listView = new ListView();
             listView.View = View.Details;
@@ -116,6 +123,99 @@ namespace Someren
             return listView;
         }
 
+        public static Control ShowKassaStudenten(List<Student> studentlijst)
+        {
+            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
+            listView = new ListView();
+
+            //List view eigenschappen
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 200;
+            listView.CheckBoxes = true;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            //Event handeler
+            listView.ColumnClick += ListView_ColumnClick;
+
+            //Kolommen voor in de list view
+            listView.Columns.Add("StudentNr", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Voornaam", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Achternaam", -2, HorizontalAlignment.Left);
+
+            foreach (Student student in studentlijst)
+            {
+                string[] items = new string[3];
+                ListViewItem item;
+
+                items[0] = student.Id.ToString();
+                items[1] = student.Naam;
+                items[2] = student.Achternaam;
+
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
+            }
+
+            return listView;
+        }
+
+        public static Control ShowKassaDranken(List<Drank> drankLijst)
+        {
+            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
+            listView = new ListView();
+
+            //List view eigenschappen
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 200;
+            listView.Location = new System.Drawing.Point(210, 0);
+            listView.CheckBoxes = true;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            //Event handeler
+            listView.ColumnClick += ListView_ColumnClick;
+
+            //Kolommen voor in de list view
+            listView.Columns.Add("Naam", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Prijs", -2, HorizontalAlignment.Left);
+
+            foreach (Drank drank in drankLijst)
+            {
+                string[] items = new string[2];
+                ListViewItem item;
+
+                items[0] = drank.Naam;
+                items[1] = drank.Prijs.ToString("0.00");
+
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
+            }
+
+            return listView;
+        }
+
+        public static Control AddBetaalBtn()
+        {
+            var button = new Button();
+            button.Text = "Betaald";
+            button.Location = new System.Drawing.Point(420, 180);
+
+            button.Click += Btn_Betaald_Click;
+
+            return button;
+        }
+
+        private static void Btn_Betaald_Click(object sender, EventArgs e)
+        {
+            
+        }
+
         private static void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             if (listView.Sorting == SortOrder.Ascending)
@@ -135,12 +235,11 @@ namespace Someren
             }
         }
 
-        public static Control addUILabel(string text)
+        public static Control AddUILabel(string text)
         {
             Label l = new Label();
             l.Text = text;
             return l;
         }
-
     }
 }

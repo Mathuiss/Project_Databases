@@ -60,6 +60,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -158,20 +159,20 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(151, 22);
             this.toolStripMenuItem2.Text = "Kamers";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(151, 22);
             this.toolStripMenuItem3.Text = "Kamerindeling";
             // 
             // zoekKamersToolStripMenuItem
             // 
             this.zoekKamersToolStripMenuItem.Name = "zoekKamersToolStripMenuItem";
-            this.zoekKamersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoekKamersToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.zoekKamersToolStripMenuItem.Text = "Zoek Kamers";
             // 
             // bardienstToolStripMenuItem
@@ -195,6 +196,7 @@
             this.kassaToolStripMenuItem.Name = "kassaToolStripMenuItem";
             this.kassaToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.kassaToolStripMenuItem.Text = "Kassa";
+            this.kassaToolStripMenuItem.Click += new System.EventHandler(this.kassaToolStripMenuItem_Click);
             // 
             // omzetrapportageToolStripMenuItem
             // 
@@ -309,6 +311,12 @@
             this.toolStripStatusLabel2.Size = new System.Drawing.Size(10, 17);
             this.toolStripStatusLabel2.Text = " ";
             // 
+            // timer
+            // 
+            this.timer.Enabled = true;
+            this.timer.Interval = 1000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
             // Someren_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,6 +374,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripMenuItem docentenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toonDocentenToolStripMenuItem;
+        private System.Windows.Forms.Timer timer;
     }
 }
 
