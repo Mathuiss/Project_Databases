@@ -152,7 +152,7 @@ namespace Data
             connection.Open();
 
             //Querie om docenten uit de db te halen
-            SqlCommand command = new SqlCommand("select Id, naam, prijs from DRANK", connection);
+            var command = new SqlCommand("select Id, naam, prijs from DRANK", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)

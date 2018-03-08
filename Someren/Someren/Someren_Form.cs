@@ -204,7 +204,11 @@ namespace Someren
                 var drankLijst = new List<Drank>();
                 drankLijst = database.GetDranken();
 
-                Control[] controls = new Control[2] { SomerenUI.ShowKassaStudenten(studentLijst), SomerenUI.ShowKassaDranken(drankLijst) };
+                Control[] controls = new Control[3]
+                { SomerenUI.ShowKassaStudenten(studentLijst),
+                  SomerenUI.ShowKassaDranken(drankLijst),
+                  SomerenUI.AddBetaalBtn()
+                };
 
                 panel1.Controls.AddRange(controls);
             }

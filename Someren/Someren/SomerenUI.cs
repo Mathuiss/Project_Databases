@@ -132,6 +132,7 @@ namespace Someren
             listView.View = View.Details;
             listView.Height = 300;
             listView.Width = 200;
+            listView.CheckBoxes = true;
             listView.AllowColumnReorder = true;
             listView.GridLines = true;
             listView.Sorting = SortOrder.Ascending;
@@ -170,6 +171,8 @@ namespace Someren
             listView.View = View.Details;
             listView.Height = 300;
             listView.Width = 200;
+            listView.Location = new System.Drawing.Point(210, 0);
+            listView.CheckBoxes = true;
             listView.AllowColumnReorder = true;
             listView.GridLines = true;
             listView.Sorting = SortOrder.Ascending;
@@ -187,7 +190,7 @@ namespace Someren
                 ListViewItem item;
 
                 items[0] = drank.Naam;
-                items[1] = drank.Prijs.ToString();
+                items[1] = drank.Prijs.ToString("0.00");
 
                 item = new ListViewItem(items);
 
@@ -195,6 +198,22 @@ namespace Someren
             }
 
             return listView;
+        }
+
+        public static Control AddBetaalBtn()
+        {
+            var button = new Button();
+            button.Text = "Betaald";
+            button.Location = new System.Drawing.Point(420, 180);
+
+            button.Click += Btn_Betaald_Click;
+
+            return button;
+        }
+
+        private static void Btn_Betaald_Click(object sender, EventArgs e)
+        {
+            
         }
 
         private static void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
