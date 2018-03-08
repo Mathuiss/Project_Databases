@@ -118,9 +118,15 @@ namespace Someren
             panel1.Controls.Clear();
             groupBox1.Text = "Studenten";
 
-            studentLijst = database.GetStudenten();
-            panel1.Controls.Add(SomerenUI.ShowStudents(studentLijst));
-            
+            try
+            {
+                studentLijst = database.GetStudenten();
+                panel1.Controls.Add(SomerenUI.ShowStudents(studentLijst));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -153,9 +159,16 @@ namespace Someren
             panel1.Controls.Clear();
             groupBox1.Text = "Docenten";
 
-            //toont de tabel met docenten.
-            docentLijst = database.GetDocenten();
-            panel1.Controls.Add(SomerenUI.ShowDocenten(docentLijst));
+            try
+            {
+                //toont de tabel met docenten.
+                docentLijst = database.GetDocenten();
+                panel1.Controls.Add(SomerenUI.ShowDocenten(docentLijst));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -164,14 +177,45 @@ namespace Someren
             panel1.Controls.Clear();
             groupBox1.Text = "Kamers";
 
-            kamerLijst = database.GetKamers();
-            panel1.Controls.Add(SomerenUI.ShowKamers(kamerLijst));
-
+            try
+            {
+                kamerLijst = database.GetKamers();
+                panel1.Controls.Add(SomerenUI.ShowKamers(kamerLijst));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = DateTime.Now.ToString();
+        }
+
+        private void kassaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Kassa";
+
+            try
+            {
+                studentLijst = database.GetStudenten();
+                var drankLijst = new List<Drank>();
+                drankLijst = database.GetDranken();
+
+                Control[] controls = new Control[3]
+                { SomerenUI.ShowKassaStudenten(studentLijst),
+                  SomerenUI.ShowKassaDranken(drankLijst),
+                  SomerenUI.AddBetaalBtn()
+                };
+
+                panel1.Controls.AddRange(controls);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
