@@ -1,0 +1,8 @@
+Index Out Of Range Exception op het overzetten van de data uit de sql data reader naar het student object.
+Dit kwam doordat de querie niet alle benodigde tabellen opvroeg.
+Opgelost door in de querie de overige velden mee op te vragen.
+
+Index Out Of Range Exception op de UI handeler die de List View Spawnt.
+Dit kwam doordat de range van de array kleiner was dan wat er werd opgevraagd.
+Opgelost door de range van de array groter te maken.
+
