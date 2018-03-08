@@ -44,6 +44,7 @@
     <Compile Include="Docent.cs" />
     <Compile Include="Drank.cs" />
     <Compile Include="Kamer.cs" />
+    <Compile Include="Omzetrapportage.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
