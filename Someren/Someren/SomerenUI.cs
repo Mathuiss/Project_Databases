@@ -123,6 +123,14 @@ namespace Someren
             return listView;
         }
 
+        public static Control ShowOmzetCallendar()
+        {
+            var callendaer = new MonthCalendar();
+
+        }
+
+        public static 
+
         public static Control ShowKassaStudenten(List<Student> studentlijst)
         {
             //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
