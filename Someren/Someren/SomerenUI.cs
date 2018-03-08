@@ -123,14 +123,6 @@ namespace Someren
             return listView;
         }
 
-        public static Control ShowOmzetCallendar()
-        {
-            var callendaer = new MonthCalendar();
-
-        }
-
-        public static 
-
         public static Control ShowKassaStudenten(List<Student> studentlijst)
         {
             //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
@@ -224,9 +216,10 @@ namespace Someren
             
         }
 
-        public static Control showVoorraad(List<Kamer> kamerList)
+        public static Control showVoorraad(List<VoorraadObject> voorraad)
             // showVoorraad gebruikt momenteel nog List<Kamer>, zodat er geen errors getoond worden.
         {
+
             listView = new ListView();
             listView.View = View.Details;
             listView.Height = 300;
@@ -239,16 +232,15 @@ namespace Someren
 
             listView.Columns.Add("Drankje", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
-            listView.Columns.Add("Prijs", -2, HorizontalAlignment.Left);
 
-            foreach (Kamer kamer in kamerList)
+            foreach (VoorraadObject drankje in voorraad)
             {
                 string[] items = new string[3];
                 ListViewItem item;
 
-                items[0] = kamer.KamerCode.ToString();
-                items[1] = kamer.MaxPersonen.ToString();
-                items[2] = kamer.IsBegeleider.ToString();
+                items[0] = drankje.Id.ToString();
+                items[1] = drankje.Naam.ToString();
+                items[2] = drankje.Aantal.ToString();
 
                 item = new ListViewItem(items);
 

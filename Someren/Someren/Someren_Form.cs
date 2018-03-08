@@ -192,6 +192,8 @@ namespace Someren
         {
             toolStripStatusLabel1.Text = DateTime.Now.ToString();
         }
+
+        private void kassaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
             groupBox1.Text = "Kassa";
@@ -215,16 +217,11 @@ namespace Someren
                 MessageBox.Show(ex.ToString());
             }
         }
-        private void kassaToolStripMenuItem_Click(object sender, EventArgs e)
-
 
         private void omzetrapportageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
             groupBox1.Text = "omzetrapportage";
-
-            panel1.Controls.Add(SomerenUI.);
-
         }
     }
 }
