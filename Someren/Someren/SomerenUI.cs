@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Model;
+using Logic;
 
 namespace Someren
 {
@@ -126,10 +127,9 @@ namespace Someren
         public static Control ShowOmzetCallendar()
         {
             var callendaer = new MonthCalendar();
-
+            return callendaer;
         }
-
-        public static 
+        
 
         public static Control ShowKassaStudenten(List<Student> studentlijst)
         {
@@ -211,7 +211,7 @@ namespace Someren
         public static Control AddBetaalBtn()
         {
             var button = new Button();
-            button.Text = "Betaald";
+            button.Text = "Betaal";
             button.Location = new System.Drawing.Point(420, 180);
 
             button.Click += Btn_Betaald_Click;
@@ -221,7 +221,9 @@ namespace Someren
 
         private static void Btn_Betaald_Click(object sender, EventArgs e)
         {
-            
+            ListView.CheckedListViewItemCollection group = listView.CheckedItems;
+            var afrekenProcessor = new AfrekenProcessor();
+            afrekenProcessor.RekenAf(group);
         }
 
         private static void ListView_ColumnClick(object sender, ColumnClickEventArgs e)

@@ -8,7 +8,7 @@ namespace Data
 {
     public class SomerenDB
     {
-        private SqlConnection OpenConnectieDB()
+        private static SqlConnection OpenConnectieDB()
         {
             string host = "den1.mssql4.gear.host";
             string db = "projectdbgroepa1";
