@@ -172,5 +172,34 @@ namespace Data
 
             return drankLijst;
         }
+
+        public List<VoorraadObject> GetVoorraad()
+        {
+            SqlConnection connection = OpenConnectieDB();
+            var voorraad = new List<VoorraadObject>();
+
+            //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
+            SluitConnectieDB(ref connection);
+            connection.Open();
+
+            var command = new SqlCommand("select id, naam, aantal from VOORRAAD", connection);
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                // Laat de voorraad zien
+                while (reader.Read())
+                {
+                    voorraad.Add(new VoorraadObject(
+                        reader.GetInt16(0),
+                        reader.GetString(1),
+                        reader.GetInt16(2)
+                        ));
+                }
+            }
+            SluitConnectieDB(ref connection);
+
+            return voorraad;
+        }
     }
 }
