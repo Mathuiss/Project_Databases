@@ -226,6 +226,40 @@ namespace Someren
             afrekenProcessor.RekenAf(group);
         }
 
+        public static Control showVoorraad(List<VoorraadObject> voorraad)
+            // showVoorraad gebruikt momenteel nog List<Kamer>, zodat er geen errors getoond worden.
+        {
+
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            listView.ColumnClick += ListView_ColumnClick;
+
+            listView.Columns.Add("Drankje", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
+
+            foreach (VoorraadObject drankje in voorraad)
+            {
+                string[] items = new string[3];
+                ListViewItem item;
+
+                items[0] = drankje.Id.ToString();
+                items[1] = drankje.Naam.ToString();
+                items[2] = drankje.Aantal.ToString();
+
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
+            }
+
+            return listView;
+        }
+
         private static void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             if (listView.Sorting == SortOrder.Ascending)
