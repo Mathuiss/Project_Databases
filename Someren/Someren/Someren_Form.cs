@@ -8,15 +8,18 @@ namespace Someren
 {
     public partial class Someren_Form : Form
     {
+        private SomerenUI SomerenUI;
         private List<Student> studentLijst;
         private List<Docent> docentLijst;
         private List<Kamer> kamerLijst;
+        private List<VoorraadObject> voorraadLijst;
 
         private SomerenDB database;
         private static Someren_Form instance;
 
         public Someren_Form()
         {
+            SomerenUI = new SomerenUI(this);
             database = new SomerenDB();
             InitializeComponent();
         }
@@ -201,27 +204,39 @@ namespace Someren
             try
             {
                 studentLijst = database.GetStudenten();
-                var drankLijst = new List<Drank>();
-                drankLijst = database.GetDranken();
 
-                Control[] controls = new Control[3]
-                { SomerenUI.ShowKassaStudenten(studentLijst),
-                  SomerenUI.ShowKassaDranken(drankLijst),
-                  SomerenUI.AddBetaalBtn()
-                };
-
-                panel1.Controls.AddRange(controls);
+                panel1.Controls.Add(SomerenUI.ShowKassaStudenten(studentLijst));
+                panel1.Controls.Add(SomerenUI.AddStudentSelectButton());
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
-
+        
         private void omzetrapportageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
             groupBox1.Text = "omzetrapportage";
+
+            panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
+            
+        }
+
+        private void drankvoorraadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Voorraad";
+
+            try
+            {
+                voorraadLijst = database.GetVoorraad();
+                panel1.Controls.Add(SomerenUI.ShowVoorraad(voorraadLijst));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

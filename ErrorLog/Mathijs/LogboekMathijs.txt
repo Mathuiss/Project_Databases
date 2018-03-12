@@ -6,3 +6,6 @@ Index Out Of Range Exception op de UI handeler die de List View Spawnt.
 Dit kwam doordat de range van de array kleiner was dan wat er werd opgevraagd.
 Opgelost door de range van de array groter te maken.
 
+Sql exception bij het invoeren van een querie.
+Dat kwam doordat de querie niet goed vertaald werd vanuit de Logica naar de DAL.
+Verholpen door de methode parameters aan te passen.

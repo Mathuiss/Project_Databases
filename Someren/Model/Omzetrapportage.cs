@@ -6,22 +6,23 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    class Omzetrapportage
+    public struct Omzetrapportage
     {
-        private double afzet;
-        private double omzet;
-        private int aantalKlanten;
+        private int id;
+        private DateTime time;
+        private double mutatie;
 
-        public Omzetrapportage(double afzet, double omzet, int aantalKlanten)
+        public Omzetrapportage(int id, DateTime time, double mutatie)
         {
-            this.afzet = afzet;
-            this.omzet = omzet;
-            this.aantalKlanten = aantalKlanten;
+            this.id = id;
+            this.time = time;
+            this.mutatie = mutatie;            
         }
 
-        public double Afzet { get => afzet; set => afzet = value; }
-        public double Omzet { get => omzet; set => omzet = value; }
-        public int AantalKlanten { get => aantalKlanten; set => aantalKlanten= value; }
+        public int Id { get => id; set => id = value; }
+        public DateTime Time { get => time; set => time = value; }
+        public double Mutatie { get => mutatie; set => mutatie = value; }
+         
 
 
     }
