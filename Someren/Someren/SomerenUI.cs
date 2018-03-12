@@ -281,29 +281,35 @@ namespace Someren
             listView.Width = 400;
             listView.AllowColumnReorder = true;
             listView.GridLines = true;
-            listView.Sorting = SortOrder.Ascending;
 
             listView.ColumnClick += ListView_ColumnClick;
 
+            listView.Columns.Add("", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Drank", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
-            
+
             foreach (VoorraadObject drankje in voorraad)
             {
+                string[] items = new string[3];
+
+                items[1] = drankje.Naam;
+                items[2] = drankje.Aantal.ToString();
+
+                var item = new ListViewItem(items);
+
+                listView.Items.Add(item);
+
                 // Als het aantal kleiner dan 10 is worden de cellen rood gekleurd.
-
-                ListViewItem[] items = new ListViewItem[2];
-
-                items[0] = new ListViewItem(drankje.Naam);
-                items[1] = new ListViewItem(drankje.Aantal.ToString());
-
-                if(drankje.Aantal < 10)
-                { 
-                    items[0].BackColor = System.Drawing.Color.IndianRed;
-                    items[1].BackColor = System.Drawing.Color.IndianRed;
+                if (drankje.Aantal < 10)
+                {
+                    item.SubItems[0].Text = "!!!"; // !!! of \uFF01 - full-width exclamation mark
+                    item.SubItems[0].ForeColor = System.Drawing.Color.Red;
                 }
-
-                listView.Items.AddRange(items);
+                else
+                {
+                    item.SubItems[0].Text = "✔";
+                    item.SubItems[0].ForeColor = System.Drawing.Color.Green;
+                }
             }
             
             return listView;
