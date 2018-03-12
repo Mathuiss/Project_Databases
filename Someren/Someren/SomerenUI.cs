@@ -273,10 +273,8 @@ namespace Someren
             afrekenProcessor.RekenAf(group, int.Parse(tb_Aantal.Text));
         }
 
-        public static Control showVoorraad(List<VoorraadObject> voorraad)
-            // showVoorraad gebruikt momenteel nog List<Kamer>, zodat er geen errors getoond worden.
+        public static Control ShowVoorraad(List<VoorraadObject> voorraad)
         {
-
             listView = new ListView();
             listView.View = View.Details;
             listView.Height = 300;
@@ -287,23 +285,27 @@ namespace Someren
 
             listView.ColumnClick += ListView_ColumnClick;
 
-            listView.Columns.Add("Drankje", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Drank", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
-
+            
             foreach (VoorraadObject drankje in voorraad)
             {
-                string[] items = new string[3];
-                ListViewItem item;
+                // Als het aantal kleiner dan 10 is worden de cellen rood gekleurd.
 
-                items[0] = drankje.Id.ToString();
-                items[1] = drankje.Naam.ToString();
-                items[2] = drankje.Aantal.ToString();
+                ListViewItem[] items = new ListViewItem[2];
 
-                item = new ListViewItem(items);
+                items[0] = new ListViewItem(drankje.Naam);
+                items[1] = new ListViewItem(drankje.Aantal.ToString());
 
-                listView.Items.Add(item);
+                if(drankje.Aantal < 10)
+                { 
+                    items[0].BackColor = System.Drawing.Color.IndianRed;
+                    items[1].BackColor = System.Drawing.Color.IndianRed;
+                }
+
+                listView.Items.AddRange(items);
             }
-
+            
             return listView;
         }
 
