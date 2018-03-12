@@ -210,7 +210,11 @@ namespace Someren
                   SomerenUI.AddBetaalBtn()
                 };
 
+                Control[] aantalControls = SomerenUI.AddAantalDialog();
+
+                panel1.Controls.Add(SomerenUI.AddUILabel("Aantal: ", 420, 60));
                 panel1.Controls.AddRange(controls);
+                panel1.Controls.AddRange(aantalControls);
             }
             catch (Exception ex)
             {
