@@ -182,7 +182,13 @@ namespace Data
             SluitConnectieDB(ref connection);
             connection.Open();
 
-            var command = new SqlCommand("select id, naam, aantal from VOORRAAD", connection);
+            // query om de voorraad te laten zien
+            var command = new SqlCommand("" +
+                "select VOORRAAD.id, VOORRAAD.naam, aantal " +
+                "from VOORRAAD " +
+                "inner join DRANK on VOORRAAD.id = DRANK.id " +
+                "where VOORRAAD.naam <> 'water' and VOORRAAD.naam <> 'sinas' and VOORRAAD.naam <> 'kersensap' " +
+                "order by VOORRAAD.aantal, DRANK.prijs", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
