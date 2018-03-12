@@ -153,9 +153,9 @@ namespace Data
                 while (reader.Read())
                 {
                     voorraad.Add(new VoorraadObject(
-                        reader.GetInt16(0),
+                        reader.GetInt32(0),
                         reader.GetString(1),
-                        reader.GetInt16(2)
+                        reader.GetInt32(2)
                         ));
                 }
             }
