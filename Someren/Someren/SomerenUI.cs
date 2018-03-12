@@ -11,6 +11,7 @@ namespace Someren
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private static ListView listView;
         private static TextBox tb_Aantal;
+        private static DateTimePicker kiesDatum;
 
         public static Control ShowStudents(List<Student> studentList)
         {
@@ -127,15 +128,17 @@ namespace Someren
 
         public static Control ShowOmzetCalendar()
         {
-
             //var calender = new MonthCalendar();
             
             // Create a new DateTimePicker control and initialize it.
-            DateTimePicker kiesDatum = new DateTimePicker();
+            kiesDatum = new DateTimePicker();
 
             // Set the MinDate and MaxDate.
             kiesDatum.MinDate = new DateTime(2018, 3, 1);
             kiesDatum.MaxDate = DateTime.Today;
+
+            var btn_SelecteerDatum = new Button();
+            btn_SelecteerDatum.Click += Btn_SelecteerDatum_Click;
 
             // Set the CustomFormat string.
             //dateTimePicker1.CustomFormat = "MMMM dd, yyyy - dddd";
@@ -145,37 +148,11 @@ namespace Someren
             return kiesDatum;         
            //return calender;
         }
-        
 
-        public static int Afzet()
+        private static void Btn_SelecteerDatum_Click(object sender, EventArgs e)
         {
-            
-            //afzet is totaal aantal verkocht
-            //afzet bij de kassa vandaan halen. 
-            //return de kassa
-            int weg = 5;
-            return weg;
-        }
-
-        public static double Omzet()
-        {
-            //omzet = afzet * verkoopprijs, v/d drankjes
-            //omzet bij de kassa vandaan halen
-            //afzet van hierboven
-            //en dan keer elkaar,
-            //return de omzet
-            double weg = 5;
-            return weg;
-        }
-
-        public static int  AantalKlanten()
-        {
-            //aantal studenten die minimaal 1 drankje hebben gekocht
-            //kijken naar Kassa 
-            //het aantal nieuwe 'leden' die iets voor de eerste keer gekocht zouden hebben
-            // return aantal klanten
-            int weg = 5;
-            return weg;
+            var manager = new AdministratieManager();
+            manager.BerekenOmzet(kiesDatum.Value.Date);
         }
 
         public static Control ShowKassaStudenten(List<Student> studentlijst)
