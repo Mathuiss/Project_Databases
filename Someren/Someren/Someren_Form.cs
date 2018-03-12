@@ -12,6 +12,7 @@ namespace Someren
         private List<Student> studentLijst;
         private List<Docent> docentLijst;
         private List<Kamer> kamerLijst;
+        private List<VoorraadObject> voorraadLijst;
 
         private SomerenDB database;
         private static Someren_Form instance;
@@ -221,6 +222,22 @@ namespace Someren
             //panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
             panel1.Controls.Add(SomerenUI.AddMaxDatumButton(5,5));
             panel1.Controls.Add(SomerenUI.AddMinDatumButton(225,5));
+        }
+
+        private void drankvoorraadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Voorraad";
+
+            try
+            {
+                voorraadLijst = database.GetVoorraad();
+                panel1.Controls.Add(SomerenUI.ShowVoorraad(voorraadLijst));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

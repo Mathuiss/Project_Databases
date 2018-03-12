@@ -13,17 +13,14 @@ namespace Someren
     {
         Someren_Form form;
 
-        public SomerenUI(Someren_Form form)
-        {
-            this.form = form;
-        }
-        
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private ListView listView;
+        private ListView listViewB;
         private TextBox tb_Aantal;
         private DateTimePicker kiesMinDatum;
         private DateTimePicker kiesMaxDatum;
         private Button button;
+        private int selectedStudent;
 
         public SomerenUI(Someren_Form form)
         {
@@ -231,6 +228,8 @@ namespace Someren
             return listView;
         }
 
+        //STUDENTENSCHERM
+
         public Control ShowKassaStudenten(List<Student> studentLijst)
         {
             //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
@@ -282,24 +281,102 @@ namespace Someren
 
             return button;
         }
-
+        
         private void Btn_Selecteer_Click(object sender, EventArgs e)
         {
-            form.panel1.Controls.Clear();
+            
+            if (listView.CheckedItems.Count != 0)
+            {
+                form.panel1.Controls.Clear();
+                selectedStudent = int.Parse(listView.CheckedItems[0].Text);
+                var database = new SomerenDB();
+                form.panel1.Controls.Add(ShowVoorraad(database.GetVoorraad()));
+
+                Control[] controls = AddAantalDialog();
+                form.panel1.Controls.AddRange(controls);
+                form.panel1.Controls.Add(AddToevoegenBtn());
+                form.panel1.Controls.Add(ShowBestelling());
+            }
+            else
+            {
+                MessageBox.Show("Selecteer een student");
+            }
+
         }
 
-        public Control AddBetaalBtn()
-        {
-            var button = new Button();
-            button.Text = "Betaal";
-            button.Location = new Point(360, 320);
+        //VOORRAADSCHERM
 
-            button.Click += Btn_Betaald_Click;
+        public Control ShowVoorraad(List<VoorraadObject> voorraad)
+        {
+
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+
+            listView.Columns.Add("", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Drank", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
+
+            foreach (VoorraadObject drankje in voorraad)
+            {
+                string[] items = new string[3];
+
+                items[1] = drankje.Naam;
+                items[2] = drankje.Aantal.ToString();
+
+                var item = new ListViewItem(items);
+
+                listView.Items.Add(item);
+
+                // Als het aantal kleiner dan 10 is worden de cellen rood gekleurd.
+                if (drankje.Aantal < 10)
+                {
+                    item.SubItems[0].Text = "!!!"; // !!! of \uFF01 - full-width exclamation mark
+                    item.SubItems[0].ForeColor = System.Drawing.Color.Red;
+                }
+                else
+                {
+                    item.SubItems[0].Text = "✔";
+                    item.SubItems[0].ForeColor = System.Drawing.Color.Green;
+                }
+            }
+
+            return listView;
+        }
+
+        public Control ShowBestelling()
+        {
+            listViewB = new ListView();
+            listViewB.View = View.Details;
+            listViewB.Height = 300;
+            listViewB.Width = 200;
+            listViewB.AllowColumnReorder = true;
+            listViewB.GridLines = true;
+            listViewB.Sorting = SortOrder.Ascending;
+            listViewB.CheckBoxes = true;
+            listViewB.Location = new Point(300, 0);
+
+            listViewB.Columns.Add("Drankje", -2, HorizontalAlignment.Left);
+            listViewB.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
+            listViewB.Columns.Add("Prijs", -2, HorizontalAlignment.Left);
+
+            return listViewB;
+        }
+
+        public Control AddToevoegenBtn()
+        {
+            button = new Button();
+            button.Location = new Point(215, 160);
+            button.Text = "Toevoegen";
+            button.Click += Btn_Toevoegen_Click;
 
             return button;
         }
 
-        private void Btn_Betaald_Click(object sender, EventArgs e)
+        private void Btn_Toevoegen_Click(object sender, EventArgs e)
         {
             
         }
@@ -350,40 +427,13 @@ namespace Someren
             tb_Aantal.Text = n.ToString();
         }
 
-        public Control showVoorraad(List<VoorraadObject> voorraad)
-            // showVoorraad gebruikt momenteel nog List<Kamer>, zodat er geen errors getoond worden.
+        private void Btn_Betaald_Click(object sender, EventArgs e)
         {
-
-            listView = new ListView();
-            listView.View = View.Details;
-            listView.Height = 300;
-            listView.Width = 400;
-            listView.AllowColumnReorder = true;
-            listView.GridLines = true;
-            listView.Sorting = SortOrder.Ascending;
-
-            listView.ColumnClick += ListView_ColumnClick;
-
-            listView.Columns.Add("Drankje", -2, HorizontalAlignment.Left);
-            listView.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
-
-            foreach (VoorraadObject drankje in voorraad)
-            {
-                string[] items = new string[3];
-                ListViewItem item;
-
-                items[0] = drankje.Id.ToString();
-                items[1] = drankje.Naam.ToString();
-                items[2] = drankje.Aantal.ToString();
-
-                item = new ListViewItem(items);
-
-                listView.Items.Add(item);
-            }
-
-            return listView;
+            ListView.CheckedListViewItemCollection group = listView.CheckedItems;
+            var afrekenProcessor = new AfrekenProcessor();
+            afrekenProcessor.RekenAf(group, int.Parse(tb_Aantal.Text));
         }
-
+        
         private void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             switch (listView.Sorting)

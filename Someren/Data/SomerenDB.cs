@@ -144,7 +144,13 @@ namespace Data
             connection.Close();
             connection.Open();
 
-            var command = new SqlCommand("select id, naam, aantal from VOORRAAD", connection);
+            // query om de voorraad te laten zien
+            var command = new SqlCommand("" +
+                "select VOORRAAD.id, VOORRAAD.naam, aantal " +
+                "from VOORRAAD " +
+                "inner join DRANK on VOORRAAD.id = DRANK.id " +
+                "where VOORRAAD.naam <> 'water' and VOORRAAD.naam <> 'sinas' and VOORRAAD.naam <> 'kersensap' " +
+                "order by VOORRAAD.aantal, DRANK.prijs", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
@@ -153,9 +159,9 @@ namespace Data
                 while (reader.Read())
                 {
                     voorraad.Add(new VoorraadObject(
-                        reader.GetInt16(0),
+                        reader.GetInt32(0),
                         reader.GetString(1),
-                        reader.GetInt16(2)
+                        reader.GetInt32(2)
                         ));
                 }
             }
