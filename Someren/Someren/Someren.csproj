@@ -112,6 +112,10 @@
       <Project>{5520ddea-ae5b-45c9-b5a1-5c7fb69658df}</Project>
       <Name>Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logic\Logic.csproj">
+      <Project>{4ee46f5b-0e4e-4f2b-9735-a9d9a3cffc8c}</Project>
+      <Name>Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{f7264fef-3f63-4e21-8380-646f2bafd70a}</Project>
       <Name>Model</Name>

@@ -4,9 +4,9 @@
     {
         int id;
         string naam;
-        decimal prijs;
+        double prijs;
 
-        public Drank(int id, string naam, decimal prijs)
+        public Drank(int id, string naam, double prijs)
         {
             this.id = id;
             this.naam = naam;
@@ -15,6 +15,6 @@
 
         public int Id { get => id; set => id = value; }
         public string Naam {get => naam;set => naam = value;}
-        public decimal Prijs { get => prijs; set => prijs = value; }
+        public double Prijs { get => prijs; set => prijs = value; }
     }
 }
