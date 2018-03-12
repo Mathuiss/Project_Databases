@@ -212,16 +212,15 @@ namespace Someren
                 MessageBox.Show(ex.ToString());
             }
         }
-        
+
         private void omzetrapportageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
             groupBox1.Text = "omzetrapportage";
 
-            panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
-
-
-
+            //panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
+            panel1.Controls.Add(SomerenUI.AddMaxDatumButton(5,5));
+            panel1.Controls.Add(SomerenUI.AddMinDatumButton(225,5));
         }
     }
 }

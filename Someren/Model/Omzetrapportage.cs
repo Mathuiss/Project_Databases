@@ -9,21 +9,23 @@ namespace Model
     public struct Omzetrapportage
     {
         private int id;
-        private DateTime time;
+        private DateTime mintime;
+        private DateTime maxTime;        
+
         private double mutatie;
 
-        public Omzetrapportage(int id, DateTime time, double mutatie)
+
+        public Omzetrapportage(int id, DateTime maxTime, DateTime minTime, double mutatie)
         {
             this.id = id;
-            this.time = time;
-            this.mutatie = mutatie;            
+            this.maxTime = maxTime;
+            this.mintime = minTime;
+            this.mutatie = mutatie;
         }
 
         public int Id { get => id; set => id = value; }
-        public DateTime Time { get => time; set => time = value; }
-        public double Mutatie { get => mutatie; set => mutatie = value; }
-         
-
-
+        public DateTime MaxTime { get => maxTime; set => maxTime = value; }
+        public DateTime MinTime { get => mintime; set => mintime = value; }
+        public double Mutatie { get => mutatie; set => mutatie = value; }   
     }
 }

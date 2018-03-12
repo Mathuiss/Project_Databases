@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 using Model;
 using System.Drawing;
 using Logic;
@@ -16,14 +17,19 @@ namespace Someren
         {
             this.form = form;
         }
-
-
+        
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private ListView listView;
         private TextBox tb_Aantal;
-        private DateTimePicker kiesDatum;
+        private DateTimePicker kiesMinDatum;
+        private DateTimePicker kiesMaxDatum;
         private Button button;
 
+        public SomerenUI(Someren_Form form)
+        {
+            this.form = form;
+        }
+        
         public Control ShowStudents(List<Student> studentList)
         {
             //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
@@ -142,28 +148,49 @@ namespace Someren
             //var calender = new MonthCalendar();
             
             // Create a new DateTimePicker control and initialize it.
-            kiesDatum = new DateTimePicker();
+            kiesMinDatum = new DateTimePicker();
+            kiesMaxDatum = new DateTimePicker();
+
 
             // Set the MinDate and MaxDate.
-            kiesDatum.MinDate = new DateTime(2018, 3, 1);
-            kiesDatum.MaxDate = DateTime.Today;
+            kiesMinDatum.MinDate = new DateTime(2018, 3, 1);
+            kiesMinDatum.MaxDate = DateTime.Today;
 
-            var btn_SelecteerDatum = new Button();
-            btn_SelecteerDatum.Click += Btn_SelecteerDatum_Click;
+            kiesMaxDatum.MinDate = new DateTime(2018, 3, 1);
+            kiesMaxDatum.MaxDate = DateTime.Today;
 
+            
             // Set the CustomFormat string.
             //dateTimePicker1.CustomFormat = "MMMM dd, yyyy - dddd";
-            kiesDatum.CustomFormat = "dd MMMM yyyy";
-            kiesDatum.Format = DateTimePickerFormat.Custom;
+            kiesMinDatum.CustomFormat = "dddd dd MMMM yyyy";
+            kiesMinDatum.Format = DateTimePickerFormat.Custom;
 
-            return kiesDatum;         
-           //return calender;
+            kiesMaxDatum.CustomFormat = "dddd dd MMMM yyyy";
+            kiesMaxDatum.Format = DateTimePickerFormat.Custom;
+
+            return kiesMinDatum;           //return calender;
+        }
+
+        public Control AddMinDatumButton(int links, int boven)
+        {
+            var btn_SelecteerMinDatum = new DateTimePicker();
+            btn_SelecteerMinDatum.Location = new Point(links, boven);
+
+            return btn_SelecteerMinDatum;
+        }
+
+        public Control AddMaxDatumButton(int links, int boven)
+        {
+            var btn_SelecteerMaxDatum = new DateTimePicker();
+            btn_SelecteerMaxDatum.Location = new Point(links, boven);
+
+            return btn_SelecteerMaxDatum;
         }
 
         private void Btn_SelecteerDatum_Click(object sender, EventArgs e)
         {
-            //var manager = new AdministratieManager();
-            //manager.BerekenOmzet(kiesDatum.Value.Date);
+            var manager = new AdministratieManager();
+            manager.BerekenOmzet(kiesMinDatum.Value.Date);
         }
         
         public Control ShowKassaDranken(List<Drank> drankLijst)
