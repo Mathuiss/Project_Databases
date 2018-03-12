@@ -41,12 +41,25 @@ namespace Data
 
         public static int GetId(string table, string condition)
         {
-            SqlConnection connection = OpenConnectieDB();
-            connection.Close();
-            connection.Open();
+            using (SqlConnection connection = OpenConnectieDB())
+            {
+                connection.Close();
+                connection.Open();
 
-            var command = new SqlCommand("select id from " + table + " " + condition, connection);
-            return (int)command.ExecuteScalar();
+                var command = new SqlCommand("select id from " + table + " " + condition, connection);
+                return (int)command.ExecuteScalar();
+            }
+        }
+
+        public static int GetNewId(string table)
+        {
+            using (SqlConnection connection = OpenConnectieDB())
+            {
+                connection.Open();
+
+                var command = new SqlCommand("select max(id) from " + table);
+                return (int)command.ExecuteScalar();
+            }
         }
     }
 }
