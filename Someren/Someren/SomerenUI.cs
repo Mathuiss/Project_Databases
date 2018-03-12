@@ -271,11 +271,6 @@ namespace Someren
             return button;
         }
 
-        private void Btn_Betaald_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         public Control[] AddAantalDialog()
         {
             var dialog = new Control[3];
@@ -322,14 +317,14 @@ namespace Someren
             tb_Aantal.Text = n.ToString();
         }
 
-        private static void Btn_Betaald_Click(object sender, EventArgs e)
+        private void Btn_Betaald_Click(object sender, EventArgs e)
         {
             ListView.CheckedListViewItemCollection group = listView.CheckedItems;
             var afrekenProcessor = new AfrekenProcessor();
             afrekenProcessor.RekenAf(group, int.Parse(tb_Aantal.Text));
         }
 
-        public static Control ShowVoorraad(List<VoorraadObject> voorraad)
+        public Control ShowVoorraad(List<VoorraadObject> voorraad)
         {
             listView = new ListView();
             listView.View = View.Details;
