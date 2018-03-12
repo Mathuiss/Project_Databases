@@ -289,36 +289,29 @@ namespace Someren
             listView = new ListView();
             listView.View = View.Details;
             listView.Height = 300;
-            listView.Width = 400;
+            listView.Width = 200;
             listView.AllowColumnReorder = true;
             listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+            listView.CheckBoxes = true;
 
-            listView.Columns.Add("", -2, HorizontalAlignment.Left);
-            listView.Columns.Add("Drank", -2, HorizontalAlignment.Left);
+            listView.ColumnClick += ListView_ColumnClick;
+
+            listView.Columns.Add("Drankje", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
 
             foreach (VoorraadObject drankje in voorraad)
             {
                 string[] items = new string[3];
+                ListViewItem item;
 
-                items[1] = drankje.Naam;
+                items[0] = drankje.Id.ToString();
+                items[1] = drankje.Naam.ToString();
                 items[2] = drankje.Aantal.ToString();
 
-                var item = new ListViewItem(items);
+                item = new ListViewItem(items);
 
                 listView.Items.Add(item);
-
-                // Als het aantal kleiner dan 10 is worden de cellen rood gekleurd.
-                if (drankje.Aantal < 10)
-                {
-                    item.SubItems[0].Text = "!!!"; // !!! of \uFF01 - full-width exclamation mark
-                    item.SubItems[0].ForeColor = System.Drawing.Color.Red;
-                }
-                else
-                {
-                    item.SubItems[0].Text = "✔";
-                    item.SubItems[0].ForeColor = System.Drawing.Color.Green;
-                }
             }
 
             return listView;
@@ -355,7 +348,31 @@ namespace Someren
 
         private void Btn_Toevoegen_Click(object sender, EventArgs e)
         {
-            
+            if (listView.CheckedItems.Count != 0 || tb_Aantal.Text == "0")
+            {
+                foreach (ListViewItem item in listView.Items)
+                {
+                    if (item.Checked)
+                    {
+                        string naam = item.SubItems[1].Text;
+                        int aantal = int.Parse(tb_Aantal.Text);
+
+                        var calc = new DataCalculator();
+                        double prijs = calc.GetPrijs(naam, aantal);
+
+                        string[] items = new string[3];
+                        items[0] = naam;
+                        items[1] = aantal.ToString();
+                        items[2] = prijs.ToString();
+
+                        listViewB.Items.Add(new ListViewItem(items));
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Voer een drank in.");
+            }
         }
 
         public Control[] AddAantalDialog()
@@ -404,13 +421,23 @@ namespace Someren
             tb_Aantal.Text = n.ToString();
         }
 
+        public Control AddBetaalBtn()
+        {
+            var button = new Button();
+            button.Text = "Betaal";
+            button.Location = new Point(400, 320);
+
+            button.Click += Btn_Betaald_Click;
+
+            return button;
+        }
+
         private void Btn_Betaald_Click(object sender, EventArgs e)
         {
-            ListView.CheckedListViewItemCollection group = listView.CheckedItems;
-            var afrekenProcessor = new AfrekenProcessor();
-            afrekenProcessor.RekenAf(group, int.Parse(tb_Aantal.Text));
+            
         }
         
+
         private void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             switch (listView.Sorting)
