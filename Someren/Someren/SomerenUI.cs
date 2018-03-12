@@ -16,8 +16,7 @@ namespace Someren
         {
             this.form = form;
         }
-
-
+        
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private ListView listView;
         private TextBox tb_Aantal;

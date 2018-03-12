@@ -219,9 +219,7 @@ namespace Someren
             groupBox1.Text = "omzetrapportage";
 
             panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
-
-
-
+            
         }
     }
 }
