@@ -218,9 +218,9 @@ namespace Someren
             panel1.Controls.Clear();
             groupBox1.Text = "omzetrapportage";
 
-            panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
+            //panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
             panel1.Controls.Add(SomerenUI.AddMaxDatumButton(5,5));
-            panel1.Controls.Add(SomerenUI.AddMinDatumButton(225,0));
+            panel1.Controls.Add(SomerenUI.AddMinDatumButton(225,5));
         }
     }
 }

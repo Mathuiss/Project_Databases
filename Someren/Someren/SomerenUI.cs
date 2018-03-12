@@ -13,18 +13,18 @@ namespace Someren
     {
         Someren_Form form;
 
+        //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
+        private ListView listView;
+        private TextBox tb_Aantal;
+        private DateTimePicker kiesMinDatum;
+        private DateTimePicker kiesMaxDatum;
+        private Button button;
+
         public SomerenUI(Someren_Form form)
         {
             this.form = form;
         }
-
-
-        //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
-        private ListView listView;
-        private TextBox tb_Aantal;
-        private DateTimePicker kiesDatum;
-        private Button button;
-
+        
         public Control ShowStudents(List<Student> studentList)
         {
             //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
@@ -166,7 +166,7 @@ namespace Someren
             return kiesMinDatum;           //return calender;
         }
 
-        public static Control AddMinDatumButton(int links, int boven)
+        public Control AddMinDatumButton(int links, int boven)
         {
             var btn_SelecteerMinDatum = new DateTimePicker();
             btn_SelecteerMinDatum.Location = new Point(links, boven);
@@ -174,7 +174,7 @@ namespace Someren
             return btn_SelecteerMinDatum;
         }
 
-        public static Control AddMaxDatumButton(int links, int boven)
+        public Control AddMaxDatumButton(int links, int boven)
         {
             var btn_SelecteerMaxDatum = new DateTimePicker();
             btn_SelecteerMaxDatum.Location = new Point(links, boven);
@@ -182,7 +182,7 @@ namespace Someren
             return btn_SelecteerMaxDatum;
         }
 
-        private static void Btn_SelecteerDatum_Click(object sender, EventArgs e)
+        private void Btn_SelecteerDatum_Click(object sender, EventArgs e)
         {
             var manager = new AdministratieManager();
             manager.BerekenOmzet(kiesMinDatum.Value.Date);
