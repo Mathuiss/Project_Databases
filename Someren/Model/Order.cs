@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using Model;
-
-namespace Model
+﻿namespace Model
 {
     public struct Order
     {
-        private int id;
-        private Drank[] dranken;
+        private string drank;
+        private int aantal;
         double prijs;
         
-        public Order(int id, Drank[] dranken, double prijs)
+        public Order(string drank, int aantal, double prijs)
         {
-            this.id = id;
-            this.dranken = dranken;
+            this.drank = drank;
+            this.aantal = aantal;
             this.prijs = prijs;
         }
 
-        public int Id { get => id; set => id = value; }
-        public Drank[] Dranken { get => dranken; set => dranken = value; }
+        public string Drank { get => drank; set => drank = value; }
+        public int Aantal { get => aantal; set => aantal = value; }
         public double Prijs { get => prijs; set => prijs = value; }
     }
 }
