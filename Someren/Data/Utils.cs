@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
@@ -43,11 +44,12 @@ namespace Data
         {
             using (SqlConnection connection = OpenConnectieDB())
             {
-                connection.Close();
                 connection.Open();
 
-                var command = new SqlCommand("select id from " + table + " " + condition, connection);
-                return (int)command.ExecuteScalar();
+                var command = new SqlCommand("select studentNr from " + table + " " + condition, connection);
+                int answer = (int)command.ExecuteScalar();
+                connection.Close();
+                return answer;
             }
         }
 
@@ -58,7 +60,9 @@ namespace Data
                 connection.Open();
 
                 var command = new SqlCommand("select max(id) from " + table);
-                return (int)command.ExecuteScalar();
+                int answer = (int)command.ExecuteScalar();
+                connection.Close();
+                return answer;
             }
         }
     }
