@@ -11,6 +11,7 @@ namespace Someren
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private static ListView listView;
         private static TextBox tb_Aantal;
+        private static DateTimePicker kiesDatum;
 
         public static Control ShowStudents(List<Student> studentList)
         {
@@ -125,12 +126,34 @@ namespace Someren
             return listView;
         }
 
-        public static Control ShowOmzetCallendar()
+        public static Control ShowOmzetCalendar()
         {
-            var callendaer = new MonthCalendar();
-            return callendaer;
+            //var calender = new MonthCalendar();
+            
+            // Create a new DateTimePicker control and initialize it.
+            kiesDatum = new DateTimePicker();
+
+            // Set the MinDate and MaxDate.
+            kiesDatum.MinDate = new DateTime(2018, 3, 1);
+            kiesDatum.MaxDate = DateTime.Today;
+
+            var btn_SelecteerDatum = new Button();
+            btn_SelecteerDatum.Click += Btn_SelecteerDatum_Click;
+
+            // Set the CustomFormat string.
+            //dateTimePicker1.CustomFormat = "MMMM dd, yyyy - dddd";
+            kiesDatum.CustomFormat = "dd MMMM yyyy";
+            kiesDatum.Format = DateTimePickerFormat.Custom;
+
+            return kiesDatum;         
+           //return calender;
         }
-        
+
+        private static void Btn_SelecteerDatum_Click(object sender, EventArgs e)
+        {
+            var manager = new AdministratieManager();
+            manager.BerekenOmzet(kiesDatum.Value.Date);
+        }
 
         public static Control ShowKassaStudenten(List<Student> studentlijst)
         {
