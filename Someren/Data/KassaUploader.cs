@@ -34,8 +34,10 @@ namespace Data
 
                     var command = new SqlCommand(query, connection);
                     command.ExecuteNonQuery();
-                    
 
+                    query = "insert into OMZET (id, tijd, mutatie) values(";
+                    query += item.Id + ", ";
+                    query += DateTime.Now.ToString() + ", ";
                 }
             }
         }
