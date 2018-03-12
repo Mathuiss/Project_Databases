@@ -8,6 +8,7 @@ namespace Someren
 {
     public partial class Someren_Form : Form
     {
+        private SomerenUI SomerenUI;
         private List<Student> studentLijst;
         private List<Docent> docentLijst;
         private List<Kamer> kamerLijst;
@@ -17,6 +18,7 @@ namespace Someren
 
         public Someren_Form()
         {
+            SomerenUI = new SomerenUI(this);
             database = new SomerenDB();
             InitializeComponent();
         }
@@ -201,20 +203,9 @@ namespace Someren
             try
             {
                 studentLijst = database.GetStudenten();
-                var drankLijst = new List<Drank>();
-                drankLijst = database.GetDranken();
 
-                Control[] controls = new Control[3]
-                { SomerenUI.ShowKassaStudenten(studentLijst),
-                  SomerenUI.ShowKassaDranken(drankLijst),
-                  SomerenUI.AddBetaalBtn()
-                };
-
-                Control[] aantalControls = SomerenUI.AddAantalDialog();
-
-                panel1.Controls.Add(SomerenUI.AddUILabel("Aantal: ", 420, 60));
-                panel1.Controls.AddRange(controls);
-                panel1.Controls.AddRange(aantalControls);
+                panel1.Controls.Add(SomerenUI.ShowKassaStudenten(studentLijst));
+                panel1.Controls.Add(SomerenUI.AddStudentSelectButton());
             }
             catch (Exception ex)
             {
