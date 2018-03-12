@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 using Model;
 using Logic;
 
@@ -11,7 +12,8 @@ namespace Someren
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private static ListView listView;
         private static TextBox tb_Aantal;
-        private static DateTimePicker kiesDatum;
+        private static DateTimePicker kiesMinDatum;
+        private static DateTimePicker kiesMaxDatum;
 
         public static Control ShowStudents(List<Student> studentList)
         {
@@ -131,28 +133,49 @@ namespace Someren
             //var calender = new MonthCalendar();
             
             // Create a new DateTimePicker control and initialize it.
-            kiesDatum = new DateTimePicker();
+            kiesMinDatum = new DateTimePicker();
+            kiesMaxDatum = new DateTimePicker();
+
 
             // Set the MinDate and MaxDate.
-            kiesDatum.MinDate = new DateTime(2018, 3, 1);
-            kiesDatum.MaxDate = DateTime.Today;
+            kiesMinDatum.MinDate = new DateTime(2018, 3, 1);
+            kiesMinDatum.MaxDate = DateTime.Today;
 
-            var btn_SelecteerDatum = new Button();
-            btn_SelecteerDatum.Click += Btn_SelecteerDatum_Click;
+            kiesMaxDatum.MinDate = new DateTime(2018, 3, 1);
+            kiesMaxDatum.MaxDate = DateTime.Today;
 
+            
             // Set the CustomFormat string.
             //dateTimePicker1.CustomFormat = "MMMM dd, yyyy - dddd";
-            kiesDatum.CustomFormat = "dd MMMM yyyy";
-            kiesDatum.Format = DateTimePickerFormat.Custom;
+            kiesMinDatum.CustomFormat = "dddd dd MMMM yyyy";
+            kiesMinDatum.Format = DateTimePickerFormat.Custom;
 
-            return kiesDatum;         
-           //return calender;
+            kiesMaxDatum.CustomFormat = "dddd dd MMMM yyyy";
+            kiesMaxDatum.Format = DateTimePickerFormat.Custom;
+
+            return kiesMinDatum;           //return calender;
+        }
+
+        public static Control AddMinDatumButton(int links, int boven)
+        {
+            var btn_SelecteerMinDatum = new DateTimePicker();
+            btn_SelecteerMinDatum.Location = new Point(links, boven);
+
+            return btn_SelecteerMinDatum;
+        }
+
+        public static Control AddMaxDatumButton(int links, int boven)
+        {
+            var btn_SelecteerMaxDatum = new DateTimePicker();
+            btn_SelecteerMaxDatum.Location = new Point(links, boven);
+
+            return btn_SelecteerMaxDatum;
         }
 
         private static void Btn_SelecteerDatum_Click(object sender, EventArgs e)
         {
             var manager = new AdministratieManager();
-            manager.BerekenOmzet(kiesDatum.Value.Date);
+            manager.BerekenOmzet(kiesMinDatum.Value.Date);
         }
 
         public static Control ShowKassaStudenten(List<Student> studentlijst)
