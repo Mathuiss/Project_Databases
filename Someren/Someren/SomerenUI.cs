@@ -123,13 +123,57 @@ namespace Someren
             return listView;
         }
 
-        public static Control ShowOmzetCallendar()
+        public static Control ShowOmzetCalendar()
         {
-            var callendaer = new MonthCalendar();
 
+            //var calender = new MonthCalendar();
+            
+            // Create a new DateTimePicker control and initialize it.
+            DateTimePicker kiesDatum = new DateTimePicker();
+
+            // Set the MinDate and MaxDate.
+            kiesDatum.MinDate = new DateTime(2018, 3, 1);
+            kiesDatum.MaxDate = DateTime.Today;
+
+            // Set the CustomFormat string.
+            //dateTimePicker1.CustomFormat = "MMMM dd, yyyy - dddd";
+            kiesDatum.CustomFormat = "dd MMMM yyyy";
+            kiesDatum.Format = DateTimePickerFormat.Custom;
+
+            return kiesDatum;         
+           //return calender;
         }
 
-        public static 
+        public static int Afzet()
+        {
+            
+            //afzet is totaal aantal verkocht
+            //afzet bij de kassa vandaan halen. 
+            //return de kassa
+            int weg = 5;
+            return weg;
+        }
+
+        public static double Omzet()
+        {
+            //omzet = afzet * verkoopprijs, v/d drankjes
+            //omzet bij de kassa vandaan halen
+            //afzet van hierboven
+            //en dan keer elkaar,
+            //return de omzet
+            double weg = 5;
+            return weg;
+        }
+
+        public static int  AantalKlanten()
+        {
+            //aantal studenten die minimaal 1 drankje hebben gekocht
+            //kijken naar Kassa 
+            //het aantal nieuwe 'leden' die iets voor de eerste keer gekocht zouden hebben
+            // return aantal klanten
+            int weg = 5;
+            return weg;
+        }
 
         public static Control ShowKassaStudenten(List<Student> studentlijst)
         {
