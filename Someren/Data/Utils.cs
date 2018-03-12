@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Data
 {
-    public static class Uploader
+    public static class Utils
     {
-        private static SqlConnection OpenConnectieDB()
+        public static SqlConnection OpenConnectieDB()
         {
             string host = "den1.mssql4.gear.host";
             string db = "projectdbgroepa1";
@@ -40,12 +39,14 @@ namespace Data
             }
         }
 
-        public static void Betaal()
+        public static int GetId(string table, string condition)
         {
-            using (SqlConnection connection = OpenConnectieDB())
-            {
+            SqlConnection connection = OpenConnectieDB();
+            connection.Close();
+            connection.Open();
 
-            }
+            var command = new SqlCommand("select id from " + table + " " + condition, connection);
+            return (int)command.ExecuteScalar();
         }
     }
 }

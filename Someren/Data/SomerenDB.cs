@@ -8,52 +8,14 @@ namespace Data
 {
     public class SomerenDB
     {
-        private static SqlConnection OpenConnectieDB()
-        {
-            string host = "den1.mssql4.gear.host";
-            string db = "projectdbgroepa1";
-            string user = "projectdbgroepa1";
-            string password = "Zc2pQwg-wK_w";
-            //string port = "3306";
-
-            try
-            {
-                //Connectionstring voor DB maken.
-                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-                builder.DataSource = host;
-                builder.UserID = user;
-                builder.Password = password;
-                builder.InitialCatalog = db;
-
-                SqlConnection connection = new SqlConnection(builder.ConnectionString);
-
-                //Connectie openen
-                connection.Open();
-                return connection;
-
-            }
-            catch (SqlException ex)
-            {
-                //Als de connection
-                SqlConnection connection = null;
-                MessageBox.Show("Verbinding met de database mislukt. Error: \n\n" + ex);
-                return connection;
-            }
-        }
-
-        public void SluitConnectieDB(ref SqlConnection connection)
-        {
-            connection.Close();
-        }
-
         public List<Student> GetStudenten()
         {
             //Maakt verbinding met DB
-            SqlConnection connection = OpenConnectieDB();
+            SqlConnection connection = Utils.OpenConnectieDB();
             var studentList = new List<Student>();
 
             //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
-            SluitConnectieDB(ref connection);
+            connection.Close();
             connection.Open();
 
             //Querie om studenten uit de db te halen
@@ -75,18 +37,18 @@ namespace Data
                 }
             }
 
-            SluitConnectieDB(ref connection);
+            connection.Close();
             return studentList;
         }
 
         public List<Kamer> GetKamers()
         {
             //Maakt verbinding met DB
-            SqlConnection connection = OpenConnectieDB();
+            SqlConnection connection = Utils.OpenConnectieDB();
             var kamerLijst = new List<Kamer>();
 
             //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
-            SluitConnectieDB(ref connection);
+            connection.Close();
             connection.Open();
 
             //Querie om kamers uit de DB te halen
@@ -105,18 +67,18 @@ namespace Data
                 }
             }
 
-            SluitConnectieDB(ref connection);
+            connection.Close();
             return kamerLijst;
         }
 
         public List<Docent> GetDocenten()
         {
             //Maakt verbinding met DB
-            SqlConnection connection = OpenConnectieDB();
+            SqlConnection connection = Utils.OpenConnectieDB();
             var docentenLijst = new List<Docent>();
 
             //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
-            SluitConnectieDB(ref connection);
+            connection.Close();
             connection.Open();
 
             //Querie om docenten uit de db te halen
@@ -138,17 +100,17 @@ namespace Data
                 }
             }
 
-            SluitConnectieDB(ref connection);
+            connection.Close();
             return docentenLijst;
         }
 
         public List<Drank> GetDranken()
         {
-            SqlConnection connection = OpenConnectieDB();
+            SqlConnection connection = Utils.OpenConnectieDB();
             var drankLijst = new List<Drank>();
 
             //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
-            SluitConnectieDB(ref connection);
+            connection.Close();
             connection.Open();
 
             //Querie om docenten uit de db te halen
@@ -163,23 +125,23 @@ namespace Data
                     drankLijst.Add(new Drank(
                         reader.GetInt32(0),
                         reader.GetString(1),
-                        reader.GetDecimal(2)
+                        reader.GetDouble(2)
                         ));
                 }
             }
 
-            SluitConnectieDB(ref connection);
+            connection.Close();
 
             return drankLijst;
         }
 
         public List<VoorraadObject> GetVoorraad()
         {
-            SqlConnection connection = OpenConnectieDB();
+            SqlConnection connection = Utils.OpenConnectieDB();
             var voorraad = new List<VoorraadObject>();
 
             //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
-            SluitConnectieDB(ref connection);
+            connection.Close();
             connection.Open();
 
             var command = new SqlCommand("select id, naam, aantal from VOORRAAD", connection);
@@ -197,7 +159,7 @@ namespace Data
                         ));
                 }
             }
-            SluitConnectieDB(ref connection);
+            connection.Close();
 
             return voorraad;
         }

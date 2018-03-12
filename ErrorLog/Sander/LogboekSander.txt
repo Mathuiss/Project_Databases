@@ -1,0 +1,7 @@
+Parsing error in de SomerenDB klasse.
+Dit kwam doordat het programma een Int16 uit de database wilde halen waar een int32 stond.
+Verholpen door GetInt32(0) aan te roepen.
+
+Tijdens het maken van de table VOORRAAD was er een sql error.
+?
+Verholpen door het script los als sql uit te voeren.

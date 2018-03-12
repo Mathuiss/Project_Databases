@@ -10,6 +10,7 @@ namespace Someren
     {
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private static ListView listView;
+        private static TextBox tb_Aantal;
 
         public static Control ShowStudents(List<Student> studentList)
         {
@@ -219,11 +220,57 @@ namespace Someren
             return button;
         }
 
+        public static Control[] AddAantalDialog()
+        {
+            var dialog = new Control[3];
+
+            var btn_Plus = new Button();
+            btn_Plus.Location = new System.Drawing.Point(420, 90);
+            btn_Plus.Height = 20;
+            btn_Plus.Width = 60;
+            btn_Plus.Text = "+";
+            btn_Plus.Click += Btn_Plus_Click;
+
+            tb_Aantal = new TextBox();
+            tb_Aantal.Location = new System.Drawing.Point(420, 110);
+            tb_Aantal.Height = 10;
+            tb_Aantal.Width = 60;
+            tb_Aantal.Text = "1";
+
+            var btn_Min = new Button();
+            btn_Min.Location = new System.Drawing.Point(420, 130);
+            btn_Min.Height = 20;
+            btn_Min.Width = 60;
+            btn_Min.Text = "-";
+            btn_Min.Click += Btn_Min_Click;
+
+            dialog[0] = btn_Plus;
+            dialog[1] = tb_Aantal;
+            dialog[2] = btn_Min;
+
+            
+            return dialog;
+        }
+
+        private static void Btn_Min_Click(object sender, EventArgs e)
+        {
+            int n = int.Parse(tb_Aantal.Text);
+            n--;
+            tb_Aantal.Text = n.ToString();
+        }
+
+        private static void Btn_Plus_Click(object sender, EventArgs e)
+        {
+            int n = int.Parse(tb_Aantal.Text);
+            n++;
+            tb_Aantal.Text = n.ToString();
+        }
+
         private static void Btn_Betaald_Click(object sender, EventArgs e)
         {
             ListView.CheckedListViewItemCollection group = listView.CheckedItems;
             var afrekenProcessor = new AfrekenProcessor();
-            afrekenProcessor.RekenAf(group);
+            afrekenProcessor.RekenAf(group, int.Parse(tb_Aantal.Text));
         }
 
         public static Control showVoorraad(List<VoorraadObject> voorraad)
@@ -262,27 +309,27 @@ namespace Someren
 
         private static void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            if (listView.Sorting == SortOrder.Ascending)
+            switch (listView.Sorting)
             {
-                listView.Sorting = SortOrder.Descending;
-                listView.Sort();
+                case SortOrder.Ascending:
+                    listView.Sorting = SortOrder.Descending;
+                    break;
+                case SortOrder.Descending:
+                    listView.Sorting = SortOrder.Ascending;
+                    break;
+                default:
+                    listView.Sorting = SortOrder.Ascending;
+                    break;
             }
-            else if (listView.Sorting == SortOrder.Descending)
-            {
-                listView.Sorting = SortOrder.Ascending;
-                listView.Sort();
-            }
-            else
-            {
-                listView.Sorting = SortOrder.Ascending;
-                listView.Sort();
-            }
+
+            listView.Sort();
         }
 
-        public static Control AddUILabel(string text)
+        public static Control AddUILabel(string text, int x, int y)
         {
             Label l = new Label();
             l.Text = text;
+            l.Location = new System.Drawing.Point(x, y);
             return l;
         }
     }
