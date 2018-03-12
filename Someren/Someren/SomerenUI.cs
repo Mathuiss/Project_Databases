@@ -13,11 +13,6 @@ namespace Someren
     {
         Someren_Form form;
 
-        public SomerenUI(Someren_Form form)
-        {
-            this.form = form;
-        }
-        
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private ListView listView;
         private TextBox tb_Aantal;
@@ -29,6 +24,7 @@ namespace Someren
         {
             this.form = form;
         }
+        
         
         public Control ShowStudents(List<Student> studentList)
         {
@@ -152,12 +148,9 @@ namespace Someren
             kiesMaxDatum = new DateTimePicker();
 
 
-            // Set the MinDate and MaxDate.
-            kiesMinDatum.MinDate = new DateTime(2018, 3, 1);
-            kiesMinDatum.MaxDate = DateTime.Today;
 
-            kiesMaxDatum.MinDate = new DateTime(2018, 3, 1);
-            kiesMaxDatum.MaxDate = DateTime.Today;
+
+
 
             
             // Set the CustomFormat string.
@@ -165,34 +158,96 @@ namespace Someren
             kiesMinDatum.CustomFormat = "dddd dd MMMM yyyy";
             kiesMinDatum.Format = DateTimePickerFormat.Custom;
 
-            kiesMaxDatum.CustomFormat = "dddd dd MMMM yyyy";
-            kiesMaxDatum.Format = DateTimePickerFormat.Custom;
+
 
             return kiesMinDatum;           //return calender;
         }
 
         public Control AddMinDatumButton(int links, int boven)
         {
-            var btn_SelecteerMinDatum = new DateTimePicker();
-            btn_SelecteerMinDatum.Location = new Point(links, boven);
+            kiesMinDatum = new DateTimePicker();
 
-            return btn_SelecteerMinDatum;
+            // een begin en einddatum opgeven
+            kiesMinDatum.MinDate = new DateTime(2018, 3, 1);
+            kiesMinDatum.MaxDate = DateTime.Today;
+
+            kiesMinDatum.Location = new Point(links, boven);
+            // de volgorde opgeven
+            kiesMinDatum.CustomFormat = "dddd dd MMMM yyyy";
+            kiesMinDatum.Format = DateTimePickerFormat.Custom;
+
+            return kiesMinDatum;
         }
 
         public Control AddMaxDatumButton(int links, int boven)
         {
-            var btn_SelecteerMaxDatum = new DateTimePicker();
-            btn_SelecteerMaxDatum.Location = new Point(links, boven);
+            kiesMaxDatum = new DateTimePicker();
+            kiesMaxDatum.Location = new Point(links, boven);
 
-            return btn_SelecteerMaxDatum;
-        }
+            // een begin en einddatum opgeven
+            kiesMaxDatum.MinDate = new DateTime(2018, 3, 1);
+            kiesMaxDatum.MaxDate = DateTime.Today;
+            
+            // de volgorde opgeven
+            kiesMaxDatum.CustomFormat = "dddd dd MMMM yyyy";
+            kiesMaxDatum.Format = DateTimePickerFormat.Custom;
 
-        private void Btn_SelecteerDatum_Click(object sender, EventArgs e)
-        {
-            var manager = new AdministratieManager();
-            manager.BerekenOmzet(kiesMinDatum.Value.Date);
+            return kiesMaxDatum;
         }
         
+        public Control AddDateSelectorBtn()
+        { 
+            var btn_BerekenTijdVerschil = new Button();
+            btn_BerekenTijdVerschil.Location = new Point(0, 30);
+            btn_BerekenTijdVerschil.Text = "Bereken Omzet";
+            btn_BerekenTijdVerschil.Click += Btn_BerekenTijdVerschil_Click;
+
+
+            return btn_BerekenTijdVerschil;
+        }
+
+        private void Btn_BerekenTijdVerschil_Click(object sender, EventArgs e)
+        {
+            var administratie = new AdministratieDownloader();
+            List<Omzetrapportage> omzetRapportage = administratie.GetOmzetRapportage(kiesMinDatum.Value.ToString("yyyy/MM/dd"), kiesMaxDatum.Value.ToString("yyyy/MM/dd"));
+
+            form.panel1.Controls.Add(ShowOmzetRapportage(omzetRapportage));
+        }
+
+        public Control ShowOmzetRapportage(List<Omzetrapportage> omzetRapportage)
+        {
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            listView.Columns.Add("Transactie ID", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Begin Tijd", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Eind Tijd", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Mutatie", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Aantal klanten", -2, HorizontalAlignment.Left);
+
+            foreach (Omzetrapportage n in omzetRapportage)
+            {
+                string[] items = new string[4];
+                ListViewItem item;
+
+                items[0] = n.Id.ToString();
+                items[1] = n.MinTime.ToString();
+                items[2] = n.MaxTime.ToString();
+                items[3] = n.Mutatie.ToString();
+
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
+            }
+
+            return listView;
+        }
+
         public Control ShowKassaDranken(List<Drank> drankLijst)
         {
             //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt

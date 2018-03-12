@@ -12,8 +12,10 @@ namespace Someren
         private List<Student> studentLijst;
         private List<Docent> docentLijst;
         private List<Kamer> kamerLijst;
+        private List<Omzetrapportage> omzet;
 
         private SomerenDB database;
+        private AdministratieDownloader administratie;
         private static Someren_Form instance;
 
         public Someren_Form()
@@ -221,6 +223,21 @@ namespace Someren
             //panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
             panel1.Controls.Add(SomerenUI.AddMaxDatumButton(5,5));
             panel1.Controls.Add(SomerenUI.AddMinDatumButton(225,5));
+
+            panel1.Controls.Add(SomerenUI.AddDateSelectorBtn());
+
+            //uitslag als derde button voor de uitslag
+            try
+            {
+                //toont de tabel met omzet.
+                omzet = administratie.GetOmzet();
+                panel1.Controls.Add(SomerenUI.ShowDocenten(docentLijst));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
         }
     }
 }
