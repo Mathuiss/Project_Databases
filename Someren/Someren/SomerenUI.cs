@@ -296,6 +296,7 @@ namespace Someren
                 form.panel1.Controls.AddRange(controls);
                 form.panel1.Controls.Add(AddToevoegenBtn());
                 form.panel1.Controls.Add(ShowBestelling());
+                form.panel1.Controls.Add(AddBetaalBtn());
             }
             else
             {
@@ -308,33 +309,42 @@ namespace Someren
 
         public Control ShowVoorraad(List<VoorraadObject> voorraad)
         {
-
             listView = new ListView();
             listView.View = View.Details;
             listView.Height = 300;
             listView.Width = 200;
             listView.AllowColumnReorder = true;
             listView.GridLines = true;
-            listView.Sorting = SortOrder.Ascending;
             listView.CheckBoxes = true;
 
             listView.ColumnClick += ListView_ColumnClick;
 
-            listView.Columns.Add("Drankje", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Drank", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
 
             foreach (VoorraadObject drankje in voorraad)
             {
                 string[] items = new string[3];
-                ListViewItem item;
 
-                items[0] = drankje.Id.ToString();
-                items[1] = drankje.Naam.ToString();
+                items[1] = drankje.Naam;
                 items[2] = drankje.Aantal.ToString();
 
-                item = new ListViewItem(items);
+                var item = new ListViewItem(items);
 
                 listView.Items.Add(item);
+
+                // Als het aantal kleiner dan 10 is worden de cellen rood gekleurd.
+                if (drankje.Aantal < 10)
+                {
+                    item.SubItems[0].Text = "!!!"; // !!! of \uFF01 - full-width exclamation mark
+                    item.SubItems[0].ForeColor = System.Drawing.Color.Red;
+                }
+                else
+                {
+                    item.SubItems[0].Text = "✔";
+                    item.SubItems[0].ForeColor = System.Drawing.Color.Green;
+                }
             }
 
             return listView;
@@ -457,7 +467,22 @@ namespace Someren
 
         private void Btn_Betaald_Click(object sender, EventArgs e)
         {
-            
+            var processor = new AfrekenProcessor();
+            var bestelling = new List<Order>();
+
+            foreach (ListViewItem item in listViewB.Items)
+            {
+                bestelling.Add(new Order(selectedStudent, item.SubItems[0].Text, int.Parse(item.SubItems[1].Text), double.Parse(item.SubItems[2].Text)));
+            }
+
+            processor.RekenAf(bestelling);
+
+            var database = new SomerenDB();
+            List<Student> studenten = database.GetStudenten();
+
+            form.panel1.Controls.Clear();
+            form.panel1.Controls.Add(ShowKassaStudenten(studenten));
+            form.panel1.Controls.Add(AddStudentSelectButton());
         }
         
 
