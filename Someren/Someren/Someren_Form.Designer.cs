@@ -80,7 +80,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(839, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(849, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -218,19 +218,20 @@
             // activiteitenlijstToolStripMenuItem
             // 
             this.activiteitenlijstToolStripMenuItem.Name = "activiteitenlijstToolStripMenuItem";
-            this.activiteitenlijstToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.activiteitenlijstToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.activiteitenlijstToolStripMenuItem.Text = "Activiteitenlijst";
             // 
             // begeleidersToolStripMenuItem
             // 
             this.begeleidersToolStripMenuItem.Name = "begeleidersToolStripMenuItem";
-            this.begeleidersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.begeleidersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.begeleidersToolStripMenuItem.Text = "Begeleiders";
+            this.begeleidersToolStripMenuItem.Click += new System.EventHandler(this.begeleidersToolStripMenuItem_Click);
             // 
             // roosterToolStripMenuItem
             // 
             this.roosterToolStripMenuItem.Name = "roosterToolStripMenuItem";
-            this.roosterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.roosterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.roosterToolStripMenuItem.Text = "Rooster";
             // 
             // helpToolStripMenuItem
@@ -251,9 +252,11 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 27);
+            this.groupBox1.Location = new System.Drawing.Point(9, 22);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(580, 410);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(581, 415);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "TODO lijst voor Someren";
@@ -261,7 +264,8 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(6, 18);
+            this.panel1.Location = new System.Drawing.Point(4, 15);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(568, 385);
             this.panel1.TabIndex = 0;
@@ -271,7 +275,8 @@
             // 
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(598, 45);
+            this.pictureBox1.Location = new System.Drawing.Point(605, 37);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(229, 178);
             this.pictureBox1.TabIndex = 3;
@@ -293,9 +298,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 427);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 458);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(839, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(849, 22);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -322,13 +327,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(839, 449);
+            this.ClientSize = new System.Drawing.Size(849, 480);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Someren_Form";
             this.Text = "SomerenAdministratie";
             this.Load += new System.EventHandler(this.Form1_Load);
