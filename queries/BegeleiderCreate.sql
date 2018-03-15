@@ -1,0 +1,1 @@
+insert into BEGELEIDER (docentCode) values (@docentCode)

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using Model;
-using System.Drawing;
 using Logic;
 using Data;
 
@@ -12,6 +11,7 @@ namespace Someren
     public class SomerenUI
     {
         Someren_Form form;
+        Form formB;
 
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private ListView listView;
@@ -484,7 +484,160 @@ namespace Someren
             form.panel1.Controls.Add(ShowKassaStudenten(studenten));
             form.panel1.Controls.Add(AddStudentSelectButton());
         }
-        
+
+        public Control ShowBegeleiders()
+        {
+            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
+            listView = new ListView();
+            
+            //List view eigenschappen
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 300;
+            listView.Location = new Point(0, 0);
+            listView.CheckBoxes = true;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            //Event handeler
+            listView.ColumnClick += ListView_ColumnClick;
+
+            //Kolommen voor in de list view
+            listView.Columns.Add("Begeleiderscode", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Voornaam", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Achternaam", -2, HorizontalAlignment.Left);
+
+            var database = new BegeleiderDataController();
+            List<Begeleider> begeleiders = database.GetBegeleiders();
+
+            foreach (Begeleider begeleider in begeleiders)
+            {
+                string[] items = new string[3];
+                ListViewItem item;
+
+                items[0] = begeleider.BegeleiderCode.ToString();
+                items[1] = begeleider.Naam;
+                items[2] = begeleider.Achternaam;
+                
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
+            }
+
+            return listView;
+        }
+
+        public Control AddBegeleiderOmzettenBtn()
+        {
+            var button = new Button();
+            button.Text = "Voeg Toe";
+            button.Location = new Point(350, 0);
+            button.Width = 150;
+
+            button.Click += Btn_VoegBegeleiderToe_Click;
+
+            return button;
+        }
+
+        public Control AddRemoveBegeleiderBtn()
+        {
+            var button = new Button();
+            button.Text = "Verwijder Begeleider";
+            button.Location = new Point(350, 40);
+            button.Width = 150;
+
+            button.Click += Btn_RemoveBegeleider_Click;
+
+            return button;
+        }
+
+        private void Btn_RemoveBegeleider_Click(object sender, EventArgs e)
+        {
+            if (listView.CheckedItems.Count != 0)
+            {
+                DialogResult dialogResult = MessageBox.Show(
+                    "Weet u zeker dat u deze begeleider wil verwijderen?",
+                    "Begeleider Verwijderen",
+                    MessageBoxButtons.YesNo
+                    );
+                if (dialogResult == DialogResult.Yes)
+                {
+                    var database = new BegeleiderDataController();
+
+                    foreach (ListViewItem item in listView.Items)
+                    {
+                        if (item.Checked)
+                        {
+                            database.RemoveBegeleider(int.Parse(item.SubItems[0].Text));
+                        }
+                    }
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    form.panel1.Controls.Clear();
+                    form.panel1.Controls.Add(ShowBegeleiders());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selecteer een begeleider.");
+            }
+
+            form.panel1.Controls.Clear();
+            form.panel1.Controls.Add(ShowBegeleiders());
+            form.panel1.Controls.Add(AddBegeleiderOmzettenBtn());
+            form.panel1.Controls.Add(AddRemoveBegeleiderBtn());
+        }
+
+        private void Btn_VoegBegeleiderToe_Click(object sender, EventArgs e)
+        {
+            var database = new BegeleiderDataController();
+            List<Docent> docenten = database.GetDocenten();
+
+            formB = new Form();
+            formB.Width = 480;
+            formB.Height = 480;
+            formB.Text = "Voeg Begeleider Toe";
+
+            var panel = new Panel();
+            panel.Location = new Point(20, 20);
+            panel.Width = 460;
+            panel.Height = 460;
+
+            listViewB = (ListView)ShowDocenten(docenten);
+            listViewB.CheckBoxes = true;
+
+            var button = new Button();
+            button.Text = "Voeg Toe";
+            button.Location = new Point(0, 350);
+            button.Click += Btn_VoegToeClick;
+
+            formB.Controls.Add(panel);
+            panel.Controls.Add(listViewB);
+            panel.Controls.Add(button);
+
+            formB.Show();
+        }
+
+        private void Btn_VoegToeClick(object sender, EventArgs e)
+        {
+            var database = new BegeleiderDataController();
+
+            foreach (ListViewItem item in listViewB.Items)
+            {
+                if (item.Checked)
+                {
+                    database.CreateBegeleider(int.Parse(item.SubItems[0].Text));
+                }
+            }
+
+            formB.Close();
+            form.panel1.Controls.Clear();
+            form.panel1.Controls.Add(ShowBegeleiders());
+            form.panel1.Controls.Add(AddBegeleiderOmzettenBtn());
+            form.panel1.Controls.Add(AddRemoveBegeleiderBtn());
+        }
 
         private void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministratieDownloader.cs" />
+    <Compile Include="BegeleiderDataController.cs" />
     <Compile Include="KassaDownloader.cs" />
     <Compile Include="SomerenDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
