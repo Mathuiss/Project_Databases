@@ -368,6 +368,42 @@ namespace Someren
             return listViewB;
         }
 
+        public Control ShowRooster(List<Rooster> rooster)
+        {
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 350;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.CheckBoxes = true;
+
+            listView.ColumnClick += ListView_ColumnClick;
+
+            listView.Columns.Add("activiteit", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("begeleider", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("datum", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("starttijd", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("eindtijd", -2, HorizontalAlignment.Left);
+
+            foreach (Rooster activiteit in rooster)
+            {
+                
+                string[] items = new string[5];
+
+                items[0] = activiteit.ActiviteitNaam.ToString();
+                items[1] = activiteit.BegeleiderNaam.ToString();
+                items[2] = activiteit.Datum.ToString("dd/MM/yyyy");
+                items[3] = activiteit.StartTijd.ToString("HH:mm:ss");
+                items[4] = activiteit.EindTijd.ToString("HH:mm:ss");
+
+                var item = new ListViewItem(items);
+
+                listView.Items.Add(item);
+            }
+            return listView;
+        }
+
         public Control AddToevoegenBtn()
         {
             button = new Button();

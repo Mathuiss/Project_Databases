@@ -13,6 +13,7 @@ namespace Someren
         private List<Docent> docentLijst;
         private List<Kamer> kamerLijst;
         private List<VoorraadObject> voorraadLijst;
+        private List<Rooster> roosterLijst;
         private List<Activiteiten> activiteitenLijst;
         private SomerenDB database;
         private static Someren_Form instance;
@@ -237,19 +238,11 @@ namespace Someren
         private void drankvoorraadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
-            groupBox1.Text = "Voorraad";
-
-            var database = new SomerenDB();
-            panel1.Controls.Add(SomerenUI.ShowVoorraad(database.GetVoorraad()));
-        }
-
-        private void drankvoorraadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            panel1.Controls.Clear();
-            groupBox1.Text = "Voorraad";
+            groupBox1.Text = "Drankvoorraad";
 
             try
             {
+                //toont de tabel met voorraad.
                 voorraadLijst = database.GetVoorraad();
                 panel1.Controls.Add(SomerenUI.ShowVoorraad(voorraadLijst));
             }
@@ -259,6 +252,22 @@ namespace Someren
             }
         }
 
+        private void roosterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Rooster";
+
+            try
+            {
+                //toont de tabel met voorraad.
+                roosterLijst = database.GetRooster();
+                panel1.Controls.Add(SomerenUI.ShowRooster(roosterLijst));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
         private void activiteitenlijstToolStripMenuItem_Click(object sender, EventArgs e) /// de show activiteiten moet nog worden geactiveerd
         {
             //pagina aanmaken en tussenkopje laten zien. 
