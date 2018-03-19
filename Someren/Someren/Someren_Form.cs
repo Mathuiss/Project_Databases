@@ -15,6 +15,7 @@ namespace Someren
         private List<VoorraadObject> voorraadLijst;
         private List<Activiteiten> activiteitenLijst;
         private SomerenDB database;
+        private AdministratieDownloader administratie;
         private static Someren_Form instance;
 
         public Someren_Form()
@@ -217,11 +218,26 @@ namespace Someren
         private void omzetrapportageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
-            groupBox1.Text = "omzetrapportage";
+            groupBox1.Text = "Omzetrapportage";
 
             //panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
             panel1.Controls.Add(SomerenUI.AddMaxDatumButton(5,5));
             panel1.Controls.Add(SomerenUI.AddMinDatumButton(225,5));
+
+            panel1.Controls.Add(SomerenUI.AddDateSelectorBtn());
+
+            //uitslag als derde button voor de uitslag
+            try
+            {
+                //toont de tabel met omzet.
+                omzet = administratie.GetOmzet();
+                panel1.Controls.Add(SomerenUI.ShowDocenten(docentLijst));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
         }
 
         private void drankvoorraadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -260,6 +276,16 @@ namespace Someren
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void begeleidersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Begeleiders";
+
+            panel1.Controls.Add(SomerenUI.ShowBegeleiders());
+            panel1.Controls.Add(SomerenUI.AddBegeleiderOmzettenBtn());
+            panel1.Controls.Add(SomerenUI.AddRemoveBegeleiderBtn());
         }
     }
 }

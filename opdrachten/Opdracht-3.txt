@@ -1,0 +1,51 @@
+Someren Opdracht 3:
+
+Verdeel de varianten A, B, C, D over jouw groepsleden:	
+groepen met 2 personen maken variant A en B.
+groepen met 3 personen maken variant A t/m C.
+groepen met 4 personen maken variant A t/m D.
+
+Algemeen deel
+Naast de in opdracht 1 en 2 aangemaakte tabellen komen er nog drie database tabellen bij (indien jullie deze nog niet hadden aangemaakt):
+    • Activiteit (Id, Omschrijving, aantalStudenten, aantalBegeleiders)
+    • Begeleider (DocentId)
+    • Rooster (Activiteit, Begeleider, Datum, tijdStart, tijdEind)
+
+	
+	
+Variant A: Activiteitenlijst
+
+    • Activiteiten tonen
+    • Activiteiten toevoegen
+    • Activiteiten wijzigen
+    • Actviteiten verwijderen (voorafgaand een ‘Weet u zeker dat u deze activiteit wilt verwijderen?’
+Toon het resultaat op het scherm na het klikken op menu-item Activiteitenlijst in een table of listView.
+
+
+
+Variant B: Begeleiders
+
+Toon een lijst met begeleiders, waarbij de volgende functionaliteiten mogelijk zijn:
+    • Begeleiders tonen (Begeleiders zijn Docenten die ook voorkomen in de tabel Begeleider voorkomen: generalisatie/specialisatie relatie)
+    • Begeleiders toevoegen (een docent omzetten naar een begeleider)
+    • Begeleiders verwijderen (voorafgaand een ‘Weet u zeker dat u deze begeleider wilt verwijderen?’ -> eigenlijk verwijder je alleen de rij waaruit blijkt dat een Docent de status begeleider heeft. De onderliggende Docent-entiteit hoef je niet te verwijderen.
+
+	
+	
+	
+Variant C: Weekrooster
+
+Toon een weekrooster (ma t/m vr.) met minimaal zelfgemaakte 5 activiteiten, minimaal 9 begeleiders, verspreid over 2 dagen (maandag 11 april 2017 en dinsdag 12 april 2017). 
+Activiteiten zonder Begeleider (DocentID: 0) toon je als ‘Onbegeleid’ in het Weekrooster.
+
+
+
+
+Variant D. Docentrooster
+
+Voeg in de SomerenApp onder ‘Activiteiten’ een nieuw submenu-item toe. Noem het ‘Docentrooster’.
+Onder Docentrooster realiseer je de volgende functionaliteit:
+Maak het mogelijk om een docent te selecteren. Na het selecteren van een docent worden alle activeiten van deze docent getoond. Je hebt ook de mogelijkheid om deze docentbegeleider te vervangen door een andere docentbegeleider. Maak hiervoor een knop ‘Vervanging regelen’. Na het drukken op de knop ‘Vervanging regelen’ vraagt het programma ‘Welke docent moet als vervanger optreden?’ 
+Er volgt een selectiemogelijkheid met lijst docenten. Na het kiezen van een docent worden alle activiteiten van de eerstgekozen docent bijgewerkt met als begeleider de nieuw gekozen docent. De nieuwe docent vervangt dus de oude docent voor de activiteiten die de eerdere docent zou begeleiden.
+Het programma controleert of de docent niet al ingeroosterd was voor een andere activiteit. In dat geval wordt die activiteit niet overgenomen door de invaldocent. De activiteit wordt dan ‘Onbegeleid’ (docentID 0).
+

@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activiteiten.cs" />
+    <Compile Include="Begeleider.cs" />
     <Compile Include="Docent.cs" />
     <Compile Include="Drank.cs" />
     <Compile Include="Kamer.cs" />
