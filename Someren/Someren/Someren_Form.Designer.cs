@@ -188,20 +188,21 @@
             // drankvoorraadToolStripMenuItem
             // 
             this.drankvoorraadToolStripMenuItem.Name = "drankvoorraadToolStripMenuItem";
-            this.drankvoorraadToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.drankvoorraadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.drankvoorraadToolStripMenuItem.Text = "Drankvoorraad";
+            this.drankvoorraadToolStripMenuItem.Click += new System.EventHandler(this.drankvoorraadToolStripMenuItem_Click);
             // 
             // kassaToolStripMenuItem
             // 
             this.kassaToolStripMenuItem.Name = "kassaToolStripMenuItem";
-            this.kassaToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.kassaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.kassaToolStripMenuItem.Text = "Kassa";
             this.kassaToolStripMenuItem.Click += new System.EventHandler(this.kassaToolStripMenuItem_Click);
             // 
             // omzetrapportageToolStripMenuItem
             // 
             this.omzetrapportageToolStripMenuItem.Name = "omzetrapportageToolStripMenuItem";
-            this.omzetrapportageToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.omzetrapportageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.omzetrapportageToolStripMenuItem.Text = "Omzetrapportage";
             this.omzetrapportageToolStripMenuItem.Click += new System.EventHandler(this.omzetrapportageToolStripMenuItem_Click);
             // 
@@ -227,6 +228,7 @@
             this.begeleidersToolStripMenuItem.Name = "begeleidersToolStripMenuItem";
             this.begeleidersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.begeleidersToolStripMenuItem.Text = "Begeleiders";
+            this.begeleidersToolStripMenuItem.Click += new System.EventHandler(this.begeleidersToolStripMenuItem_Click);
             // 
             // roosterToolStripMenuItem
             // 
@@ -253,9 +255,9 @@
             // 
             this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Location = new System.Drawing.Point(9, 22);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(581, 415);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
@@ -265,7 +267,7 @@
             // panel1
             // 
             this.panel1.Location = new System.Drawing.Point(4, 15);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(568, 385);
             this.panel1.TabIndex = 0;
@@ -276,7 +278,7 @@
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.Location = new System.Drawing.Point(605, 37);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(229, 178);
             this.pictureBox1.TabIndex = 3;
@@ -334,7 +336,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Someren_Form";
             this.Text = "SomerenAdministratie";
             this.Load += new System.EventHandler(this.Form1_Load);

@@ -44,9 +44,24 @@ namespace Data
         {
             using (SqlConnection connection = OpenConnectieDB())
             {
+                connection.Close();
                 connection.Open();
 
                 var command = new SqlCommand("select studentNr from " + table + " " + condition, connection);
+                int answer = (int)command.ExecuteScalar();
+                connection.Close();
+                return answer;
+            }
+        }
+
+        public static int GetId(string column, string table, string condition)
+        {
+            using (SqlConnection connection = OpenConnectieDB())
+            {
+                connection.Close();
+                connection.Open();
+
+                var command = new SqlCommand("select " + column + " from " + table + " " + condition, connection);
                 int answer = (int)command.ExecuteScalar();
                 connection.Close();
                 return answer;
@@ -57,11 +72,28 @@ namespace Data
         {
             using (SqlConnection connection = OpenConnectieDB())
             {
+                connection.Close();
                 connection.Open();
 
-                var command = new SqlCommand("select max(id) from " + table);
+                var command = new SqlCommand("select max(id) from " + table, connection);
                 int answer = (int)command.ExecuteScalar();
                 connection.Close();
+                answer++;
+                return answer;
+            }
+        }
+
+        public static int GetNewId(string column, string table)
+        {
+            using (SqlConnection connection = OpenConnectieDB())
+            {
+                connection.Close();
+                connection.Open();
+
+                var command = new SqlCommand("select max(" + column + ") from " + table, connection);
+                int answer = (int)command.ExecuteScalar();
+                connection.Close();
+                answer++;
                 return answer;
             }
         }
