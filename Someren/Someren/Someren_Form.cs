@@ -218,7 +218,7 @@ namespace Someren
         private void omzetrapportageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
-            groupBox1.Text = "omzetrapportage";
+            groupBox1.Text = "Omzetrapportage";
 
             //panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
             panel1.Controls.Add(SomerenUI.AddMaxDatumButton(5,5));
@@ -276,6 +276,16 @@ namespace Someren
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void begeleidersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Begeleiders";
+
+            panel1.Controls.Add(SomerenUI.ShowBegeleiders());
+            panel1.Controls.Add(SomerenUI.AddBegeleiderOmzettenBtn());
+            panel1.Controls.Add(SomerenUI.AddRemoveBegeleiderBtn());
         }
     }
 }
