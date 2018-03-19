@@ -231,8 +231,7 @@ namespace Someren
             try
             {
                 //toont de tabel met omzet.
-                omzet = administratie.GetOmzet();
-                panel1.Controls.Add(SomerenUI.ShowDocenten(docentLijst));
+                panel1.Controls.Add(SomerenUI.ShowDocenten(SomerenUI.ShowOmzetRapportage()));
             }
             catch (Exception ex)
             {
