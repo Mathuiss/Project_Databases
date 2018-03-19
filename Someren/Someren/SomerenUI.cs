@@ -26,10 +26,10 @@ namespace Someren
         {
             this.form = form;
         }
-        
+
         public Control ShowStudents(List<Student> studentList)
         {
-            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
+            //Is in de functie geÃ¯nitialiseerd zodat de event handeler de juiste instantie pakt
             listView = new ListView();
 
             //List view eigenschappen
@@ -45,7 +45,7 @@ namespace Someren
 
             //Kolommen voor in de list view
             listView.Columns.Add("StudentNr", -2, HorizontalAlignment.Left);
-            listView.Columns.Add("Voornaam", - 2, HorizontalAlignment.Left);
+            listView.Columns.Add("Voornaam", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Achternaam", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Kamer Code", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Begeleider Code", -2, HorizontalAlignment.Left);
@@ -69,7 +69,7 @@ namespace Someren
 
             return listView;
         }
-        
+
         public Control ShowKamers(List<Kamer> kamerList)
         {
             listView = new ListView();
@@ -81,7 +81,7 @@ namespace Someren
             listView.Sorting = SortOrder.Ascending;
 
             listView.ColumnClick += ListView_ColumnClick;
-            
+
             listView.Columns.Add("Kamer Code", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Max. Personen", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Is Docent Kamer", -2, HorizontalAlignment.Left);
@@ -102,7 +102,7 @@ namespace Someren
 
             return listView;
         }
-        
+
         public Control ShowDocenten(List<Docent> docentList)
         {
             listView = new ListView();
@@ -114,7 +114,7 @@ namespace Someren
             listView.Sorting = SortOrder.Ascending;
 
             listView.ColumnClick += ListView_ColumnClick;
-            
+
             listView.Columns.Add("Docent Code", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Voornaam", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Achternaam", -2, HorizontalAlignment.Left);
@@ -143,11 +143,10 @@ namespace Someren
         public Control ShowOmzetCalendar()
         {
             //var calender = new MonthCalendar();
-            
+
             // Create a new DateTimePicker control and initialize it.
             kiesMinDatum = new DateTimePicker();
             kiesMaxDatum = new DateTimePicker();
-
 
             // Set the MinDate and MaxDate.
             kiesMinDatum.MinDate = new DateTime(2018, 3, 1);
@@ -156,7 +155,6 @@ namespace Someren
             kiesMaxDatum.MinDate = new DateTime(2018, 3, 1);
             kiesMaxDatum.MaxDate = DateTime.Today;
 
-            
             // Set the CustomFormat string.
             //dateTimePicker1.CustomFormat = "MMMM dd, yyyy - dddd";
             kiesMinDatum.CustomFormat = "dddd dd MMMM yyyy";
@@ -189,10 +187,10 @@ namespace Someren
             var manager = new AdministratieManager();
             manager.BerekenOmzet(kiesMinDatum.Value.Date);
         }
-        
+
         public Control ShowKassaDranken(List<Drank> drankLijst)
         {
-            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
+            //Is in de functie geÃ¯nitialiseerd zodat de event handeler de juiste instantie pakt
             listView = new ListView();
 
             //List view eigenschappen
@@ -228,11 +226,12 @@ namespace Someren
             return listView;
         }
 
-        //STUDENTENSCHERM
+        //Bardienst
+        //Kassa
 
         public Control ShowKassaStudenten(List<Student> studentLijst)
         {
-            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
+            //Is in de functie geÃ¯nitialiseerd zodat de event handeler de juiste instantie pakt
             listView = new ListView();
 
             //List view eigenschappen
@@ -266,10 +265,10 @@ namespace Someren
 
                 listView.Items.Add(item);
             }
-            
+
             return listView;
         }
-        
+
         public Control AddStudentSelectButton()
         {
             button = new Button();
@@ -281,14 +280,14 @@ namespace Someren
 
             return button;
         }
-        
+
         private void Btn_Selecteer_Click(object sender, EventArgs e)
         {
-            
             if (listView.CheckedItems.Count != 0)
             {
                 form.panel1.Controls.Clear();
                 selectedStudent = int.Parse(listView.CheckedItems[0].Text);
+
                 var database = new SomerenDB();
                 form.panel1.Controls.Add(ShowVoorraad(database.GetVoorraad()));
 
@@ -302,7 +301,6 @@ namespace Someren
             {
                 MessageBox.Show("Selecteer een student");
             }
-
         }
 
         //VOORRAADSCHERM
@@ -342,7 +340,7 @@ namespace Someren
                 }
                 else
                 {
-                    item.SubItems[0].Text = "✔";
+                    item.SubItems[0].Text = "âœ”";
                     item.SubItems[0].ForeColor = System.Drawing.Color.Green;
                 }
             }
@@ -436,7 +434,6 @@ namespace Someren
             dialog[1] = tb_Aantal;
             dialog[2] = btn_Min;
 
-            
             return dialog;
         }
 
@@ -487,9 +484,9 @@ namespace Someren
 
         public Control ShowBegeleiders()
         {
-            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
+            //Is in de functie geÃ¯nitialiseerd zodat de event handeler de juiste instantie pakt
             listView = new ListView();
-            
+
             //List view eigenschappen
             listView.View = View.Details;
             listView.Height = 300;
@@ -519,7 +516,7 @@ namespace Someren
                 items[0] = begeleider.BegeleiderCode.ToString();
                 items[1] = begeleider.Naam;
                 items[2] = begeleider.Achternaam;
-                
+
                 item = new ListViewItem(items);
 
                 listView.Items.Add(item);
@@ -561,6 +558,7 @@ namespace Someren
                     "Begeleider Verwijderen",
                     MessageBoxButtons.YesNo
                     );
+
                 if (dialogResult == DialogResult.Yes)
                 {
                     var database = new BegeleiderDataController();
@@ -572,11 +570,6 @@ namespace Someren
                             database.RemoveBegeleider(int.Parse(item.SubItems[0].Text));
                         }
                     }
-                }
-                else if (dialogResult == DialogResult.No)
-                {
-                    form.panel1.Controls.Clear();
-                    form.panel1.Controls.Add(ShowBegeleiders());
                 }
             }
             else

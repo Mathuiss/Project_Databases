@@ -188,20 +188,21 @@
             // drankvoorraadToolStripMenuItem
             // 
             this.drankvoorraadToolStripMenuItem.Name = "drankvoorraadToolStripMenuItem";
-            this.drankvoorraadToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.drankvoorraadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.drankvoorraadToolStripMenuItem.Text = "Drankvoorraad";
+            this.drankvoorraadToolStripMenuItem.Click += new System.EventHandler(this.drankvoorraadToolStripMenuItem_Click);
             // 
             // kassaToolStripMenuItem
             // 
             this.kassaToolStripMenuItem.Name = "kassaToolStripMenuItem";
-            this.kassaToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.kassaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.kassaToolStripMenuItem.Text = "Kassa";
             this.kassaToolStripMenuItem.Click += new System.EventHandler(this.kassaToolStripMenuItem_Click);
             // 
             // omzetrapportageToolStripMenuItem
             // 
             this.omzetrapportageToolStripMenuItem.Name = "omzetrapportageToolStripMenuItem";
-            this.omzetrapportageToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.omzetrapportageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.omzetrapportageToolStripMenuItem.Text = "Omzetrapportage";
             this.omzetrapportageToolStripMenuItem.Click += new System.EventHandler(this.omzetrapportageToolStripMenuItem_Click);
             // 
@@ -218,20 +219,20 @@
             // activiteitenlijstToolStripMenuItem
             // 
             this.activiteitenlijstToolStripMenuItem.Name = "activiteitenlijstToolStripMenuItem";
-            this.activiteitenlijstToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.activiteitenlijstToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.activiteitenlijstToolStripMenuItem.Text = "Activiteitenlijst";
             // 
             // begeleidersToolStripMenuItem
             // 
             this.begeleidersToolStripMenuItem.Name = "begeleidersToolStripMenuItem";
-            this.begeleidersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.begeleidersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.begeleidersToolStripMenuItem.Text = "Begeleiders";
             this.begeleidersToolStripMenuItem.Click += new System.EventHandler(this.begeleidersToolStripMenuItem_Click);
             // 
             // roosterToolStripMenuItem
             // 
             this.roosterToolStripMenuItem.Name = "roosterToolStripMenuItem";
-            this.roosterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.roosterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.roosterToolStripMenuItem.Text = "Rooster";
             // 
             // helpToolStripMenuItem

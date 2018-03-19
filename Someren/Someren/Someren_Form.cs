@@ -232,5 +232,14 @@ namespace Someren
             panel1.Controls.Add(SomerenUI.AddBegeleiderOmzettenBtn());
             panel1.Controls.Add(SomerenUI.AddRemoveBegeleiderBtn());
         }
+
+        private void drankvoorraadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Voorraad";
+
+            var database = new SomerenDB();
+            panel1.Controls.Add(SomerenUI.ShowVoorraad(database.GetVoorraad()));
+        }
     }
 }

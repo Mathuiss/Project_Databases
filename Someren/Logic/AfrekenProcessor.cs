@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using Model;
 using Data;
 
@@ -13,7 +12,7 @@ namespace Logic
             var commands = new List<string>();
             foreach (Order item in bestelling)
             {
-                commands.Add("update VOORRAAD set aantal = " + GetAantal(item.Aantal, item.Drank));
+                commands.Add("update VOORRAAD set aantal = " + GetAantal(item.Aantal, item.Drank) + " where Id = " + Utils.GetId("Id", "VOORRAAD", "where naam = '" + item.Drank + "'"));
                 commands.Add(GetAfzetQuery(item));
                 commands.Add(GetOmzetQuery(item));
             }
@@ -25,7 +24,7 @@ namespace Logic
         private int GetAantal(int aantal, string naam)
         {
             var downloader = new KassaDownloader();
-            return aantal - downloader.GetAantal(naam);
+            return downloader.GetAantal(naam) - aantal;
         }
 
         private string GetAfzetQuery(Order item)
@@ -44,7 +43,7 @@ namespace Logic
             string query = "insert into OMZET (Id, tijd, mutatie, studentNr) values (";
             query += Utils.GetNewId("OMZET") + ", ";
             query += "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', " ;
-            query += item.Prijs + ", ";
+            query += item.Prijs.ToString(".") + ", ";
             query += item.StudentNr + ")";
 
             return query;
