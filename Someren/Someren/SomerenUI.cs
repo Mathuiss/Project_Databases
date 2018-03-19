@@ -15,10 +15,13 @@ namespace Someren
 
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private ListView listView;
+        private ListView listViewB;
+        private ListView listViewAC;
         private TextBox tb_Aantal;
         private DateTimePicker kiesMinDatum;
         private DateTimePicker kiesMaxDatum;
         private Button button;
+        private int selectedStudent;
 
         public SomerenUI(Someren_Form form)
         {
@@ -286,6 +289,8 @@ namespace Someren
             return listView;
         }
 
+        //STUDENTENSCHERM
+
         public Control ShowKassaStudenten(List<Student> studentLijst)
         {
             //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
@@ -337,26 +342,121 @@ namespace Someren
 
             return button;
         }
-
+        
         private void Btn_Selecteer_Click(object sender, EventArgs e)
         {
-            form.panel1.Controls.Clear();
+            
+            if (listView.CheckedItems.Count != 0)
+            {
+                form.panel1.Controls.Clear();
+                selectedStudent = int.Parse(listView.CheckedItems[0].Text);
+                var database = new SomerenDB();
+                form.panel1.Controls.Add(ShowVoorraad(database.GetVoorraad()));
+
+                Control[] controls = AddAantalDialog();
+                form.panel1.Controls.AddRange(controls);
+                form.panel1.Controls.Add(AddToevoegenBtn());
+                form.panel1.Controls.Add(ShowBestelling());
+            }
+            else
+            {
+                MessageBox.Show("Selecteer een student");
+            }
+
         }
 
-        public Control AddBetaalBtn()
-        {
-            var button = new Button();
-            button.Text = "Betaal";
-            button.Location = new Point(360, 320);
+        //VOORRAADSCHERM
 
-            button.Click += Btn_Betaald_Click;
+        public Control ShowVoorraad(List<VoorraadObject> voorraad)
+        {
+
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 200;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+            listView.CheckBoxes = true;
+
+            listView.ColumnClick += ListView_ColumnClick;
+
+            listView.Columns.Add("Drankje", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
+
+            foreach (VoorraadObject drankje in voorraad)
+            {
+                string[] items = new string[3];
+                ListViewItem item;
+
+                items[0] = drankje.Id.ToString();
+                items[1] = drankje.Naam.ToString();
+                items[2] = drankje.Aantal.ToString();
+
+                item = new ListViewItem(items);
+
+                listView.Items.Add(item);
+            }
+
+            return listView;
+        }
+
+        public Control ShowBestelling()
+        {
+            listViewB = new ListView();
+            listViewB.View = View.Details;
+            listViewB.Height = 300;
+            listViewB.Width = 200;
+            listViewB.AllowColumnReorder = true;
+            listViewB.GridLines = true;
+            listViewB.Sorting = SortOrder.Ascending;
+            listViewB.CheckBoxes = true;
+            listViewB.Location = new Point(300, 0);
+
+            listViewB.Columns.Add("Drankje", -2, HorizontalAlignment.Left);
+            listViewB.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
+            listViewB.Columns.Add("Prijs", -2, HorizontalAlignment.Left);
+
+            return listViewB;
+        }
+
+        public Control AddToevoegenBtn()
+        {
+            button = new Button();
+            button.Location = new Point(215, 160);
+            button.Text = "Toevoegen";
+            button.Click += Btn_Toevoegen_Click;
 
             return button;
         }
 
-        private void Btn_Betaald_Click(object sender, EventArgs e)
+        private void Btn_Toevoegen_Click(object sender, EventArgs e)
         {
-            
+            if (listView.CheckedItems.Count != 0 || tb_Aantal.Text == "0")
+            {
+                foreach (ListViewItem item in listView.Items)
+                {
+                    if (item.Checked)
+                    {
+                        string naam = item.SubItems[1].Text;
+                        int aantal = int.Parse(tb_Aantal.Text);
+
+                        var calc = new DataCalculator();
+                        double prijs = calc.GetPrijs(naam, aantal);
+
+                        string[] items = new string[3];
+                        items[0] = naam;
+                        items[1] = aantal.ToString();
+                        items[2] = prijs.ToString();
+
+                        listViewB.Items.Add(new ListViewItem(items));
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Voer een drank in.");
+            }
         }
 
         public Control[] AddAantalDialog()
@@ -405,39 +505,22 @@ namespace Someren
             tb_Aantal.Text = n.ToString();
         }
 
-        public Control showVoorraad(List<VoorraadObject> voorraad)
-            // showVoorraad gebruikt momenteel nog List<Kamer>, zodat er geen errors getoond worden.
+        public Control AddBetaalBtn()
         {
+            var button = new Button();
+            button.Text = "Betaal";
+            button.Location = new Point(400, 320);
 
-            listView = new ListView();
-            listView.View = View.Details;
-            listView.Height = 300;
-            listView.Width = 400;
-            listView.AllowColumnReorder = true;
-            listView.GridLines = true;
-            listView.Sorting = SortOrder.Ascending;
+            button.Click += Btn_Betaald_Click;
 
-            listView.ColumnClick += ListView_ColumnClick;
-
-            listView.Columns.Add("Drankje", -2, HorizontalAlignment.Left);
-            listView.Columns.Add("Aantal", -2, HorizontalAlignment.Left);
-
-            foreach (VoorraadObject drankje in voorraad)
-            {
-                string[] items = new string[3];
-                ListViewItem item;
-
-                items[0] = drankje.Id.ToString();
-                items[1] = drankje.Naam.ToString();
-                items[2] = drankje.Aantal.ToString();
-
-                item = new ListViewItem(items);
-
-                listView.Items.Add(item);
-            }
-
-            return listView;
+            return button;
         }
+
+        private void Btn_Betaald_Click(object sender, EventArgs e)
+        {
+            
+        }
+        
 
         private void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -464,6 +547,79 @@ namespace Someren
             l.Location = new Point(x, y);
             l.Width = width;
             return l;
+        }
+        public Control ShowActiviteiten(List<Activiteiten> activiteitenLijst)
+        {
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            listView.ColumnClick += ListView_ColumnClick;
+
+            listView.Columns.Add("Activiteiten code", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Omschrijving", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("aantal studenten", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("aantal begeleiders", -2, HorizontalAlignment.Left);
+
+            foreach(Activiteiten activiteit in activiteitenLijst)
+            {
+                string[] items = new string[4];
+                ListViewItem item;
+
+                items[0] = activiteit.ActiviteitsCode.ToString();
+                items[1] = activiteit.Omschrijving;
+                items[2] = activiteit.AantalStudenten.ToString();
+                items[3] = activiteit.BegeleiderCode.ToString();
+
+                item = new ListViewItem(items);
+                listView.Items.Add(item);
+            }
+            return listView;
+        } 
+        public Control ActiviteitToevoegenButton(List<Activiteiten> activiteitenlijst)
+        {
+            //hier een button toevoegen 
+
+            button = new Button();
+            button.Text = "toevoegen";
+            button.Width = 70;
+            button.Location = new Point(0, 320);
+
+            listView = new ListView();
+
+            return button;
+        }
+
+        public Control ActiviteitVerwijderenButton(List<Activiteiten> activiteitenlijst)
+        {
+            //hier een button toevoegen 
+
+            button = new Button();
+            button.Text = "verwijderen ";
+            button.Width = 70;
+            button.Location = new Point(80, 320);
+
+            listView = new ListView();
+
+            return button;
+        }
+
+        public Control ActiviteitBewerkenButton(List<Activiteiten> activiteitenlijst)
+        {
+            //hier een button toevoegen 
+
+            button = new Button();
+            button.Text = "bewerken";
+            button.Width = 70;
+            button.Location = new Point(160, 320);
+
+            listView = new ListView();
+
+            return button;
         }
     }
 }
