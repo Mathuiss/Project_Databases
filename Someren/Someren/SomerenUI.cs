@@ -585,7 +585,7 @@ namespace Someren
 
         private void Btn_VoegBegeleiderToe_Click(object sender, EventArgs e)
         {
-            var database = new BegeleiderDataController();
+            var database = new SomerenDB();
             List<Docent> docenten = database.GetDocenten();
 
             formB = new Form();
