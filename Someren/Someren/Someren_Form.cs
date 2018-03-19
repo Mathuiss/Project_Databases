@@ -167,7 +167,7 @@ namespace Someren
             {
                 //toont de tabel met docenten.
                 docentLijst = database.GetDocenten();
-                panel1.Controls.Add(SomerenUI.ShowDocenten(docentLijst));
+                //panel1.Controls.Add(SomerenUI.ShowDocenten());
             }
             catch (Exception ex)
             {
@@ -261,7 +261,9 @@ namespace Someren
             {
                 //toont de tabel met voorraad.
                 roosterLijst = database.GetRooster();
-                panel1.Controls.Add(SomerenUI.ShowRooster(roosterLijst));
+                panel1.Controls.Add(SomerenUI.ShowRooster());
+                panel1.Controls.Add(SomerenUI.AddRoosterBtn());
+                panel1.Controls.Add(SomerenUI.ChangeRoosterBtn());
             }
             catch (Exception ex)
             {
@@ -277,9 +279,7 @@ namespace Someren
             try
             {
                 //toont een lijst met de activiteiten
-
-                activiteitenLijst = database.GetActiviteiten();                
-                panel1.Controls.Add(SomerenUI.ShowActiviteiten(activiteitenLijst));
+                panel1.Controls.Add(SomerenUI.ShowActiviteiten());
                 panel1.Controls.Add(SomerenUI.ActiviteitToevoegenButton(activiteitenLijst));
                 panel1.Controls.Add(SomerenUI.ActiviteitVerwijderenButton(activiteitenLijst));
                 panel1.Controls.Add(SomerenUI.ActiviteitBewerkenButton(activiteitenLijst));
