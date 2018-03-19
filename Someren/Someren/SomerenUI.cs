@@ -669,32 +669,7 @@ namespace Someren
             form.panel1.Controls.Add(AddRemoveBegeleiderBtn());
         }
 
-        private void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-            switch (listView.Sorting)
-            {
-                case SortOrder.Ascending:
-                    listView.Sorting = SortOrder.Descending;
-                    break;
-                case SortOrder.Descending:
-                    listView.Sorting = SortOrder.Ascending;
-                    break;
-                default:
-                    listView.Sorting = SortOrder.Ascending;
-                    break;
-            }
 
-            listView.Sort();
-        }
-
-        public Control AddUILabel(string text, int x, int y, int width)
-        {
-            Label l = new Label();
-            l.Text = text;
-            l.Location = new Point(x, y);
-            l.Width = width;
-            return l;
-        }
         public Control ShowActiviteiten(List<Activiteiten> activiteitenLijst)
         {
             listView = new ListView();
@@ -727,6 +702,7 @@ namespace Someren
             }
             return listView;
         } 
+
         public Control ActiviteitToevoegenButton(List<Activiteiten> activiteitenlijst)
         {
             //hier een button toevoegen 
@@ -767,6 +743,33 @@ namespace Someren
             listView = new ListView();
 
             return button;
+        }
+
+        private void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            switch (listView.Sorting)
+            {
+                case SortOrder.Ascending:
+                    listView.Sorting = SortOrder.Descending;
+                    break;
+                case SortOrder.Descending:
+                    listView.Sorting = SortOrder.Ascending;
+                    break;
+                default:
+                    listView.Sorting = SortOrder.Ascending;
+                    break;
+            }
+
+            listView.Sort();
+        }
+
+        public Control AddUILabel(string text, int x, int y, int width)
+        {
+            Label l = new Label();
+            l.Text = text;
+            l.Location = new Point(x, y);
+            l.Width = width;
+            return l;
         }
     }
 }
