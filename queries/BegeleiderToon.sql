@@ -1,0 +1,2 @@
+select docentCode
+from BEGELEIDER

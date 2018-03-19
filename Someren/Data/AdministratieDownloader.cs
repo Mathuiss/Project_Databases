@@ -17,17 +17,16 @@ namespace Data
             connection.Close();
             connection.Open();
 
-            var command = new SqlCommand("select Id, tijd, mutatie from OMZET where time = " + date, connection);
+            var command = new SqlCommand("select Id, tijd, mutatie from OMZET where time >= minDatum AND time <= maxDatum = " + date, connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    GetOmzet.Add(new Omzetrapportage(reader.GetInt32(0) , reader.GetDateTime(1) , reader.GetDouble(2)));
+                    GetOmzet.Add(new Omzetrapportage(reader.GetInt32(0), reader.GetDateTime(1), reader.GetDateTime(2), reader.GetDouble(3)));
                 }
             }
-
             connection.Close();
             return GetOmzet;
         }

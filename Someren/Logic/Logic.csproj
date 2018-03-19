@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AdministratieManager.cs" />
     <Compile Include="AfrekenProcessor.cs" />
+    <Compile Include="DataCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

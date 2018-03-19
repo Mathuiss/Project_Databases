@@ -8,15 +8,46 @@ namespace Logic
 {
     public class AfrekenProcessor
     {
-        public void RekenAf(ListView.CheckedListViewItemCollection checkedItems, int aantal)
+        public void RekenAf(List<Order> bestelling)
         {
-            var voorraad = new List<VoorraadObject>();
-
-            foreach (ListViewItem item in checkedItems)
+            var commands = new List<string>();
+            foreach (Order item in bestelling)
             {
-                int id = Utils.GetId("VOORRAAD", "where naam like '" + item.Text.Replace(" ", "") + "'");
-                voorraad.Add(new VoorraadObject(id, item.Text, aantal));
+                commands.Add("update VOORRAAD set aantal = " + GetAantal(item.Aantal, item.Drank));
+                commands.Add(GetAfzetQuery(item));
+                commands.Add(GetOmzetQuery(item));
             }
+
+            var uploader = new KassaUploader();
+            uploader.Betaal(commands);
+        }
+
+        private int GetAantal(int aantal, string naam)
+        {
+            var downloader = new KassaDownloader();
+            return aantal - downloader.GetAantal(naam);
+        }
+
+        private string GetAfzetQuery(Order item)
+        {
+            string query = "insert into AFZET (Id, date, drankId, aantal) values(";
+            query += Utils.GetNewId("AFZET") + ", ";
+            query += "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', ";
+            query += Utils.GetId("Id", "DRANK", "where Naam = '" + item.Drank + "'") + ", ";
+            query += item.Aantal.ToString() + ")";
+
+            return query;
+        }
+
+        private string GetOmzetQuery(Order item)
+        {
+            string query = "insert into OMZET (Id, tijd, mutatie, studentNr) values (";
+            query += Utils.GetNewId("OMZET") + ", ";
+            query += "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', " ;
+            query += item.Prijs + ", ";
+            query += item.StudentNr + ")";
+
+            return query;
         }
     }
 }

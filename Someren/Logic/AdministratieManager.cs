@@ -10,19 +10,25 @@ namespace Logic
 {
     public class AdministratieManager
     {
-        //public double BerekenOmzet(DateTime date)
-        //{
-        //    var administratie = new AdministratieDownloader();
-        //    List<Omzetrapportage> mutatieLijst = administratie.GetOmzetRapportage(); //omgezette string meegeven
+        public double BerekenOmzet(DateTime date)
+        {
+            //afzet = mutatie
+            var administratie = new AdministratieDownloader();
+            List<Omzetrapportage> mutatieLijst = administratie.GetOmzetRapportage(date.ToString());
+
+            double totaal = 0;
+
+            foreach (Omzetrapportage mutatie in mutatieLijst)
+            {
+                totaal += mutatie.Mutatie;
+            }
 
 
 
 
-        //    //omzet = afzet * verkoopprijs, v/d drankjes
-        //    //omzet bij de kassa vandaan halen
-        //    //afzet van hierboven
-        //    //en dan keer elkaar,
-        //    return administratie;
-        //}
+
+            double test = 5;
+            return test;
+        }
     }
 }
