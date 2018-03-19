@@ -13,6 +13,7 @@ namespace Someren
         private List<Docent> docentLijst;
         private List<Kamer> kamerLijst;
         private List<VoorraadObject> voorraadLijst;
+        private List<Rooster> roosterLijst;
         private List<Activiteiten> activiteitenLijst;
         private SomerenDB database;
         private AdministratieDownloader administratie;
@@ -167,7 +168,7 @@ namespace Someren
             {
                 //toont de tabel met docenten.
                 docentLijst = database.GetDocenten();
-                panel1.Controls.Add(SomerenUI.ShowDocenten(docentLijst));
+                //panel1.Controls.Add(SomerenUI.ShowDocenten());
             }
             catch (Exception ex)
             {
@@ -240,13 +241,24 @@ namespace Someren
 
         }
 
+        private void begeleidersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Begeleiders";
+
+            panel1.Controls.Add(SomerenUI.ShowBegeleiders());
+            panel1.Controls.Add(SomerenUI.AddBegeleiderOmzettenBtn());
+            panel1.Controls.Add(SomerenUI.AddRemoveBegeleiderBtn());
+        }
+
         private void drankvoorraadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
-            groupBox1.Text = "Voorraad";
+            groupBox1.Text = "Drankvoorraad";
 
             try
             {
+                //toont de tabel met voorraad.
                 voorraadLijst = database.GetVoorraad();
                 panel1.Controls.Add(SomerenUI.ShowVoorraad(voorraadLijst));
             }
@@ -256,6 +268,24 @@ namespace Someren
             }
         }
 
+        private void roosterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Rooster";
+
+            try
+            {
+                //toont de tabel met voorraad.
+                roosterLijst = database.GetRooster();
+                panel1.Controls.Add(SomerenUI.ShowRooster());
+                panel1.Controls.Add(SomerenUI.AddRoosterBtn());
+                panel1.Controls.Add(SomerenUI.ChangeRoosterBtn());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
         private void activiteitenlijstToolStripMenuItem_Click(object sender, EventArgs e) /// de show activiteiten moet nog worden geactiveerd
         {
             //pagina aanmaken en tussenkopje laten zien. 
@@ -265,9 +295,7 @@ namespace Someren
             try
             {
                 //toont een lijst met de activiteiten
-
-                activiteitenLijst = database.GetActiviteiten();                
-                panel1.Controls.Add(SomerenUI.ShowActiviteiten(activiteitenLijst));
+                panel1.Controls.Add(SomerenUI.ShowActiviteiten());
                 panel1.Controls.Add(SomerenUI.ActiviteitToevoegenButton(activiteitenLijst));
                 panel1.Controls.Add(SomerenUI.ActiviteitVerwijderenButton(activiteitenLijst));
                 panel1.Controls.Add(SomerenUI.ActiviteitBewerkenButton(activiteitenLijst));

@@ -144,7 +144,11 @@ namespace Data
             connection.Close();
             connection.Open();
 
-            var command = new SqlCommand("select id, naam, aantal from VOORRAAD", connection);
+            var command = new SqlCommand("select VOORRAAD.id, VOORRAAD.naam, VOORRAAD.aantal, DRANK.prijs " +
+                                        "from VOORRAAD " +
+                                        "join DRANK on VOORRAAD.id = DRANK.id " +
+                                        "where VOORRAAD.naam <> 'sinas' AND VOORRAAD.naam <> 'water' AND VOORRAAD.naam <> 'kersensap' " +
+                                        "order by VOORRAAD.aantal, DRANK.prijs", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
@@ -191,6 +195,40 @@ namespace Data
             }
             connection.Close();
             return activiteitenLijst;
+        }
+
+        public List<Rooster> GetRooster()
+        {
+            SqlConnection connection = Utils.OpenConnectieDB();
+            var rooster = new List<Rooster>();
+
+            //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
+            connection.Close();
+            connection.Open();
+
+            var command = new SqlCommand("select omschrijving, (voornaam + ' ' + achternaam) as naam, datum, startTijd, eindTijd " +
+                "from ROOSTER " +
+                "join DOCENT on ROOSTER.docentCode = DOCENT.docentCode " +
+                "join ACTIVITEIT on ROOSTER.activiteitCode = ACTIVITEIT.activiteitCode; ", connection);
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                // Laat het rooster zien
+                while (reader.Read())
+                {
+                    rooster.Add(new Rooster(
+                        reader.GetString(0),
+                        reader.GetString(1),
+                        reader.GetDateTime(2),
+                        reader.GetDateTime(3),
+                        reader.GetDateTime(4)
+                        ));
+                }
+            }
+            connection.Close();
+
+            return rooster;
         }
     }
 }

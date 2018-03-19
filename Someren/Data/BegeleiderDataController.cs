@@ -47,9 +47,6 @@ namespace Data
                 string query = "insert into BEGELEIDER (docentCode) values (@docentCode)";
                 query = query.Replace("@docentCode", docentCode.ToString());
 
-                connection.Close();
-                connection.Open();
-
                 var command = new SqlCommand(query, connection);
                 command.ExecuteNonQuery();
 
