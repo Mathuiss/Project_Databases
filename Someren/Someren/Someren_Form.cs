@@ -12,6 +12,8 @@ namespace Someren
         private List<Student> studentLijst;
         private List<Docent> docentLijst;
         private List<Kamer> kamerLijst;
+        private List<VoorraadObject> voorraadLijst;
+        private List<Rooster> roosterLijst;
 
         private SomerenDB database;
         private static Someren_Form instance;
@@ -231,6 +233,40 @@ namespace Someren
             panel1.Controls.Add(SomerenUI.ShowBegeleiders());
             panel1.Controls.Add(SomerenUI.AddBegeleiderOmzettenBtn());
             panel1.Controls.Add(SomerenUI.AddRemoveBegeleiderBtn());
+        }
+
+        private void drankvoorraadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Drankvoorraad";
+
+            try
+            {
+                //toont de tabel met voorraad.
+                voorraadLijst = database.GetVoorraad();
+                panel1.Controls.Add(SomerenUI.ShowVoorraad(voorraadLijst));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void roosterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Begeleiders";
+
+            try
+            {
+                //toont de tabel met voorraad.
+                roosterLijst = database.GetRooster();
+                panel1.Controls.Add(SomerenUI.ShowRooster(roosterLijst));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
