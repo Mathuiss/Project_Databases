@@ -597,20 +597,20 @@ namespace Someren
 
             formB = new Form();
             formB.Width = 480;
-            formB.Height = 480;
+            formB.Height = 420;
             formB.Text = "Voeg Begeleider Toe";
 
             var panel = new Panel();
             panel.Location = new Point(20, 20);
             panel.Width = 460;
-            panel.Height = 460;
+            panel.Height = 400;
 
             listViewB = (ListView)ShowDocenten(docenten);
             listViewB.CheckBoxes = true;
 
             var button = new Button();
             button.Text = "Voeg Toe";
-            button.Location = new Point(0, 350);
+            button.Location = new Point(0, 320);
             button.Click += Btn_VoegToeClick;
 
             formB.Controls.Add(panel);
