@@ -16,6 +16,7 @@ namespace Someren
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private ListView listView;
         private ListView listViewB;
+        private ListView listViewAC;
         private TextBox tb_Aantal;
         private DateTimePicker kiesMinDatum;
         private DateTimePicker kiesMaxDatum;
@@ -29,7 +30,7 @@ namespace Someren
 
         public Control ShowStudents(List<Student> studentList)
         {
-            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
+            //Is in de functie geÃ¯nitialiseerd zodat de event handeler de juiste instantie pakt
             listView = new ListView();
 
             //List view eigenschappen
@@ -148,14 +149,12 @@ namespace Someren
             kiesMinDatum = new DateTimePicker();
             kiesMaxDatum = new DateTimePicker();
 
-
             // Set the MinDate and MaxDate.
             kiesMinDatum.MinDate = new DateTime(2018, 3, 1);
             kiesMinDatum.MaxDate = DateTime.Today;
 
             kiesMaxDatum.MinDate = new DateTime(2018, 3, 1);
             kiesMaxDatum.MaxDate = DateTime.Today;
-
 
             // Set the CustomFormat string.
             //dateTimePicker1.CustomFormat = "MMMM dd, yyyy - dddd";
@@ -192,7 +191,7 @@ namespace Someren
 
         public Control ShowKassaDranken(List<Drank> drankLijst)
         {
-            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
+            //Is in de functie geÃ¯nitialiseerd zodat de event handeler de juiste instantie pakt
             listView = new ListView();
 
             //List view eigenschappen
@@ -228,11 +227,12 @@ namespace Someren
             return listView;
         }
 
-        //STUDENTENSCHERM
+        //Bardienst
+        //Kassa
 
         public Control ShowKassaStudenten(List<Student> studentLijst)
         {
-            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
+            //Is in de functie geÃ¯nitialiseerd zodat de event handeler de juiste instantie pakt
             listView = new ListView();
 
             //List view eigenschappen
@@ -284,11 +284,11 @@ namespace Someren
 
         private void Btn_Selecteer_Click(object sender, EventArgs e)
         {
-
             if (listView.CheckedItems.Count != 0)
             {
                 form.panel1.Controls.Clear();
                 selectedStudent = int.Parse(listView.CheckedItems[0].Text);
+
                 var database = new SomerenDB();
                 form.panel1.Controls.Add(ShowVoorraad(database.GetVoorraad()));
 
@@ -302,7 +302,6 @@ namespace Someren
             {
                 MessageBox.Show("Selecteer een student");
             }
-
         }
 
         //VOORRAADSCHERM
@@ -342,7 +341,7 @@ namespace Someren
                 }
                 else
                 {
-                    item.SubItems[0].Text = "✔";
+                    item.SubItems[0].Text = "âœ”";
                     item.SubItems[0].ForeColor = System.Drawing.Color.Green;
                 }
             }
@@ -472,7 +471,6 @@ namespace Someren
             dialog[1] = tb_Aantal;
             dialog[2] = btn_Min;
 
-
             return dialog;
         }
 
@@ -523,7 +521,7 @@ namespace Someren
 
         public Control ShowBegeleiders()
         {
-            //Is in de functie geïnitialiseerd zodat de event handeler de juiste instantie pakt
+            //Is in de functie geÃ¯nitialiseerd zodat de event handeler de juiste instantie pakt
             listView = new ListView();
 
             //List view eigenschappen
@@ -597,6 +595,7 @@ namespace Someren
                     "Begeleider Verwijderen",
                     MessageBoxButtons.YesNo
                     );
+
                 if (dialogResult == DialogResult.Yes)
                 {
                     var database = new BegeleiderDataController();
@@ -608,11 +607,6 @@ namespace Someren
                             database.RemoveBegeleider(int.Parse(item.SubItems[0].Text));
                         }
                     }
-                }
-                else if (dialogResult == DialogResult.No)
-                {
-                    form.panel1.Controls.Clear();
-                    form.panel1.Controls.Add(ShowBegeleiders());
                 }
             }
             else
@@ -628,7 +622,7 @@ namespace Someren
 
         private void Btn_VoegBegeleiderToe_Click(object sender, EventArgs e)
         {
-            var database = new BegeleiderDataController();
+            var database = new SomerenDB();
             List<Docent> docenten = database.GetDocenten();
 
             formB = new Form();
@@ -700,6 +694,79 @@ namespace Someren
             l.Location = new Point(x, y);
             l.Width = width;
             return l;
+        }
+        public Control ShowActiviteiten(List<Activiteiten> activiteitenLijst)
+        {
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            listView.ColumnClick += ListView_ColumnClick;
+
+            listView.Columns.Add("Activiteiten code", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Omschrijving", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("aantal studenten", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("aantal begeleiders", -2, HorizontalAlignment.Left);
+
+            foreach(Activiteiten activiteit in activiteitenLijst)
+            {
+                string[] items = new string[4];
+                ListViewItem item;
+
+                items[0] = activiteit.ActiviteitsCode.ToString();
+                items[1] = activiteit.Omschrijving;
+                items[2] = activiteit.AantalStudenten.ToString();
+                items[3] = activiteit.BegeleiderCode.ToString();
+
+                item = new ListViewItem(items);
+                listView.Items.Add(item);
+            }
+            return listView;
+        } 
+        public Control ActiviteitToevoegenButton(List<Activiteiten> activiteitenlijst)
+        {
+            //hier een button toevoegen 
+
+            button = new Button();
+            button.Text = "toevoegen";
+            button.Width = 70;
+            button.Location = new Point(0, 320);
+
+            listView = new ListView();
+
+            return button;
+        }
+
+        public Control ActiviteitVerwijderenButton(List<Activiteiten> activiteitenlijst)
+        {
+            //hier een button toevoegen 
+
+            button = new Button();
+            button.Text = "verwijderen ";
+            button.Width = 70;
+            button.Location = new Point(80, 320);
+
+            listView = new ListView();
+
+            return button;
+        }
+
+        public Control ActiviteitBewerkenButton(List<Activiteiten> activiteitenlijst)
+        {
+            //hier een button toevoegen 
+
+            button = new Button();
+            button.Text = "bewerken";
+            button.Width = 70;
+            button.Location = new Point(160, 320);
+
+            listView = new ListView();
+
+            return button;
         }
     }
 }

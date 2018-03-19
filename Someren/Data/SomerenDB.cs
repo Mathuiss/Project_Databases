@@ -170,6 +170,35 @@ namespace Data
             return voorraad;
         }
 
+        public List<Activiteiten> GetActiviteiten()
+        {
+            SqlConnection connection = Utils.OpenConnectieDB();
+            var activiteitenLijst = new List<Activiteiten>();
+
+            //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
+            connection.Close();
+            connection.Open();
+
+            SqlCommand command = new SqlCommand("select activiteitCode, omschrijving, aantalStudenten, aantalBegeleiders from ACTIVITEIT", connection);
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                //Vult een lijst met studenten
+                while (reader.Read())
+                {
+                    activiteitenLijst.Add(new Activiteiten(
+                        reader.GetInt32(0),
+                        reader.GetString(1),
+                        reader.GetInt32(2),
+                        reader.GetInt32(3)
+                        ));
+                }
+            }
+            connection.Close();
+            return activiteitenLijst;
+        }
+
         public List<Rooster> GetRooster()
         {
             SqlConnection connection = Utils.OpenConnectieDB();
