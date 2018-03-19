@@ -16,6 +16,7 @@ namespace Someren
         //Is in de klasse gedefinieerd omdat de event handeler anders een null reference exception gooit
         private ListView listView;
         private ListView listViewB;
+        private ListView listViewAC;
         private TextBox tb_Aantal;
         private DateTimePicker kiesMinDatum;
         private DateTimePicker kiesMaxDatum;
@@ -459,6 +460,79 @@ namespace Someren
             l.Location = new Point(x, y);
             l.Width = width;
             return l;
+        }
+        public Control ShowActiviteiten(List<Activiteiten> activiteitenLijst)
+        {
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 400;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            listView.ColumnClick += ListView_ColumnClick;
+
+            listView.Columns.Add("Activiteiten code", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Omschrijving", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("aantal studenten", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("aantal begeleiders", -2, HorizontalAlignment.Left);
+
+            foreach(Activiteiten activiteit in activiteitenLijst)
+            {
+                string[] items = new string[4];
+                ListViewItem item;
+
+                items[0] = activiteit.ActiviteitsCode.ToString();
+                items[1] = activiteit.Omschrijving;
+                items[2] = activiteit.AantalStudenten.ToString();
+                items[3] = activiteit.BegeleiderCode.ToString();
+
+                item = new ListViewItem(items);
+                listView.Items.Add(item);
+            }
+            return listView;
+        } 
+        public Control ActiviteitToevoegenButton(List<Activiteiten> activiteitenlijst)
+        {
+            //hier een button toevoegen 
+
+            button = new Button();
+            button.Text = "toevoegen";
+            button.Width = 70;
+            button.Location = new Point(0, 320);
+
+            listView = new ListView();
+
+            return button;
+        }
+
+        public Control ActiviteitVerwijderenButton(List<Activiteiten> activiteitenlijst)
+        {
+            //hier een button toevoegen 
+
+            button = new Button();
+            button.Text = "verwijderen ";
+            button.Width = 70;
+            button.Location = new Point(80, 320);
+
+            listView = new ListView();
+
+            return button;
+        }
+
+        public Control ActiviteitBewerkenButton(List<Activiteiten> activiteitenlijst)
+        {
+            //hier een button toevoegen 
+
+            button = new Button();
+            button.Text = "bewerken";
+            button.Width = 70;
+            button.Location = new Point(160, 320);
+
+            listView = new ListView();
+
+            return button;
         }
     }
 }

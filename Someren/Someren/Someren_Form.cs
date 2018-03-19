@@ -13,7 +13,7 @@ namespace Someren
         private List<Docent> docentLijst;
         private List<Kamer> kamerLijst;
         private List<VoorraadObject> voorraadLijst;
-
+        private List<Activiteiten> activiteitenLijst;
         private SomerenDB database;
         private static Someren_Form instance;
 
@@ -53,7 +53,7 @@ namespace Someren
             
             groupBox1.Text = "TODO LIJST";
             Label l = new Label();
-            l.Height = 500;
+            l.Height =500;
             l.Text = "-bierfust controleren";
             l.Text += "\r\n-kamerindeling maken";
             panel1.Controls.Add(l);
@@ -233,6 +233,28 @@ namespace Someren
             {
                 voorraadLijst = database.GetVoorraad();
                 panel1.Controls.Add(SomerenUI.ShowVoorraad(voorraadLijst));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void activiteitenlijstToolStripMenuItem_Click(object sender, EventArgs e) /// de show activiteiten moet nog worden geactiveerd
+        {
+            //pagina aanmaken en tussenkopje laten zien. 
+            panel1.Controls.Clear();
+            groupBox1.Text = "Activiteitenlijst";
+
+            try
+            {
+                //toont een lijst met de activiteiten
+
+                activiteitenLijst = database.GetActiviteiten();                
+                panel1.Controls.Add(SomerenUI.ShowActiviteiten(activiteitenLijst));
+                panel1.Controls.Add(SomerenUI.ActiviteitToevoegenButton(activiteitenLijst));
+                panel1.Controls.Add(SomerenUI.ActiviteitVerwijderenButton(activiteitenLijst));
+                panel1.Controls.Add(SomerenUI.ActiviteitBewerkenButton(activiteitenLijst));
             }
             catch (Exception ex)
             {
