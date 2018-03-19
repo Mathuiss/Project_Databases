@@ -255,7 +255,7 @@ namespace Someren
         private void roosterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
-            groupBox1.Text = "Begeleiders";
+            groupBox1.Text = "Rooster";
 
             try
             {

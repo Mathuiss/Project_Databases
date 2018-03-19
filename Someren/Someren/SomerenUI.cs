@@ -389,6 +389,7 @@ namespace Someren
 
             foreach (Rooster activiteit in rooster)
             {
+                
                 string[] items = new string[5];
 
                 items[0] = activiteit.ActiviteitNaam.ToString();
