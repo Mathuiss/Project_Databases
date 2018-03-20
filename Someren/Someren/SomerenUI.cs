@@ -767,8 +767,6 @@ namespace Someren
             button.Width = 70;
             button.Location = new Point(0, 320);
 
-            listView = new ListView();
-
             return button;
         }
 
@@ -781,8 +779,6 @@ namespace Someren
             button.Width = 70;
             button.Location = new Point(80, 320);
 
-            listView = new ListView();
-
             return button;
         }
 
@@ -794,8 +790,6 @@ namespace Someren
             button.Text = "bewerken";
             button.Width = 70;
             button.Location = new Point(160, 320);
-
-            listView = new ListView();
 
             return button;
         }
