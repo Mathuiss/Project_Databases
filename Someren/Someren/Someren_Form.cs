@@ -13,9 +13,7 @@ namespace Someren
         private List<Docent> docentLijst;
         private List<Kamer> kamerLijst;
         private List<VoorraadObject> voorraadLijst;
-        private List<Activiteiten> activiteitenLijst;
         private SomerenDB database;
-        private AdministratieDownloader administratie;
         private static Someren_Form instance;
 
         public Someren_Form()
@@ -261,21 +259,12 @@ namespace Someren
             //pagina aanmaken en tussenkopje laten zien. 
             panel1.Controls.Clear();
             groupBox1.Text = "Activiteitenlijst";
-
-            try
-            {
-                //toont een lijst met de activiteiten
-
-                activiteitenLijst = database.GetActiviteiten();                
-                panel1.Controls.Add(SomerenUI.ShowActiviteiten(activiteitenLijst));
-                panel1.Controls.Add(SomerenUI.ActiviteitToevoegenButton(activiteitenLijst));
-                panel1.Controls.Add(SomerenUI.ActiviteitVerwijderenButton(activiteitenLijst));
-                panel1.Controls.Add(SomerenUI.ActiviteitBewerkenButton(activiteitenLijst));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            
+            var database = new SomerenDB();
+            panel1.Controls.Add(SomerenUI.ShowActiviteiten(database.GetActiviteiten()));
+            panel1.Controls.Add(SomerenUI.ActiviteitToevoegenButton());
+            panel1.Controls.Add(SomerenUI.ActiviteitVerwijderenButton());
+            panel1.Controls.Add(SomerenUI.ActiviteitBewerkenButton());
         }
 
         private void begeleidersToolStripMenuItem_Click(object sender, EventArgs e)
