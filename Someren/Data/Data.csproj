@@ -45,6 +45,7 @@
     <Compile Include="AdministratieDownloader.cs" />
     <Compile Include="BegeleiderDataController.cs" />
     <Compile Include="KassaDownloader.cs" />
+    <Compile Include="RoosterDataController.cs" />
     <Compile Include="SomerenDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="KassaUploader.cs" />

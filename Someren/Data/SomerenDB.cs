@@ -144,13 +144,11 @@ namespace Data
             connection.Close();
             connection.Open();
 
-            var command = new SqlCommand("select VOORRAAD.id, VOORRAAD.naam, VOORRAAD.aantal " +
-                                        "from VOORRAAD" +
-                                        "join VOORRAAD on VOORRAAD.id = DRANK.id" +
-                                        "join VOORRAAD on VOORRAAD.id = AFZET.drankId" +
-                                        "where VOORRAAD.naam <> 'sinas', VOORRAAD.naam <> 'water', VOORRAAD.naam <> 'kersensap'" +
-                                        "group by AFZET.drankId" +
-                                        "order by VOORRAAD.aantal, DRANK.prijs, AFZET.aantal", connection);
+            var command = new SqlCommand("select VOORRAAD.id, VOORRAAD.naam, VOORRAAD.aantal, DRANK.prijs " +
+                                        "from VOORRAAD " +
+                                        "join DRANK on VOORRAAD.id = DRANK.id " +
+                                        "where VOORRAAD.naam <> 'sinas' AND VOORRAAD.naam <> 'water' AND VOORRAAD.naam <> 'kersensap' " +
+                                        "order by VOORRAAD.aantal, DRANK.prijs", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)

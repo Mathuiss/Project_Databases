@@ -16,6 +16,7 @@ namespace Someren
         private List<Rooster> roosterLijst;
         private List<Activiteiten> activiteitenLijst;
         private SomerenDB database;
+        private AdministratieDownloader administratie;
         private static Someren_Form instance;
 
         public Someren_Form()
@@ -167,7 +168,7 @@ namespace Someren
             {
                 //toont de tabel met docenten.
                 docentLijst = database.GetDocenten();
-                panel1.Controls.Add(SomerenUI.ShowDocenten(docentLijst));
+                //panel1.Controls.Add(SomerenUI.ShowDocenten());
             }
             catch (Exception ex)
             {
@@ -223,6 +224,20 @@ namespace Someren
             //panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
             panel1.Controls.Add(SomerenUI.AddMaxDatumButton(5,5));
             panel1.Controls.Add(SomerenUI.AddMinDatumButton(225,5));
+
+            panel1.Controls.Add(SomerenUI.AddDateSelectorBtn());
+
+            //uitslag als derde button voor de uitslag
+            try
+            {
+                //toont de tabel met omzet.
+                panel1.Controls.Add(SomerenUI.ShowDocenten(SomerenUI.ShowOmzetRapportage()));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
         }
 
         private void begeleidersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -261,7 +276,9 @@ namespace Someren
             {
                 //toont de tabel met voorraad.
                 roosterLijst = database.GetRooster();
-                panel1.Controls.Add(SomerenUI.ShowRooster(roosterLijst));
+                panel1.Controls.Add(SomerenUI.ShowRooster());
+                panel1.Controls.Add(SomerenUI.AddRoosterBtn());
+                panel1.Controls.Add(SomerenUI.ChangeRoosterBtn());
             }
             catch (Exception ex)
             {
@@ -277,9 +294,7 @@ namespace Someren
             try
             {
                 //toont een lijst met de activiteiten
-
-                activiteitenLijst = database.GetActiviteiten();                
-                panel1.Controls.Add(SomerenUI.ShowActiviteiten(activiteitenLijst));
+                panel1.Controls.Add(SomerenUI.ShowActiviteiten());
                 panel1.Controls.Add(SomerenUI.ActiviteitToevoegenButton(activiteitenLijst));
                 panel1.Controls.Add(SomerenUI.ActiviteitVerwijderenButton(activiteitenLijst));
                 panel1.Controls.Add(SomerenUI.ActiviteitBewerkenButton(activiteitenLijst));
@@ -288,6 +303,16 @@ namespace Someren
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void begeleidersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            groupBox1.Text = "Begeleiders";
+
+            panel1.Controls.Add(SomerenUI.ShowBegeleiders());
+            panel1.Controls.Add(SomerenUI.AddBegeleiderOmzettenBtn());
+            panel1.Controls.Add(SomerenUI.AddRemoveBegeleiderBtn());
         }
     }
 }
