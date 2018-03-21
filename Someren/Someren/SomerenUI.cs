@@ -588,7 +588,7 @@ namespace Someren
         private void Btn_ChangeRoosterDatums_Click(object sender, EventArgs e)
         {
             form.panel1.Controls.Clear();
-            form.groupBox1.Text = "Tijden wisselen";
+            form.groupBox1.Text = "Datums wisselen";
 
             listView.CheckBoxes = true;
 
@@ -602,8 +602,8 @@ namespace Someren
                     listView.CheckedItems[0].SubItems[0].Text,
                     listView.CheckedItems[1].SubItems[0].Text,
                     // datum
-                    listView.CheckedItems[0].SubItems[3].Text,
-                    listView.CheckedItems[1].SubItems[3].Text);
+                    listView.CheckedItems[0].SubItems[2].Text,
+                    listView.CheckedItems[1].SubItems[2].Text);
             }
             else
             {

@@ -25,15 +25,11 @@ namespace Logic
             datums[1] = DateTime.ParseExact(datum1, "dd/MM/yyyy", null);
 
             var tijden = new DateTime[4];
-            startTijd1 += ":00";
-            startTijd2 += ":00";
             // verwissel starttijden
             tijden[0] = DateTime.ParseExact(startTijd2, "HH:mm:00", null);
             tijden[2] = DateTime.ParseExact(startTijd1, "HH:mm:00", null);
 
             // verwissel eindtijden
-            eindTijd1 += ":00";
-            eindTijd2 += ":00";
             tijden[1] = DateTime.ParseExact(eindTijd2, "HH:mm:00", null);
             tijden[3] = DateTime.ParseExact(eindTijd1, "HH:mm:00", null);
 
