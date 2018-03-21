@@ -14,7 +14,7 @@ namespace Someren
         private List<Kamer> kamerLijst;
         private List<VoorraadObject> voorraadLijst;
         private List<Rooster> roosterLijst;
-        private List<Activiteiten> activiteitenLijst;
+        private List<Activiteit> activiteitenLijst;
         private SomerenDB database;
         private static Someren_Form instance;
 
@@ -269,7 +269,8 @@ namespace Someren
                 roosterLijst = database.GetRooster();
                 panel1.Controls.Add(SomerenUI.ShowRooster());
                 panel1.Controls.Add(SomerenUI.AddRoosterBtn());
-                panel1.Controls.Add(SomerenUI.ChangeRoosterBtn());
+                panel1.Controls.Add(SomerenUI.ChangeRoosterDatumsBtn());
+                panel1.Controls.Add(SomerenUI.ChangeRoosterTijdenBtn());
             }
             catch (Exception ex)
             {
@@ -283,8 +284,7 @@ namespace Someren
             groupBox1.Text = "Activiteitenlijst";
             
             //verwijzen naar somerenUI
-            var database = new SomerenDB();
-            panel1.Controls.Add(SomerenUI.ShowActiviteiten(database.GetActiviteiten()));
+            panel1.Controls.Add(SomerenUI.ShowActiviteiten());
             panel1.Controls.Add(SomerenUI.ActiviteitToevoegenButton());
             panel1.Controls.Add(SomerenUI.ActiviteitVerwijderenButton());
             panel1.Controls.Add(SomerenUI.ActiviteitBewerkenButton());

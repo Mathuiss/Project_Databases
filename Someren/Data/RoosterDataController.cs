@@ -32,10 +32,10 @@ namespace Data
             }
         }
 
-        public List<Activiteiten> GetNietRoosterActiviteiten()
+        public List<Activiteit> GetNietRoosterActiviteiten()
         {
             SqlConnection connection = Utils.OpenConnectieDB();
-            var activiteitenLijst = new List<Activiteiten>();
+            var activiteitenLijst = new List<Activiteit>();
 
             //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
             connection.Close();
@@ -51,7 +51,7 @@ namespace Data
                 //Vult een lijst met studenten
                 while (reader.Read())
                 {
-                    activiteitenLijst.Add(new Activiteiten(
+                    activiteitenLijst.Add(new Activiteit(
                         reader.GetInt32(0),
                         reader.GetString(1),
                         reader.GetInt32(2),
@@ -124,19 +124,21 @@ namespace Data
             using (SqlConnection connection = Utils.OpenConnectieDB())
             {
                 string query = "update ROOSTER set '";
-                query += "startTijd = " + tijden[0].ToString("HH:mm:ss") + "'";
-                query += "eindTijd = " + tijden[1].ToString("HH:mm:ss") + "'";
+                query += "startTijd = '" + tijden[0].ToString("HH:mm:ss") + "', ";
+                query += "eindTijd = '" + tijden[1].ToString("HH:mm:ss") + "' ";
                 query += "where Id = " + id1;
                 var command = new SqlCommand(query, connection);
                 command.ExecuteNonQuery();
 
                 query = "update ROOSTER set '";
-                query += "startTijd = " + tijden[2].ToString("HH:mm:ss") + "'";
-                query += "eindTijd = " + tijden[3].ToString("HH:mm:ss") + "'";
+                query += "startTijd = '" + tijden[2].ToString("HH:mm:ss") + "', ";
+                query += "eindTijd = '" + tijden[3].ToString("HH:mm:ss") + "' ";
                 query += "where Id = " + id2;
                 command = new SqlCommand(query, connection);
                 command.ExecuteNonQuery();
             }
         }
+
+
     }
 }
