@@ -16,6 +16,7 @@ namespace Someren
         private List<Rooster> roosterLijst;
         private List<Activiteiten> activiteitenLijst;
         private SomerenDB database;
+        private AdministratieDownloader administratie;
         private static Someren_Form instance;
 
         public Someren_Form()
@@ -223,6 +224,12 @@ namespace Someren
             //panel1.Controls.Add(SomerenUI.ShowOmzetCalendar());
             panel1.Controls.Add(SomerenUI.AddMaxDatumButton(5,5));
             panel1.Controls.Add(SomerenUI.AddMinDatumButton(225,5));
+
+            panel1.Controls.Add(SomerenUI.AddDateSelectorBtn());
+
+            //uitslag als derde button voor de uitslag
+
+            panel1.Controls.Add(SomerenUI.ShowOmzetRapportage());
         }
 
         private void begeleidersToolStripMenuItem_Click(object sender, EventArgs e)

@@ -16,7 +16,6 @@ namespace Data
                     var command = new SqlCommand(c, connection);
                     command.ExecuteNonQuery();
                 }
-
                 connection.Close();
             }
         }
