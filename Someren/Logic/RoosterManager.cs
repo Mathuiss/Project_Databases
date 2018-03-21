@@ -26,12 +26,16 @@ namespace Logic
 
             var tijden = new DateTime[4];
             // verwissel starttijden
-            tijden[0] = DateTime.ParseExact(startTijd2, "HH:mm:00", null);
-            tijden[2] = DateTime.ParseExact(startTijd1, "HH:mm:00", null);
+            startTijd1 += ":00";
+            startTijd2 += ":00";
+            tijden[0] = DateTime.ParseExact(startTijd2, "HH:mm:ss", null);
+            tijden[2] = DateTime.ParseExact(startTijd1, "HH:mm:ss", null);
 
             // verwissel eindtijden
-            tijden[1] = DateTime.ParseExact(eindTijd2, "HH:mm:00", null);
-            tijden[3] = DateTime.ParseExact(eindTijd1, "HH:mm:00", null);
+            eindTijd1 += ":00";
+            eindTijd2 += ":00";
+            tijden[1] = DateTime.ParseExact(eindTijd2, "HH:mm:ss", null);
+            tijden[3] = DateTime.ParseExact(eindTijd1, "HH:mm:ss", null);
 
             var database = new RoosterDataController();
             database.SwitchRoosterTijdenSQL(datums, tijden, id1, id2);

@@ -486,6 +486,7 @@ namespace Someren
 
             listView.ColumnClick += ListView_ColumnClick;
 
+            listView.Columns.Add("id", -2, HorizontalAlignment.Left);
             listView.Columns.Add("activiteit", -2, HorizontalAlignment.Left);
             listView.Columns.Add("begeleider", -2, HorizontalAlignment.Left);
             listView.Columns.Add("datum", -2, HorizontalAlignment.Left);
@@ -497,14 +498,14 @@ namespace Someren
 
             foreach (Rooster activiteit in roosterLijst)
             {
-                
-                string[] items = new string[5];
+                string[] items = new string[6];
 
-                items[0] = activiteit.ActiviteitNaam.ToString();
-                items[1] = activiteit.BegeleiderNaam.ToString();
-                items[2] = activiteit.Datum.ToString("dd/MM/yyyy");
-                items[3] = activiteit.StartTijd.ToString("HH:mm:ss");
-                items[4] = activiteit.EindTijd.ToString("HH:mm:ss");
+                items[0] = activiteit.Id.ToString();
+                items[1] = activiteit.ActiviteitNaam.ToString();
+                items[2] = activiteit.BegeleiderNaam.ToString();
+                items[3] = activiteit.Datum.ToString("dd/MM/yyyy");
+                items[4] = activiteit.StartTijd.ToString("HH:mm");
+                items[5] = activiteit.EindTijd.ToString("HH:mm");
 
                 var item = new ListViewItem(items);
 
@@ -602,8 +603,8 @@ namespace Someren
                     listView.CheckedItems[0].SubItems[0].Text,
                     listView.CheckedItems[1].SubItems[0].Text,
                     // datum
-                    listView.CheckedItems[0].SubItems[2].Text,
-                    listView.CheckedItems[1].SubItems[2].Text);
+                    listView.CheckedItems[0].SubItems[3].Text,
+                    listView.CheckedItems[1].SubItems[3].Text);
             }
             else
             {

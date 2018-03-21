@@ -42,8 +42,8 @@ namespace Data
             connection.Open();
 
             SqlCommand command = new SqlCommand("select ACT.activiteitCode, omschrijving, aantalStudenten, aantalBegeleiders from ACTIVITEIT as ACT " +
-                                                "full join ROOSTER on ACT.activiteitCode = ROOSTER.activiteitCode " +
-                                                "where ROOSTER.activiteitCode is null", connection);
+                                                "full join ROOSTERTEMP on ACT.activiteitCode = ROOSTERTEMP.activiteitCode " +
+                                                "where ROOSTERTEMP.activiteitCode is null", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
@@ -67,13 +67,13 @@ namespace Data
         {
             using (SqlConnection connection = Utils.OpenConnectieDB())
             {
-                string query = "update ROOSTER set '";
+                string query = "update ROOSTERTEMP set '";
                 query += "datum = " + rooster[0].ToString("dd/MM/yyyy") + "'";
                 query += "where Id = " + id1;
                 var command = new SqlCommand(query, connection);
                 command.ExecuteNonQuery();
 
-                query = "update ROOSTER set '";
+                query = "update ROOSTERTEMP set '";
                 query += "datum = " + rooster[1].ToString("dd/MM/yyyy") + "'";
                 query += "where Id = " + id2;
                 command = new SqlCommand(query, connection);

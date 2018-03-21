@@ -11,14 +11,16 @@ namespace Model
         // Deze struct representeert een rooster.
         // Een rooster bevat een activiteitId, begeleiderId, datum, startTijd en eindTijd
 
+        int id;
         string activiteitNaam;
         string begeleiderNaam;
         DateTime datum;
         DateTime startTijd;
         DateTime eindTijd;
 
-        public Rooster(string activiteitNaam, string begeleiderNaam, DateTime datum, DateTime startTijd, DateTime eindTijd)
+        public Rooster(int id, string activiteitNaam, string begeleiderNaam, DateTime datum, DateTime startTijd, DateTime eindTijd)
         {
+            this.id = id;
             this.activiteitNaam = activiteitNaam;
             this.begeleiderNaam = begeleiderNaam;
             this.datum = datum;
@@ -26,6 +28,7 @@ namespace Model
             this.eindTijd = eindTijd;
         }
 
+        public int Id { get => id; set => id = value; }
         public string ActiviteitNaam { get => activiteitNaam; set => activiteitNaam= value; }        
         public string BegeleiderNaam { get => begeleiderNaam; set => begeleiderNaam = value; }
         public DateTime Datum { get => datum; set => datum = value; }
