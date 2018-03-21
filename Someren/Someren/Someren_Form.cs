@@ -228,16 +228,8 @@ namespace Someren
             panel1.Controls.Add(SomerenUI.AddDateSelectorBtn());
 
             //uitslag als derde button voor de uitslag
-            try
-            {
-                //toont de tabel met omzet.
-                panel1.Controls.Add(SomerenUI.ShowDocenten(SomerenUI.ShowOmzetRapportage()));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
 
+            panel1.Controls.Add(SomerenUI.ShowOmzetRapportage());
         }
 
         private void begeleidersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -303,16 +295,6 @@ namespace Someren
             {
                 MessageBox.Show(ex.ToString());
             }
-        }
-
-        private void begeleidersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            panel1.Controls.Clear();
-            groupBox1.Text = "Begeleiders";
-
-            panel1.Controls.Add(SomerenUI.ShowBegeleiders());
-            panel1.Controls.Add(SomerenUI.AddBegeleiderOmzettenBtn());
-            panel1.Controls.Add(SomerenUI.AddRemoveBegeleiderBtn());
         }
     }
 }
