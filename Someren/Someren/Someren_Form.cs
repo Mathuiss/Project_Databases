@@ -260,6 +260,7 @@ namespace Someren
             panel1.Controls.Clear();
             groupBox1.Text = "Activiteitenlijst";
             
+            //verwijzen naar somerenUI
             var database = new SomerenDB();
             panel1.Controls.Add(SomerenUI.ShowActiviteiten(database.GetActiviteiten()));
             panel1.Controls.Add(SomerenUI.ActiviteitToevoegenButton());
