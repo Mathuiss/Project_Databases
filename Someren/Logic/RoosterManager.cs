@@ -6,34 +6,39 @@ namespace Logic
 {
     public class RoosterManager
     {
-        public void VerwisselItems(string id1, string id2)
+        public void VerwisselDatums(string id1, string id2, string datum1, string datum2)
         {
-            var roosters = new DateTime[2];
-
-            DateTime dateTemp = roosters[0];
-            roosters[0] = roosters[1];
-            roosters[1] = dateTemp;
+            // verwissel datums
+            var datums = new DateTime[2];
+            datums[0] = DateTime.ParseExact(datum1, "dd/MM/yyyy", null);
+            datums[1] = DateTime.ParseExact(datum2, "dd/MM/yyyy", null);
 
             var database = new RoosterDataController();
-            database.AddRooster(roosters, id1, id2);
+            database.SwitchRoosterDatumsSQL(datums, id1, id2);
         }
 
-        public void VerwisselTijden(string id1, string id2)
+        public void VerwisselTijden(string id1, string id2, string datum1, string datum2, string startTijd1, string startTijd2, string eindTijd1, string eindTijd2)
         {
-            var tijden = new DateTime[4];
+            var datums = new DateTime[2];
+            // geef datums mee (niet verwisselen!)
+            datums[0] = DateTime.ParseExact(datum2, "dd/MM/yyyy", null);
+            datums[1] = DateTime.ParseExact(datum1, "dd/MM/yyyy", null);
 
-            // verwissel 0 met 2
-            DateTime timeStartTemp = tijden[0];
-            tijden[0] = tijden[2];
-            tijden[2] = timeStartTemp;
-            
-            // verwissel 1 met 3
-            DateTime timeEindTemp = tijden[1];
-            tijden[1] = tijden[3];
-            tijden[3] = timeEindTemp;
+            var tijden = new DateTime[4];
+            startTijd1 += ":00";
+            startTijd2 += ":00";
+            // verwissel starttijden
+            tijden[0] = DateTime.ParseExact(startTijd2, "HH:mm:00", null);
+            tijden[2] = DateTime.ParseExact(startTijd1, "HH:mm:00", null);
+
+            // verwissel eindtijden
+            eindTijd1 += ":00";
+            eindTijd2 += ":00";
+            tijden[1] = DateTime.ParseExact(eindTijd2, "HH:mm:00", null);
+            tijden[3] = DateTime.ParseExact(eindTijd1, "HH:mm:00", null);
 
             var database = new RoosterDataController();
-            database.SwitchRoosterTijdenSQL(tijden, id1, id2);
+            database.SwitchRoosterTijdenSQL(datums, tijden, id1, id2);
         }
     }
 }

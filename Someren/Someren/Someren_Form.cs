@@ -266,11 +266,12 @@ namespace Someren
 
             try
             {
-                //toont de tabel met voorraad.
+                // toont de tabel met het rooster
                 roosterLijst = database.GetRooster();
                 panel1.Controls.Add(SomerenUI.ShowRooster());
                 panel1.Controls.Add(SomerenUI.AddRoosterBtn());
-                panel1.Controls.Add(SomerenUI.ChangeRoosterBtn());
+                panel1.Controls.Add(SomerenUI.ChangeRoosterDatumBtn());
+                panel1.Controls.Add(SomerenUI.ChangeRoosterTijdenBtn());
             }
             catch (Exception ex)
             {

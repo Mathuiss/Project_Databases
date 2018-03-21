@@ -63,44 +63,6 @@ namespace Data
             return activiteitenLijst;
         }
 
-        public DateTime[] SwitchRoosterDatum(string id1, string id2)
-        {
-            var datum = new DateTime[2];
-
-            using (SqlConnection connection = Utils.OpenConnectieDB())
-            {
-                var command = new SqlCommand("select datum from ROOSTER where id = " + id1, connection);
-                datum[0] = (DateTime)command.ExecuteScalar();
-
-                command = new SqlCommand("select datum from ROOSTER where id = " + id2, connection);
-                datum[1] = (DateTime)command.ExecuteScalar();
-
-                return datum;
-            }
-        }
-
-        public DateTime[] SwitchRoosterTijden(string id1, string id2)
-        {
-            var tijden = new DateTime[4];
-
-            using (SqlConnection connection = Utils.OpenConnectieDB())
-            {
-                var command = new SqlCommand("select tijdStart from ROOSTER where id = " + id1, connection);
-                tijden[0] = (DateTime)command.ExecuteScalar();
-
-                command = new SqlCommand("select tijdEind from ROOSTER where id = " + id1, connection);
-                tijden[1] = (DateTime)command.ExecuteScalar();
-
-                command = new SqlCommand("select tijdStart from ROOSTER where id = " + id2, connection);
-                tijden[2] = (DateTime)command.ExecuteScalar();
-
-                command = new SqlCommand("select tijdEind from ROOSTER where id = " + id2, connection);
-                tijden[3] = (DateTime)command.ExecuteScalar();
-
-                return tijden;
-            }
-        }
-
         public void AddRooster(DateTime[] rooster, string id1, string id2)
         {
             using (SqlConnection connection = Utils.OpenConnectieDB())
@@ -119,21 +81,39 @@ namespace Data
             }
         }
 
-        public void SwitchRoosterTijdenSQL(DateTime[] tijden, string id1, string id2)
+        public void SwitchRoosterDatumsSQL(DateTime[] date, string id1, string id2)
         {
             using (SqlConnection connection = Utils.OpenConnectieDB())
             {
-                string query = "update ROOSTER set '";
-                query += "startTijd = " + tijden[0].ToString("HH:mm:ss") + "'";
-                query += "eindTijd = " + tijden[1].ToString("HH:mm:ss") + "'";
-                query += "where Id = " + id1;
+                string query = "update ROOSTERTEMP set ";
+                query += "datum = '" + date[1].ToString("MM/dd/yyyy") + "' ";
+                query += "where id = " + id1 + "";
                 var command = new SqlCommand(query, connection);
                 command.ExecuteNonQuery();
 
-                query = "update ROOSTER set '";
-                query += "startTijd = " + tijden[2].ToString("HH:mm:ss") + "'";
-                query += "eindTijd = " + tijden[3].ToString("HH:mm:ss") + "'";
-                query += "where Id = " + id2;
+                query = "update ROOSTERTEMP set ";
+                query += "datum = '" + date[0].ToString("MM/dd/yyyy") + "' ";
+                query += "where id = " + id2 + "";
+                command = new SqlCommand(query, connection);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void SwitchRoosterTijdenSQL(DateTime[] date, DateTime[] tijden, string id1, string id2)
+        {
+            using (SqlConnection connection = Utils.OpenConnectieDB())
+            {
+                string query = "update ROOSTERTEMP set ";
+                query += "startTijd = '"+ date[0].ToString("MM/dd/yyyy") + " " + tijden[0].ToString("HH:mm") + ":00', ";
+                query += "eindTijd = '" + date[0].ToString("MM/dd/yyyy") + " " + tijden[1].ToString("HH:mm") + ":00' ";
+                query += "where id = " + id1 + "";
+                var command = new SqlCommand(query, connection);
+                command.ExecuteNonQuery();
+
+                query = "update ROOSTERTEMP set ";
+                query += "startTijd = '"+ date[1].ToString("MM/dd/yyyy") + " " + tijden[2].ToString("HH:mm") + ":00', ";
+                query += "eindTijd = '" + date[1].ToString("MM/dd/yyyy") + " " + tijden[3].ToString("HH:mm") + ":00' ";
+                query += "where id = " + id2 + "";
                 command = new SqlCommand(query, connection);
                 command.ExecuteNonQuery();
             }

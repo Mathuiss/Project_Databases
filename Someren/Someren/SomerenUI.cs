@@ -485,6 +485,7 @@ namespace Someren
 
             listView.ColumnClick += ListView_ColumnClick;
 
+            listView.Columns.Add("id", -2, HorizontalAlignment.Left);
             listView.Columns.Add("activiteit", -2, HorizontalAlignment.Left);
             listView.Columns.Add("begeleider", -2, HorizontalAlignment.Left);
             listView.Columns.Add("datum", -2, HorizontalAlignment.Left);
@@ -495,15 +496,15 @@ namespace Someren
             List<Rooster> roosterLijst = database.GetRooster();
 
             foreach (Rooster activiteit in roosterLijst)
-            {
-                
-                string[] items = new string[5];
+            { 
+                string[] items = new string[6];
 
-                items[0] = activiteit.ActiviteitNaam.ToString();
-                items[1] = activiteit.BegeleiderNaam.ToString();
-                items[2] = activiteit.Datum.ToString("dd/MM/yyyy");
-                items[3] = activiteit.StartTijd.ToString("HH:mm:ss");
-                items[4] = activiteit.EindTijd.ToString("HH:mm:ss");
+                items[0] = activiteit.Id.ToString();
+                items[1] = activiteit.ActiviteitNaam.ToString();
+                items[2] = activiteit.BegeleiderNaam.ToString();
+                items[3] = activiteit.Datum.ToString("dd/MM/yyyy");
+                items[4] = activiteit.StartTijd.ToString("HH:mm");
+                items[5] = activiteit.EindTijd.ToString("HH:mm");
 
                 var item = new ListViewItem(items);
 
@@ -523,13 +524,13 @@ namespace Someren
             return button;
         }
 
-        public Control ChangeRoosterBtn()
+        public Control ChangeRoosterDatumBtn()
         {
             button = new Button();
             button.Location = new Point(370, 70);
             button.Width = 160;
             button.Text = "Datums verwisselen";
-            button.Click += Btn_ChangeRooster_Click;
+            button.Click += Btn_ChangeRoosterDatums_Click;
 
             return button;
         }
@@ -554,10 +555,22 @@ namespace Someren
 
             if (listView.CheckedItems.Count == 2)
             {
+                var db = new SomerenDB();
                 var database = new RoosterManager();
+
                 database.VerwisselTijden(
+                    // id
                     listView.CheckedItems[0].SubItems[0].Text,
-                    listView.CheckedItems[1].SubItems[0].Text
+                    listView.CheckedItems[1].SubItems[0].Text,
+                    // datum
+                    listView.CheckedItems[0].SubItems[3].Text,
+                    listView.CheckedItems[1].SubItems[3].Text,
+                    // starttijd
+                    listView.CheckedItems[0].SubItems[4].Text,
+                    listView.CheckedItems[1].SubItems[4].Text,
+                    // eindtijd
+                    listView.CheckedItems[0].SubItems[5].Text,
+                    listView.CheckedItems[1].SubItems[5].Text
                     );
             }
             else
@@ -568,23 +581,29 @@ namespace Someren
             form.panel1.Controls.Clear();
             form.panel1.Controls.Add(ShowRooster());
             form.panel1.Controls.Add(AddRoosterBtn());
-            form.panel1.Controls.Add(ChangeRoosterBtn());
+            form.panel1.Controls.Add(ChangeRoosterDatumBtn());
+            form.panel1.Controls.Add(ChangeRoosterTijdenBtn());
         }
 
-        private void Btn_ChangeRooster_Click(object sender, EventArgs e)
+        private void Btn_ChangeRoosterDatums_Click(object sender, EventArgs e)
         {
             form.panel1.Controls.Clear();
-            form.groupBox1.Text = "Rooster items wisselen";
+            form.groupBox1.Text = "Tijden wisselen";
 
             listView.CheckBoxes = true;
 
             if (listView.CheckedItems.Count == 2)
             {
+                var db = new SomerenDB();
                 var database = new RoosterManager();
-                database.VerwisselItems(
+
+                database.VerwisselDatums(
+                    // id
                     listView.CheckedItems[0].SubItems[0].Text,
-                    listView.CheckedItems[1].SubItems[0].Text
-                    );
+                    listView.CheckedItems[1].SubItems[0].Text,
+                    // datum
+                    listView.CheckedItems[0].SubItems[3].Text,
+                    listView.CheckedItems[1].SubItems[3].Text);
             }
             else
             {
@@ -594,7 +613,8 @@ namespace Someren
             form.panel1.Controls.Clear();
             form.panel1.Controls.Add(ShowRooster());
             form.panel1.Controls.Add(AddRoosterBtn());
-            form.panel1.Controls.Add(ChangeRoosterBtn());
+            form.panel1.Controls.Add(ChangeRoosterDatumBtn());
+            form.panel1.Controls.Add(ChangeRoosterTijdenBtn());
         }
 
         private void Btn_AddRooster_Click(object sender, EventArgs e)
