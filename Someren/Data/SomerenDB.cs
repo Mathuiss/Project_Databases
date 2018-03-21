@@ -168,10 +168,10 @@ namespace Data
             return voorraad;
         }
 
-        public List<Activiteiten> GetActiviteiten()
+        public List<Activiteit> GetActiviteiten()
         {
             SqlConnection connection = Utils.OpenConnectieDB();
-            var activiteitenLijst = new List<Activiteiten>();
+            var activiteitenLijst = new List<Activiteit>();
 
             //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
             connection.Close();
@@ -185,7 +185,7 @@ namespace Data
                 //Vult een lijst met studenten
                 while (reader.Read())
                 {
-                    activiteitenLijst.Add(new Activiteiten(
+                    activiteitenLijst.Add(new Activiteit(
                         reader.GetInt32(0),
                         reader.GetString(1),
                         reader.GetInt32(2),
