@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
@@ -527,10 +528,47 @@ namespace Someren
             button = new Button();
             button.Location = new Point(370, 70);
             button.Width = 160;
-            button.Text = "Items verwisselen";
+            button.Text = "Datums verwisselen";
             button.Click += Btn_ChangeRooster_Click;
 
             return button;
+        }
+
+        public Control ChangeRoosterTijdenBtn()
+        {
+            button = new Button();
+            button.Location = new Point(370, 100);
+            button.Width = 160;
+            button.Text = "Tijden verwisselen";
+            button.Click += Btn_ChangeRoosterTijden_Click; ;
+
+            return button;
+        }
+
+        private void Btn_ChangeRoosterTijden_Click(object sender, EventArgs e)
+        {
+            form.panel1.Controls.Clear();
+            form.groupBox1.Text = "Tijden wisselen";
+
+            listView.CheckBoxes = true;
+
+            if (listView.CheckedItems.Count == 2)
+            {
+                var database = new RoosterManager();
+                database.VerwisselTijden(
+                    listView.CheckedItems[0].SubItems[0].Text,
+                    listView.CheckedItems[1].SubItems[0].Text
+                    );
+            }
+            else
+            {
+                MessageBox.Show("U kunt maar 2 items met elkaar verwisselen");
+            }
+
+            form.panel1.Controls.Clear();
+            form.panel1.Controls.Add(ShowRooster());
+            form.panel1.Controls.Add(AddRoosterBtn());
+            form.panel1.Controls.Add(ChangeRoosterBtn());
         }
 
         private void Btn_ChangeRooster_Click(object sender, EventArgs e)
@@ -564,7 +602,7 @@ namespace Someren
             form.panel1.Controls.Clear();
             form.groupBox1.Text = "Rooster item toevoegen";
 
-            listView = (ListView)ShowActiviteiten();
+            listView = (ListView)ShowNonRoosterActiviteiten();
             listView.CheckBoxes = true;
             form.panel1.Controls.Add(listView);
 
@@ -578,17 +616,17 @@ namespace Someren
             tijdStart = new DateTimePicker();
             tijdStart.MinDate = DateTime.Today;
             tijdStart.Location = new Point(380, 60);
-            tijdStart.Width = 70;
-            tijdStart.CustomFormat = "HH:mm:ss";
-            tijdStart.Format = DateTimePickerFormat.Time;
+            tijdStart.Width = 55;
+            tijdStart.CustomFormat = "HH:mm";
+            tijdStart.Format = DateTimePickerFormat.Custom;
             tijdStart.ShowUpDown = true;
 
             tijdEind = new DateTimePicker();
             tijdEind.MinDate = DateTime.Today;
-            tijdEind.Location = new Point(460, 60);
-            tijdEind.Width = 70;
-            tijdEind.CustomFormat = "HH:mm:ss";
-            tijdEind.Format = DateTimePickerFormat.Time;
+            tijdEind.Location = new Point(475, 60);
+            tijdEind.Width = 55;
+            tijdEind.CustomFormat = "HH:mm";
+            tijdEind.Format = DateTimePickerFormat.Custom;
             tijdEind.ShowUpDown = true;
 
             var button = new Button();
@@ -660,12 +698,12 @@ namespace Someren
         {
             if (tijdStart.Value >= tijdEind.Value)
             {
-                MessageBox.Show("De geselecteerde eindtijd is eerder dan de begintijd.");
+                MessageBox.Show("De geselecteerde eindtijd is eerder dan of gelijk aan de begintijd.");
             }
             else
             {
-                //form.panel1.Controls.Add(Data.RoosterDataController);
-                //form.panel1.Controls.Add(ShowDocenten());
+                // ShowNonRoosterActiviteiten()
+                ShowActiviteiten();
             }
         }
 
@@ -978,7 +1016,43 @@ namespace Someren
                 listView.Items.Add(item);
             }
             return listView;
-        } 
+        }
+
+        public Control ShowNonRoosterActiviteiten()
+        {
+            listView = new ListView();
+            listView.View = View.Details;
+            listView.Height = 300;
+            listView.Width = 370;
+            listView.AllowColumnReorder = true;
+            listView.GridLines = true;
+            listView.Sorting = SortOrder.Ascending;
+
+            listView.ColumnClick += ListView_ColumnClick;
+
+            var database = new RoosterDataController();
+            List<Activiteiten> activiteitenLijst = database.GetNietRoosterActiviteiten();
+
+            listView.Columns.Add("Activiteiten code", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("Omschrijving", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("aantal studenten", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("aantal begeleiders", -2, HorizontalAlignment.Left);
+
+            foreach (Activiteiten activiteit in activiteitenLijst)
+            {
+                string[] items = new string[4];
+                ListViewItem item;
+
+                items[0] = activiteit.ActiviteitsCode.ToString();
+                items[1] = activiteit.Omschrijving;
+                items[2] = activiteit.AantalStudenten.ToString();
+                items[3] = activiteit.BegeleiderCode.ToString();
+
+                item = new ListViewItem(items);
+                listView.Items.Add(item);
+            }
+            return listView;
+        }
 
         public Control ActiviteitToevoegenButton(List<Activiteiten> activiteitenlijst)
         {
