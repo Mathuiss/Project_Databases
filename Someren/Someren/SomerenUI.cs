@@ -530,7 +530,7 @@ namespace Someren
             button.Location = new Point(370, 70);
             button.Width = 160;
             button.Text = "Datums verwisselen";
-            button.Click += Btn_ChangeRooster_Click;
+            button.Click += Btn_ChangeRoosterDatums_Click;
 
             return button;
         }
@@ -555,10 +555,22 @@ namespace Someren
 
             if (listView.CheckedItems.Count == 2)
             {
+                var db = new SomerenDB();
                 var database = new RoosterManager();
+
                 database.VerwisselTijden(
+                    // id
                     listView.CheckedItems[0].SubItems[0].Text,
-                    listView.CheckedItems[1].SubItems[0].Text
+                    listView.CheckedItems[1].SubItems[0].Text,
+                    // datum
+                    listView.CheckedItems[0].SubItems[3].Text,
+                    listView.CheckedItems[1].SubItems[3].Text,
+                    // starttijd
+                    listView.CheckedItems[0].SubItems[4].Text,
+                    listView.CheckedItems[1].SubItems[4].Text,
+                    // eindtijd
+                    listView.CheckedItems[0].SubItems[5].Text,
+                    listView.CheckedItems[1].SubItems[5].Text
                     );
             }
             else
@@ -573,20 +585,25 @@ namespace Someren
             form.panel1.Controls.Add(ChangeRoosterTijdenBtn());
         }
 
-        private void Btn_ChangeRooster_Click(object sender, EventArgs e)
+        private void Btn_ChangeRoosterDatums_Click(object sender, EventArgs e)
         {
             form.panel1.Controls.Clear();
-            form.groupBox1.Text = "Rooster items wisselen";
+            form.groupBox1.Text = "Tijden wisselen";
 
             listView.CheckBoxes = true;
 
             if (listView.CheckedItems.Count == 2)
             {
+                var db = new SomerenDB();
                 var database = new RoosterManager();
-                database.VerwisselItems(
+
+                database.VerwisselDatums(
+                    // id
                     listView.CheckedItems[0].SubItems[0].Text,
-                    listView.CheckedItems[1].SubItems[0].Text
-                    );
+                    listView.CheckedItems[1].SubItems[0].Text,
+                    // datum
+                    listView.CheckedItems[0].SubItems[3].Text,
+                    listView.CheckedItems[1].SubItems[3].Text);
             }
             else
             {
