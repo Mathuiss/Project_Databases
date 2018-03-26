@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiviteitenManager.cs" />
     <Compile Include="AdministratieManager.cs" />
     <Compile Include="AfrekenProcessor.cs" />
     <Compile Include="DataCalculator.cs" />

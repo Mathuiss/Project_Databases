@@ -168,10 +168,10 @@ namespace Data
             return voorraad;
         }
 
-        public List<Activiteiten> GetActiviteiten()
+        public List<Activiteit> GetActiviteiten()
         {
             SqlConnection connection = Utils.OpenConnectieDB();
-            var activiteitenLijst = new List<Activiteiten>();
+            var activiteitenLijst = new List<Activiteit>();
 
             //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
             connection.Close();
@@ -185,7 +185,7 @@ namespace Data
                 //Vult een lijst met studenten
                 while (reader.Read())
                 {
-                    activiteitenLijst.Add(new Activiteiten(
+                    activiteitenLijst.Add(new Activiteit(
                         reader.GetInt32(0),
                         reader.GetString(1),
                         reader.GetInt32(2),
@@ -206,10 +206,10 @@ namespace Data
             connection.Close();
             connection.Open();
 
-            var command = new SqlCommand("select omschrijving, (voornaam + ' ' + achternaam) as naam, datum, startTijd, eindTijd " +
-                "from ROOSTER " +
-                "join DOCENT on ROOSTER.docentCode = DOCENT.docentCode " +
-                "join ACTIVITEIT on ROOSTER.activiteitCode = ACTIVITEIT.activiteitCode; ", connection);
+            var command = new SqlCommand("select id, omschrijving, (voornaam + ' ' + achternaam) as naam, datum, startTijd, eindTijd " +
+                "from ROOSTERTEMP " +
+                "join DOCENT on ROOSTERTEMP.docentCode = DOCENT.docentCode " +
+                "join ACTIVITEIT on ROOSTERTEMP.activiteitCode = ACTIVITEIT.activiteitCode; ", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
@@ -218,11 +218,12 @@ namespace Data
                 while (reader.Read())
                 {
                     rooster.Add(new Rooster(
-                        reader.GetString(0),
+                        reader.GetInt32(0),
                         reader.GetString(1),
-                        reader.GetDateTime(2),
+                        reader.GetString(2),
                         reader.GetDateTime(3),
-                        reader.GetDateTime(4)
+                        reader.GetDateTime(4),
+                        reader.GetDateTime(5)
                         ));
                 }
             }
