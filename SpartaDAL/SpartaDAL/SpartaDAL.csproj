@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DALConnection.cs" />
+    <Compile Include="DALPersonen.cs" />
     <Compile Include="DALProgramma.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
