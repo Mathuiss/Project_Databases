@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sparta.Model;
+using Sparta.Dal;
 
 namespace Sparta.Dal
 {
