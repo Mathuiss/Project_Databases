@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sparta.Model;
+using Sparta.Dal;
 
 namespace Sparta.Dal
 {
@@ -16,6 +17,25 @@ namespace Sparta.Dal
             
 
             return cursussen;
+        }
+    }
+}
+
+        public static List<Locatie> GetLokaties()
+        {
+            //sql string maken
+
+            //sqlcommand maken
+
+            //op het command een 'executeReader'methode uitvoeren
+
+            //opnemen van info over elk veld
+
+            //curcus struct vullen 
+
+            //herhalen bij elk record
+
+            //return list van lokaties
         }
     }
 }
