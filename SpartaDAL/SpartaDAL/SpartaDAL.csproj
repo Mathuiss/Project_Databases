@@ -60,7 +60,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DALOverzicht.cs" />
     <Compile Include="DALConnection.cs" />
     <Compile Include="DALProgramma.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
