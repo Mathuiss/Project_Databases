@@ -32,18 +32,18 @@ namespace Data
             }
         }
 
-        public List<Activiteiten> GetNietRoosterActiviteiten()
+        public List<Activiteit> GetNietRoosterActiviteiten()
         {
             SqlConnection connection = Utils.OpenConnectieDB();
-            var activiteitenLijst = new List<Activiteiten>();
+            var activiteitenLijst = new List<Activiteit>();
 
             //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
             connection.Close();
             connection.Open();
 
             SqlCommand command = new SqlCommand("select ACT.activiteitCode, omschrijving, aantalStudenten, aantalBegeleiders from ACTIVITEIT as ACT " +
-                                                "full join ROOSTER on ACT.activiteitCode = ROOSTER.activiteitCode " +
-                                                "where ROOSTER.activiteitCode is null", connection);
+                                                "full join ROOSTERTEMP on ACT.activiteitCode = ROOSTERTEMP.activiteitCode " +
+                                                "where ROOSTERTEMP.activiteitCode is null", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
@@ -51,7 +51,7 @@ namespace Data
                 //Vult een lijst met studenten
                 while (reader.Read())
                 {
-                    activiteitenLijst.Add(new Activiteiten(
+                    activiteitenLijst.Add(new Activiteit(
                         reader.GetInt32(0),
                         reader.GetString(1),
                         reader.GetInt32(2),
@@ -67,13 +67,13 @@ namespace Data
         {
             using (SqlConnection connection = Utils.OpenConnectieDB())
             {
-                string query = "update ROOSTER set '";
+                string query = "update ROOSTERTEMP set '";
                 query += "datum = " + rooster[0].ToString("dd/MM/yyyy") + "'";
                 query += "where Id = " + id1;
                 var command = new SqlCommand(query, connection);
                 command.ExecuteNonQuery();
 
-                query = "update ROOSTER set '";
+                query = "update ROOSTERTEMP set '";
                 query += "datum = " + rooster[1].ToString("dd/MM/yyyy") + "'";
                 query += "where Id = " + id2;
                 command = new SqlCommand(query, connection);
@@ -93,6 +93,26 @@ namespace Data
 
                 query = "update ROOSTERTEMP set ";
                 query += "datum = '" + date[0].ToString("MM/dd/yyyy") + "' ";
+                query += "where id = " + id2 + "";
+                command = new SqlCommand(query, connection);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void SwitchRoosterTijdenSQL(DateTime[] date, DateTime[] tijden, string id1, string id2)
+        {
+            using (SqlConnection connection = Utils.OpenConnectieDB())
+            {
+                string query = "update ROOSTERTEMP set ";
+                query += "startTijd = '" + date[0].ToString("MM/dd/yyyy") + " " + tijden[0].ToString("HH:mm") + ":00', ";
+                query += "eindTijd = '" + date[0].ToString("MM/dd/yyyy") + " " + tijden[1].ToString("HH:mm") + ":00' ";
+                query += "where id = " + id1 + "";
+                var command = new SqlCommand(query, connection);
+                command.ExecuteNonQuery();
+
+                query = "update ROOSTERTEMP set ";
+                query += "startTijd = '" + date[1].ToString("MM/dd/yyyy") + " " + tijden[2].ToString("HH:mm") + ":00', ";
+                query += "eindTijd = '" + date[1].ToString("MM/dd/yyyy") + " " + tijden[3].ToString("HH:mm") + ":00' ";
                 query += "where id = " + id2 + "";
                 command = new SqlCommand(query, connection);
                 command.ExecuteNonQuery();

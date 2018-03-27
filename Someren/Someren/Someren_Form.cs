@@ -14,9 +14,8 @@ namespace Someren
         private List<Kamer> kamerLijst;
         private List<VoorraadObject> voorraadLijst;
         private List<Rooster> roosterLijst;
-        private List<Activiteiten> activiteitenLijst;
+        private List<Activiteit> activiteitenLijst;
         private SomerenDB database;
-        private AdministratieDownloader administratie;
         private static Someren_Form instance;
 
         public Someren_Form()
@@ -270,7 +269,7 @@ namespace Someren
                 roosterLijst = database.GetRooster();
                 panel1.Controls.Add(SomerenUI.ShowRooster());
                 panel1.Controls.Add(SomerenUI.AddRoosterBtn());
-                panel1.Controls.Add(SomerenUI.ChangeRoosterDatumBtn());
+                panel1.Controls.Add(SomerenUI.ChangeRoosterDatumsBtn());
                 panel1.Controls.Add(SomerenUI.ChangeRoosterTijdenBtn());
             }
             catch (Exception ex)
@@ -283,19 +282,12 @@ namespace Someren
             //pagina aanmaken en tussenkopje laten zien. 
             panel1.Controls.Clear();
             groupBox1.Text = "Activiteitenlijst";
-
-            try
-            {
-                //toont een lijst met de activiteiten
-                panel1.Controls.Add(SomerenUI.ShowActiviteiten());
-                panel1.Controls.Add(SomerenUI.ActiviteitToevoegenButton(activiteitenLijst));
-                panel1.Controls.Add(SomerenUI.ActiviteitVerwijderenButton(activiteitenLijst));
-                panel1.Controls.Add(SomerenUI.ActiviteitBewerkenButton(activiteitenLijst));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            
+            //verwijzen naar somerenUI
+            panel1.Controls.Add(SomerenUI.ShowActiviteiten());
+            panel1.Controls.Add(SomerenUI.ActiviteitToevoegenButton());
+            panel1.Controls.Add(SomerenUI.ActiviteitVerwijderenButton());
+            panel1.Controls.Add(SomerenUI.ActiviteitBewerkenButton());
         }
     }
 }
