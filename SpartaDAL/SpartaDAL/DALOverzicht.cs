@@ -11,8 +11,27 @@ namespace Sparta.Dal
         {
             List<Cursus> cursussen = new List<Cursus>();
 
-            
+            using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
+            {
+                SqlCommand command = new SqlCommand("" +
+                    "select CursusId, Naam, Niveau, Toelichting, Categorie from Cursus", connection);
+                connection.Open();
 
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Cursus cursus = new Cursus();
+                        cursus.Id = reader.GetInt32(0);
+                        cursus.Naam = reader.GetString(1);
+                        cursus.Niveau = reader.GetInt32(2);
+                        cursus.Toelichting = reader.GetString(3);
+                        cursus.Categorie = (DeelnemerCategorie)reader.GetInt32(4);
+                    }
+                }
+            }
             return cursussen;
         }
 
