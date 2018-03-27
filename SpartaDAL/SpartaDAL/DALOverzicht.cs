@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using Sparta.Model;
-using Sparta.Dal;
 
 namespace Sparta.Dal
 {
@@ -18,10 +15,8 @@ namespace Sparta.Dal
 
             return cursussen;
         }
-    }
-}
 
-        public static List<Locatie> GetLokaties()
+        public static List<Locatie> GetLocaties()
         {
             //sql string maken
 
@@ -37,5 +32,34 @@ namespace Sparta.Dal
 
             //return list van lokaties
         }
+
+        public static List<Persoon> GetPersonen()
+        {
+            var personen = new List<Persoon>();
+
+            using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
+            {
+                connection.Open();
+
+                string query = "select PersoonId, Naam, Achternaam, Categorie, GeboorteDatum from Persoon";
+                var command = new SqlCommand(query, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    personen.Add(new Persoon(
+                        reader.GetInt32(0),
+                        reader.GetString(1),
+                        reader.GetString(2),
+                        reader.GetDateTime(4),
+                        (DeelnemerCategorie)reader.GetInt32(3)
+                        ));
+                }
+                connection.Close();
+            }
+
+            return personen;
+        }
     }
+}
 }
