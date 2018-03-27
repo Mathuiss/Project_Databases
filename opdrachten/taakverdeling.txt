@@ -1,0 +1,15 @@
+Week1 
+Mathijs: A
+Robbin: B
+Sander: C
+
+week2
+Mathijs: B
+Robbin: C
+Sander: A
+
+week3
+Mathijs: B
+Robbin: A
+Sander: C
+
