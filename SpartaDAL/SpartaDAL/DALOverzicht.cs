@@ -36,19 +36,39 @@ namespace Sparta.Dal
 
         public static List<Locatie> GetLocaties()
         {
-            //sql string maken
+            List<Locatie> locaties = new List<Locatie>();
+            using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
+            {
+                connection.Open();
+                //sql string maken
+                string query = "select LocatieId, Gebouw, Zaal, Omschrijving from LOCATIE";
 
-            //sqlcommand maken
+                //sqlcommand maken
+                var command = new SqlCommand(query, connection);
 
-            //op het command een 'executeReader'methode uitvoeren
+                //op het command een 'executeReader'methode uitvoeren
+                SqlDataReader reader = command.ExecuteReader();
 
-            //opnemen van info over elk veld
+                //opnemen van info over elk veld
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        //herhalen bij elk record
+                        locaties.Add(new Locatie(
+                                     reader.GetInt32(0),
+                                     reader.GetString(1),
+                                     reader.GetString(2),
+                                     reader.GetString(3))
+                                     );
+                    }
+                }
+                //curcus struct vullen 
 
-            //curcus struct vullen 
-
-            //herhalen bij elk record
-
+                connection.Close();
+            }
             //return list van lokaties
+            return locaties;
         }
 
         public static List<Persoon> GetPersonen()
