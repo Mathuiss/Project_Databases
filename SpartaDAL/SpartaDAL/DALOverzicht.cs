@@ -9,14 +9,19 @@ namespace Sparta.Dal
     {
         public static List<Cursus> GetCursussen()
         {
+            // lijst met Cursussen aanmaken
             List<Cursus> cursussen = new List<Cursus>();
 
             using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
             {
+                // sql query maken en uitvoeren
                 SqlCommand command = new SqlCommand("select CursusId, Naam, Niveau, Toelichting, Categorie from Cursus", connection);
                 connection.Open();
+                
+                // een 'executeReader' methode uitvoeren op command
                 SqlDataReader reader = command.ExecuteReader();
 
+                // als er tenminste een rij is, vraag per veld de informatie op
                 if (reader.HasRows)
                 {
                     while (reader.Read())
@@ -31,13 +36,15 @@ namespace Sparta.Dal
                     connection.Close();
                 }
             }
+
+            // geef de lijst met cursussen terug
             return cursussen;
         }
 
         public static List<Locatie> GetLocaties()
         {
             List<Locatie> locaties = new List<Locatie>();
-            using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
+            using (SqlConnection connection = DALConnection.GetConnectionByName("projectdbnelleke"))
             {
                 connection.Open();
                 //sql string maken
@@ -75,7 +82,7 @@ namespace Sparta.Dal
         {
             var personen = new List<Persoon>();
 
-            using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
+            using (SqlConnection connection = DALConnection.GetConnectionByName("projectdbnelleke"))
             {
                 connection.Open();
 
