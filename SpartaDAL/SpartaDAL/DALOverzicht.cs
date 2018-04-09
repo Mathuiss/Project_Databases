@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using Sparta.Model;
+using System.Data.SqlClient;
 
 namespace Sparta.Dal
 {
@@ -11,26 +11,9 @@ namespace Sparta.Dal
         {
             List<Cursus> cursussen = new List<Cursus>();
 
-            
+
 
             return cursussen;
-        }
-
-        public static List<Locatie> GetLocaties()
-        {
-            //sql string maken
-
-            //sqlcommand maken
-
-            //op het command een 'executeReader'methode uitvoeren
-
-            //opnemen van info over elk veld
-
-            //curcus struct vullen 
-
-            //herhalen bij elk record
-
-            //return list van lokaties
         }
 
         public static List<Persoon> GetPersonen()
@@ -47,13 +30,13 @@ namespace Sparta.Dal
 
                 while (reader.Read())
                 {
-                    personen.Add(new Persoon(
-                        reader.GetInt32(0),
-                        reader.GetString(1),
-                        reader.GetString(2),
-                        reader.GetDateTime(4),
-                        (DeelnemerCategorie)reader.GetInt32(3)
-                        ));
+                    int id = reader.GetInt32(0);
+                    string naame = reader.GetString(1);
+                    string achternaam = reader.GetString(2);
+                    DateTime dt = reader.GetDateTime(4);
+                    DeelnemerCategorie cat = (DeelnemerCategorie)reader.GetInt16(3);
+
+                    personen.Add(new Persoon(id, naame, achternaam, dt, cat));
                 }
                 connection.Close();
             }
@@ -61,5 +44,4 @@ namespace Sparta.Dal
             return personen;
         }
     }
-}
 }
