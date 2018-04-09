@@ -73,7 +73,6 @@ namespace Sparta.Dal
                     }
                 }
                 //curcus struct vullen 
-
                 connection.Close();
             }
             //return list van lokaties

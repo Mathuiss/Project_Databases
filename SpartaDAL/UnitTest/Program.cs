@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using Sparta.Model;
 using Sparta.Dal;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace UnitTest
 {
     class Program
     {
+        private static DateTimePicker dtp;
+
+        [STAThread]
         static void Main(string[] args)
         {
             //try
@@ -52,6 +56,17 @@ namespace UnitTest
             }
 
             Console.ReadKey();
+        }
+
+        private static void Btn_Click(object sender, EventArgs e)
+        {
+            DALGebruiker.RegistreerPersoon((DeelnemerCategorie)100, "mathijs", "geerlings", dtp.Value, new Login("m", "m"));
+            List<Persoon> personen = DALOverzicht.GetPersonen();
+
+            foreach (Persoon p in personen)
+            {
+                Console.WriteLine(p.Persoonid + " " + p.Naam);
+            }
         }
     }
 }

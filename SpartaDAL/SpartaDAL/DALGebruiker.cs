@@ -6,23 +6,6 @@ namespace Sparta.Dal
 {
     public static class DALGebruiker
     {
-        //public static Persoon CheckCredentials(Login user)
-        //{
-
-        //}
-
-        //public static int GetPersonId(Login user)
-        //{
-        //    string query = "select LoginId from Login where AanmeldNaam = '@naam' and PwdHash = '@hash'";
-        //    query = query.Replace("@naam", user.Naam);
-        //    query = query.Replace("@hash", user.Pwdhash);
-
-        //    using (SqlConnection)
-        //    {
-
-        //    }
-        //}
-
         public static void voegtoeContactInfo(Contact info)
         {
             string name = "";
@@ -75,6 +58,39 @@ namespace Sparta.Dal
             command.ExecuteNonQuery();
 
             connection.Close();
+        }
+        
+        //Voert login gegevens in in de database
+        static void InsertLogin(Login login, string naam)
+        {
+            string query = "insert into Login(AanmeldNaam, PwdHash, PersoonId) values('@Naam', '@hash', @id)";
+            query = query.Replace("@Naam", login.Naam);
+            query = query.Replace("@hash", login.Pwdhash);
+            query = query.Replace("@id", GetId("PersoonID", "Persoon", "Naam = '" + naam + "'").ToString());
+
+            using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
+            {
+                connection.Open();
+                var command = new SqlCommand(query, connection);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        //Methode wordt gebruikt om een bestaande ID op te vragen
+        static int GetId(string column, string table, string condition)
+        {
+            string query = "select @id from @Table where @condition";
+            query = query.Replace("@id", column);
+            query = query.Replace("@Table", table);
+            query = query.Replace("@condition", condition);
+
+            using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
+            {
+                connection.Open();
+                var command = new SqlCommand(query, connection);
+                int id = (int)command.ExecuteScalar();
+                return id;
+            }
         }
     }
 }
