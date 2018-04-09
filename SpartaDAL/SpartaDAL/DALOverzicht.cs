@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using Sparta.Model;
+using System.Data.SqlClient;
 
 namespace Sparta.Dal
 {
@@ -26,9 +26,11 @@ namespace Sparta.Dal
                         Cursus cursus = new Cursus();
                         cursus.Id = reader.GetInt32(0);
                         cursus.Naam = reader.GetString(1);
-                        cursus.Niveau = reader.GetInt32(2);
+                        cursus.Niveau = reader.GetInt16(2);
                         cursus.Toelichting = reader.GetString(3);
-                        cursus.Categorie = (DeelnemerCategorie)reader.GetInt32(4);
+                        cursus.Categorie = (DeelnemerCategorie)reader.GetInt16(4);
+
+                        cursussen.Add(cursus);
                     }
                 }
             }
@@ -74,31 +76,33 @@ namespace Sparta.Dal
 
         public static List<Persoon> GetPersonen()
         {
+            //Maak lijst met personen om te vullen met gegevens uit de database
             var personen = new List<Persoon>();
 
             using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
             {
                 connection.Open();
 
+                //Query om alle personen uit de db te halen
                 string query = "select PersoonId, Naam, Achternaam, Categorie, GeboorteDatum from Persoon";
                 var command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    personen.Add(new Persoon(
-                        reader.GetInt32(0),
-                        reader.GetString(1),
-                        reader.GetString(2),
-                        reader.GetDateTime(4),
-                        (DeelnemerCategorie)reader.GetInt32(3)
-                        ));
+                    int id = reader.GetInt32(0);
+                    string naame = reader.GetString(1);
+                    string achternaam = reader.GetString(2);
+                    DateTime dt = reader.GetDateTime(4);
+                    DeelnemerCategorie cat = (DeelnemerCategorie)reader.GetInt16(3);
+
+                    //Voeg personen toe aan de lijst
+                    personen.Add(new Persoon(id, naame, achternaam, dt, cat));
                 }
                 connection.Close();
             }
-
+            //Return lijst met personen
             return personen;
         }
     }
-}
 }
