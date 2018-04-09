@@ -46,7 +46,7 @@ namespace Sparta.Dal
         public static List<Locatie> GetLocaties()
         {
             List<Locatie> locaties = new List<Locatie>();
-            using (SqlConnection connection = DALConnection.GetConnectionByName("projectdbnelleke"))
+            using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
             {
                 connection.Open();
                 //sql string maken
@@ -85,7 +85,7 @@ namespace Sparta.Dal
             //Maak lijst met personen om te vullen met gegevens uit de database
             var personen = new List<Persoon>();
 
-            using (SqlConnection connection = DALConnection.GetConnectionByName("projectdbnelleke"))
+            using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
             {
                 connection.Open();
 
