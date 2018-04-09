@@ -76,12 +76,14 @@ namespace Sparta.Dal
 
         public static List<Persoon> GetPersonen()
         {
+            //Maak lijst met personen om te vullen met gegevens uit de database
             var personen = new List<Persoon>();
 
             using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
             {
                 connection.Open();
 
+                //Query om alle personen uit de db te halen
                 string query = "select PersoonId, Naam, Achternaam, Categorie, GeboorteDatum from Persoon";
                 var command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
@@ -94,11 +96,12 @@ namespace Sparta.Dal
                     DateTime dt = reader.GetDateTime(4);
                     DeelnemerCategorie cat = (DeelnemerCategorie)reader.GetInt16(3);
 
+                    //Voeg personen toe aan de lijst
                     personen.Add(new Persoon(id, naame, achternaam, dt, cat));
                 }
                 connection.Close();
             }
-
+            //Return lijst met personen
             return personen;
         }
     }
