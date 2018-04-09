@@ -265,7 +265,7 @@ namespace Someren
 
             try
             {
-                //toont de tabel met voorraad.
+                // toont de tabel met het rooster
                 roosterLijst = database.GetRooster();
                 panel1.Controls.Add(SomerenUI.ShowRooster());
                 panel1.Controls.Add(SomerenUI.AddRoosterBtn());

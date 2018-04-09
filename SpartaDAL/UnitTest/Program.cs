@@ -14,26 +14,41 @@ namespace UnitTest
         [STAThread]
         static void Main(string[] args)
         {
+            //try
+            //{
+            //    Contact contact = new Contact();
+            //    // contact.Id wordt door de database aangemaakt
+            //    contact.Persoonid = 2;
+            //    contact.Straat = "Zijweg";
+            //    contact.Huisnummer = 3;
+            //    contact.Huisnummertoevoeging = "zw";
+            //    contact.Plaats = "Haarlem";
+            //    contact.Postcode = "1234AB";
+            //    contact.Email = "daaro@weetikwel.nl";
+            //    contact.Telefoon = "0654321678";
+                
+            //    DALGebruiker.voegtoeContactInfo(contact);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.ToString());
+            //}
+
             try
             {
-                var form = new Form();
-                form.Width = 600;
-                form.Height = 400;
+                Contact contact = new Contact();
+                // contact.Id wordt door de database aangemaakt
+                contact.Id = 15;
+                contact.Persoonid = 2;
+                contact.Straat = "Amsterdamstraat";
+                contact.Huisnummer = 10;
+                contact.Huisnummertoevoeging = "A";
+                contact.Plaats = "Haarlem";
+                contact.Postcode = "1234AB";
+                contact.Email = "daaro@weetikwel.nl";
+                contact.Telefoon = "0678912345";
 
-                dtp = new DateTimePicker();
-                dtp.Location = new Point(10, 10);
-
-                var btn = new Button();
-                btn.Location = new Point(10, 100);
-                btn.Text = "Verstur";
-                btn.Click += Btn_Click;
-
-                form.Controls.Add(dtp);
-                form.Controls.Add(btn);
-                Application.EnableVisualStyles();
-                Application.Run(form);
-
-                Console.WriteLine("Form shown");
+                DALGebruiker.vernieuwContactInfo(contact);
             }
             catch (Exception ex)
             {
