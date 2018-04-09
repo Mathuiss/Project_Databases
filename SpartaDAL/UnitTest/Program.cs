@@ -12,12 +12,9 @@ namespace UnitTest
         {
             try
             {
-                List<Cursus> personen = DALOverzicht.GetCursussen();
+                //###Code die moet worden getest###
 
-                foreach (Cursus c in personen)
-                {
-                    Console.Write(c.ToString());
-                }
+                //#################################
             }
             catch (Exception ex)
             {
