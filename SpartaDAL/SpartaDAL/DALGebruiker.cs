@@ -120,8 +120,7 @@ namespace Sparta.Dal
 
         public static void voegtoeContactInfo(Contact info)
         {
-            string name = "";
-            SqlConnection connection = DALConnection.GetConnectionByName(name);
+            SqlConnection connection = DALConnection.GetConnectionByName("Database");
             connection.Open();
 
             // insert query
@@ -146,8 +145,7 @@ namespace Sparta.Dal
 
         public static void vernieuwContactInfo(Contact info)
         {
-            string name = "";
-            SqlConnection connection = DALConnection.GetConnectionByName(name);
+            SqlConnection connection = DALConnection.GetConnectionByName("Database");
             connection.Open();
 
             // update query
