@@ -8,17 +8,10 @@ namespace Sparta.Dal
     {
         public static SqlConnection GetConnectionByName(string name)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            string connectionString = "Data Source=den1.mssql4.gear.host;Initial Catalog=projectdbgroepa1;Persist Security Info=True;User ID=projectdbgroepa1;Password=Zc2pQwg-wK_w";
 
-            if (connectionString == null)
-            {
-                var connection = new SqlConnection(connectionString);
-                return connection;
-            }
-            else
-            {
-                throw new Exception();
-            }
+            var connection = new SqlConnection(connectionString);
+            return connection;
         }
     }
 }
