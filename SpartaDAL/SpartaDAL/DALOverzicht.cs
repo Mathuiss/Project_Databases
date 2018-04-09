@@ -26,9 +26,11 @@ namespace Sparta.Dal
                         Cursus cursus = new Cursus();
                         cursus.Id = reader.GetInt32(0);
                         cursus.Naam = reader.GetString(1);
-                        cursus.Niveau = reader.GetInt32(2);
+                        cursus.Niveau = reader.GetInt16(2);
                         cursus.Toelichting = reader.GetString(3);
-                        cursus.Categorie = (DeelnemerCategorie)reader.GetInt32(4);
+                        cursus.Categorie = (DeelnemerCategorie)reader.GetInt16(4);
+
+                        cursussen.Add(cursus);
                     }
                 }
             }
