@@ -12,13 +12,9 @@ namespace Data
             //verbinding maken met server.
             SqlConnection connection = Utils.OpenConnectieDB();
             var GetOmzet = new List<Omzetrapportage>();
-
-            //In geval van bugs uit een vorige ronde sluit en opent hij opnieuw de connectie
-            connection.Close();
-            connection.Open();
-
+            
             //var command = new SqlCommand("select Id, tijd, mutatie from OMZET inner join student_doet_aankoop on student.id where tijd <= '" + minDatum + "' AND tijd >= '" + maxDatum + "' group by studentNr", connection);
-            var command = new SqlCommand("select Id, tijd, mutatie from OMZET where tijd <= '" + minDatum + "' AND tijd >= '" + maxDatum +  connection);
+            var command = new SqlCommand("select Id, tijd, mutatie, studentNr from OMZET where tijd <= '" + minDatum + "' AND tijd >= '" + maxDatum + "'", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
@@ -48,7 +44,7 @@ namespace Data
             connection.Open();
 
             //var command = new SqlCommand("select Id, tijd, mutatie from OMZET inner join student_doet_aankoop on student.id where tijd <= '" + minDatum + "' AND tijd >= '" + maxDatum + "' group by studentNr", connection);
-            var command = new SqlCommand("select Id, tijd, mutatie from OMZET", connection);
+            var command = new SqlCommand("select Id, tijd, mutatie, studentNr from OMZET", connection);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
