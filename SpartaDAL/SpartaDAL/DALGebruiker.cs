@@ -25,7 +25,7 @@ namespace Sparta.Dal
             }
         }
 
-        public static int GetLoginid(int persoonId, string pwdhash)
+        public static int GetLoginId(int persoonId, string pwdhash)
         {
             int loginID = 0;
             //Variant B actie 2.
