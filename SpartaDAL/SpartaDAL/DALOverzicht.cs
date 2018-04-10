@@ -9,16 +9,19 @@ namespace Sparta.Dal
     {
         public static List<Cursus> GetCursussen()
         {
+            // lijst met Cursussen aanmaken
             List<Cursus> cursussen = new List<Cursus>();
 
             using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
             {
-                SqlCommand command = new SqlCommand("" +
-                    "select CursusId, Naam, Niveau, Toelichting, Categorie from Cursus", connection);
+                // sql query maken en uitvoeren
+                SqlCommand command = new SqlCommand("select CursusId, Naam, Niveau, Toelichting, Categorie from Cursus", connection);
                 connection.Open();
-
+                
+                // een 'executeReader' methode uitvoeren op command
                 SqlDataReader reader = command.ExecuteReader();
 
+                // als er tenminste een rij is, vraag per veld de informatie op
                 if (reader.HasRows)
                 {
                     while (reader.Read())
@@ -32,8 +35,11 @@ namespace Sparta.Dal
 
                         cursussen.Add(cursus);
                     }
+                    connection.Close();
                 }
             }
+
+            // geef de lijst met cursussen terug
             return cursussen;
         }
 

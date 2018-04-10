@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using Sparta.Model;
 using Sparta.Dal;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace UnitTest
 {
     class Program
-    {
+    {   
         static void Main(string[] args)
         {
             try
