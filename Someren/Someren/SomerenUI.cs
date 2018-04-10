@@ -222,6 +222,7 @@ namespace Someren
             List<Omzetrapportage> omzetRapportage = administratie.GetOmzetRapportage(kiesMinDatum.Value.ToString("yyyy/MM/dd"),
                 kiesMaxDatum.Value.ToString("yyyy/MM/dd"));
 
+            form.panel1.Controls.Remove(listView);
             form.panel1.Controls.Add(ShowOmzetRapportage(omzetRapportage));
         }
 
@@ -231,6 +232,8 @@ namespace Someren
             listView.View = View.Details;
             listView.Height = 300;
             listView.Width = 400;
+            listView.Location = new Point(0, 80);
+            listView.Scrollable = true;
             listView.AllowColumnReorder = true;
             listView.GridLines = true;
             listView.Sorting = SortOrder.Ascending;
@@ -245,7 +248,7 @@ namespace Someren
 
             foreach (Omzetrapportage n in omzetRapportage)
             {
-                string[] items = new string[3];
+                string[] items = new string[4];
                 ListViewItem item;
 
                 items[0] = n.Id.ToString();
@@ -267,18 +270,20 @@ namespace Someren
             listView.View = View.Details;
             listView.Height = 300;
             listView.Width = 400;
+            listView.Location = new Point(0, 80);
+            listView.Scrollable = true;
             listView.AllowColumnReorder = true;
             listView.GridLines = true;
             listView.Sorting = SortOrder.Ascending;
 
             listView.Columns.Add("Transactie ID", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Tijd", -2, HorizontalAlignment.Left);
-            listView.Columns.Add("Bedrag", -2, HorizontalAlignment.Left);
+            listView.Columns.Add("bedrag", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Student nummer", -2, HorizontalAlignment.Left);
-            
+
             foreach (Omzetrapportage n in omzetRapportage)
             {
-                string[] items = new string[3];
+                string[] items = new string[4];
                 ListViewItem item;
 
                 items[0] = n.Id.ToString();

@@ -13,8 +13,9 @@ namespace UnitTest
         {
             try
             {
-                Contact c = DALGebruiker.GetContactInfoByPersoonId(26);
-                Console.WriteLine("{0} {1}", c.Id, c.Email);
+                //###Code die moet worden getest###
+
+                //#################################
             }
             catch (Exception ex)
             {

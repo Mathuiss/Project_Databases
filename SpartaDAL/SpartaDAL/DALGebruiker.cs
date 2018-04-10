@@ -44,7 +44,7 @@ namespace Sparta.Dal
             }
         }
 
-        public static int GetPersonId(Login user)
+        public static int GetLoginId(int persoonId, string pwdhash)
         {
             //Zoekt de persoon ID op aan de hand van de gebruikersnaam en de ww hash
             string query = "select PersoonId from Login where AanmeldNaam = '@naam' and PwdHash = '@hash'";
