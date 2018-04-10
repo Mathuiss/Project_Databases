@@ -118,6 +118,44 @@ namespace Sparta.Dal
             }
         }
 
+        public static Contact GetContactInfoByPersoonId(int persoonId)
+        {
+            string query = "select * from Contactinfo where persoonId = @id";
+            query = query.Replace("@id", persoonId.ToString());
+
+            using (SqlConnection connection = DALConnection.GetConnectionByName("Reader"))
+            {
+                connection.Open();
+
+                var command = new SqlCommand(query, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        return new Contact(
+                            reader.GetInt32(0),
+                            reader.GetInt32(1),
+                            reader.GetString(2),
+                            reader.GetInt32(3),
+                            reader.GetString(4),
+                            reader.GetString(5),
+                            reader.GetString(6),
+                            reader.GetString(7),
+                            reader.GetString(8)
+                            );
+                    }
+                }
+                else
+                {
+                    return new Contact(0, 0, "Contactinfo niet gevonden", 0, null, null, null, null, null);
+                }
+                return new Contact();
+            }
+        }
+
+        //Ook hier in de contactinfo van Sparta niet goed. Hij maakt van de persoonID 0 als dat niet moet.
         public static void voegtoeContactInfo(Contact info)
         {
             using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
@@ -146,6 +184,7 @@ namespace Sparta.Dal
             };
         }
 
+        //Contact info is fout. Sparta geeft niet een goede PersoonID mee. Kijk maar in de database
         public static void vernieuwContactInfo(Contact info)
         {
 
@@ -179,7 +218,7 @@ namespace Sparta.Dal
         public static void UpdatePwd(int loginid, string pwdhash)
         {
             //Variant B actie 1.
-            using (SqlConnection connection = DALConnection.GetConnectionByName("database"))
+            using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
             {
                 //connectie openen
                 connection.Open();
@@ -195,11 +234,11 @@ namespace Sparta.Dal
             }
         }
 
-        public static int GetLoginid(int persoonId, string pwdhash)
+        public static int GetLoginId(int persoonId, string pwdhash)
         {
             int loginID = 0;
             //Variant B actie 2.
-            using (SqlConnection connection = DALConnection.GetConnectionByName("database"))
+            using (SqlConnection connection = DALConnection.GetConnectionByName("Database"))
             {
                 //conectie openen
                 connection.Open();
