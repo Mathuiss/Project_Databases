@@ -118,25 +118,5 @@ namespace Data
                 command.ExecuteNonQuery();
             }
         }
-
-        public void SwitchRoosterTijdenSQL(DateTime[] date, DateTime[] tijden, string id1, string id2)
-        {
-            using (SqlConnection connection = Utils.OpenConnectieDB())
-            {
-                string query = "update ROOSTERTEMP set ";
-                query += "startTijd = '"+ date[0].ToString("MM/dd/yyyy") + " " + tijden[0].ToString("HH:mm") + ":00', ";
-                query += "eindTijd = '" + date[0].ToString("MM/dd/yyyy") + " " + tijden[1].ToString("HH:mm") + ":00' ";
-                query += "where id = " + id1 + "";
-                var command = new SqlCommand(query, connection);
-                command.ExecuteNonQuery();
-
-                query = "update ROOSTERTEMP set ";
-                query += "startTijd = '"+ date[1].ToString("MM/dd/yyyy") + " " + tijden[2].ToString("HH:mm") + ":00', ";
-                query += "eindTijd = '" + date[1].ToString("MM/dd/yyyy") + " " + tijden[3].ToString("HH:mm") + ":00' ";
-                query += "where id = " + id2 + "";
-                command = new SqlCommand(query, connection);
-                command.ExecuteNonQuery();
-            }
-        }
     }
 }
